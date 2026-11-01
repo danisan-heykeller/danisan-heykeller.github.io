@@ -9,7 +9,7 @@
     az: {
       calling: "zəng edir...", accept: "Qəbul et", decline: "Rədd et", hang: "Bitir",
       declined: "Eybi yoxdur. Geri zəng edək?", callBack: "Geri zəng et", thanks: "Dinlədiyiniz üçün sağ olun.", ai: "Səslər süni intellektlə yaradılıb. Mətnlər yoxlanılmış mənbələrə əsaslanır.",
-      dur: function (m) { return "~" + m + " dəq"; }, sound: "səsi artırın",
+      dur: function (m) { return "~" + m + " dəq"; }, sound: "səsi artırın", soon: "səs tezliklə, hələlik mətn",
       collected: function (n, t) { return "Toplanan zənglər: <b>" + n + "</b> / " + t; },
       deck: "Danışan heykəllər", locked: "???",
       again: "Yenidən dinlə", share: "Linki göndər", copied: "Link kopyalandı",
@@ -26,7 +26,7 @@
     ru: {
       calling: "звонит...", accept: "Принять", decline: "Отклонить", hang: "Завершить",
       declined: "Ничего страшного. Перезвонить?", callBack: "Перезвонить", thanks: "Спасибо, что выслушали.", ai: "Голоса созданы с помощью ИИ. Тексты основаны на проверенных источниках.",
-      dur: function (m) { return "~" + m + " мин"; }, sound: "сделайте звук громче",
+      dur: function (m) { return "~" + m + " мин"; }, sound: "сделайте звук громче", soon: "озвучка скоро, пока текст",
       collected: function (n, t) { return "Собрано звонков: <b>" + n + "</b> из " + t; },
       deck: "Говорящие памятники", locked: "???",
       again: "Послушать ещё раз", share: "Отправить ссылку", copied: "Ссылка скопирована",
@@ -120,7 +120,9 @@
   /* ---------- call page ---------- */
   function call(m) {
     var audio = new Audio(); audio.preload = "auto";
-    var state = "ring", clock = null, spans = [], maxSeen = 0, story = null;
+    var state = "ring", clock = null, spans = [], maxSeen = 0, story = null, t0 = 0;
+    var voiced = m.voice !== false;
+    function nowT() { return voiced ? audio.currentTime : (Date.now() - t0) / 1000; }
 
     if (m.photo) {
       var bg = $("bg"); bg.classList.remove("placeholder");
@@ -146,7 +148,7 @@
       $("talkName").textContent = m.name[lang];
       $("role").textContent = m.role[lang];
       $("dur").textContent = t.dur(Math.max(1, Math.round(lastCue() / 60)));
-      $("sound").textContent = t.sound;
+      $("sound").textContent = voiced ? t.sound : t.soon;
       $("acceptLbl").textContent = t.accept;
       $("declineLbl").textContent = t.decline;
       $("hangLbl").textContent = t.hang;
@@ -180,7 +182,7 @@
       });
     }
     function sync() {
-      var t = audio.currentTime, cues = m.cues[lang], idx = 0;
+      var t = nowT(), cues = m.cues[lang], idx = 0;
       for (var i = 0; i < cues.length; i++) if (cues[i].t <= t + 0.05) idx = i;
       spans.forEach(function (s, i) { s.className = i < idx ? "past" : (i === idx ? "now" : ""); });
       var cur = spans[idx], box = $("subs");
@@ -188,20 +190,23 @@
         var top = cur.offsetTop - box.offsetTop;
         if (top > box.scrollTop + box.clientHeight - 48 || top < box.scrollTop) box.scrollTop = Math.max(0, top - 24);
       }
-      var d = audio.duration || lastCue();
+      var d = voiced ? (audio.duration || lastCue()) : lastCue();
       $("time").textContent = fmt(t) + " / " + fmt(d);
       $("prog").style.width = Math.min(100, (t / d) * 100) + "%";
       maxSeen = Math.max(maxSeen, t / d);
+      if (!voiced && t >= d && state === "call") { maxSeen = 1; finish(); }
     }
 
     function start() {
       setState("call");
       try { if (navigator.vibrate) navigator.vibrate(60); } catch (e) {}
       buildSubs(); maxSeen = 0; story = null;
-      audio.src = ROOT + m.audio[lang];
-      audio.currentTime = 0;
-      var pr = audio.play();
-      if (pr && pr.catch) pr.catch(function () { $("time").textContent = T[lang].audioErr; });
+      if (voiced) {
+        audio.src = ROOT + m.audio[lang];
+        audio.currentTime = 0;
+        var pr = audio.play();
+        if (pr && pr.catch) pr.catch(function () { $("time").textContent = T[lang].audioErr; });
+      } else { t0 = Date.now(); }
       clearInterval(clock); clock = setInterval(sync, 200); sync();
       track("accepted");
     }

@@ -137,3 +137,4 @@ details.transcript p{margin:0 0 8px;font-size:15px}
 @media (prefers-reduced-motion:reduce){
   .round.accept,.wave i,.status .dot{animation:none}
 }
+.done-view > .btn{flex:0 0 auto}
