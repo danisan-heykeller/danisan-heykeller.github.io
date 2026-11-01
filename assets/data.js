@@ -199,8 +199,11 @@ window.DH = {
    },
    "ready": true,
    "initial": "S",
-   "photo": null,
-   "credit": "",
+   "photo": "photo/sabir.jpg",
+   "credit": {
+    "az": "Foto: erichware.org",
+    "ru": "Фото: Эрих Гаузер, erichware.org"
+   },
    "name": {
     "az": "Mirzə Ələkbər Sabir",
     "ru": "Мирза Алекпер Сабир"
@@ -421,8 +424,11 @@ window.DH = {
    },
    "ready": true,
    "initial": "N",
-   "photo": null,
-   "credit": "",
+   "photo": "photo/natavan.jpg",
+   "credit": {
+    "az": "Foto: erichware.org",
+    "ru": "Фото: Эрих Гаузер, erichware.org"
+   },
    "name": {
     "az": "Xurşidbanu Natəvan",
     "ru": "Хуршидбану Натаван"
@@ -507,42 +513,38 @@ window.DH = {
      },
      {
       "t": 50.51,
-      "s": "Heykəltəraş Ömər Eldarov məni mərmərdən yonub."
+      "s": "Heykəltəraş Ömər Eldarov məni oturmuş halda təsvir edib."
      },
      {
-      "t": 54.24,
-      "s": "Deyirdi ki, bu abidə yox, mərmərdə yarımfiqurdur."
+      "t": 54.96,
+      "s": "Başımda kəlağayı var, ona xüsusi diqqət ayırıb."
      },
      {
-      "t": 58.19,
-      "s": "Ən çox vaxtı başımdakı kəlağayıya ayırıb."
-     },
-     {
-      "t": 61.57,
+      "t": 58.76,
       "s": "Diqqətlə baxın."
      },
      {
-      "t": 63.09,
-      "s": "Mərmərdir, amma ipək kimi görünür."
+      "t": 60.29,
+      "s": "Daşdır, amma ipək kimi görünür."
      },
      {
-      "t": 65.97,
+      "t": 62.95,
       "s": "Dayandığınız üçün sağ olun."
      },
      {
-      "t": 68.35,
+      "t": 65.33,
       "s": "Bizdə deyirlər: elm öyrənmək iynə ilə quyu qazmaq kimidir."
      },
      {
-      "t": 72.94,
+      "t": 69.92,
       "s": "Mən bütün ömrüm öyrəndim, şəhərə isə su çəkdim."
      },
      {
-      "t": 76.75,
+      "t": 73.73,
       "s": "Öz quyunuzu qazın, azacıq, hər gün."
      },
      {
-      "t": 79.7,
+      "t": 76.68,
       "s": "Və suyunuzu bölüşün."
      }
     ],
@@ -617,42 +619,38 @@ window.DH = {
      },
      {
       "t": 54.36,
-      "s": "Скульптор Омар Эльдаров вырезал меня из мрамора."
+      "s": "Скульптор Омар Эльдаров изобразил меня сидящей."
      },
      {
-      "t": 58.24,
-      "s": "Он говорил, что это не памятник, а полуфигура в мраморе."
+      "t": 58.17,
+      "s": "На голове у меня кялагаи - ему он уделил особое внимание."
      },
      {
       "t": 62.69,
-      "s": "Больше всего времени он отдал кялагаи на моей голове."
-     },
-     {
-      "t": 66.93,
       "s": "Присмотритесь."
      },
      {
-      "t": 68.38,
-      "s": "Это мрамор, а кажется шёлком."
+      "t": 64.14,
+      "s": "Это камень, а кажется шёлком."
      },
      {
-      "t": 70.9,
+      "t": 66.66,
       "s": "Спасибо, что остановились."
      },
      {
-      "t": 73.21,
+      "t": 68.97,
       "s": "У нас говорят: учиться - всё равно что копать колодец иголкой."
      },
      {
-      "t": 78.09,
+      "t": 73.85,
       "s": "Я училась всю жизнь, а городу провела воду."
      },
      {
-      "t": 81.61,
+      "t": 77.37,
       "s": "Копайте свой колодец - понемногу, каждый день."
      },
      {
-      "t": 85.34,
+      "t": 81.11,
       "s": "И делитесь водой."
      }
     ]

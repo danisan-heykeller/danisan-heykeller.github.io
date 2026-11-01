@@ -165,7 +165,7 @@
       $("foot").textContent = t.foot;
       $("sheetTxt").textContent = t.sheet;
       $("sheetClose").textContent = t.close;
-      $("credit").textContent = m.credit || "";
+      $("credit").textContent = (m.credit && typeof m.credit === "object") ? (m.credit[lang] || "") : (m.credit || "");
       var tb = $("trBody"); tb.innerHTML = "";
       var p = document.createElement("p");
       p.textContent = m.cues[lang].map(function (c) { return c.s; }).join(" ");
