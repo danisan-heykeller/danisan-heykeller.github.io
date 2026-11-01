@@ -8,36 +8,36 @@
   var T = {
     az: {
       calling: "zəng edir...", accept: "Qəbul et", decline: "Rədd et", hang: "Bitir",
-      declined: "Zəng rədd edildi.", callBack: "Geri zəng et",
+      declined: "Eybi yoxdur. Geri zəng edək?", callBack: "Geri zəng et", thanks: "Dinlədiyiniz üçün sağ olun.", ai: "Səslər süni intellektlə yaradılıb. Mətnlər yoxlanılmış mənbələrə əsaslanır.",
       dur: function (m) { return "~" + m + " dəq"; }, sound: "səsi artırın",
-      collected: function (n, t) { return "<b>" + n + "</b> / " + t + " zəng toplanıb"; },
+      collected: function (n, t) { return "Toplanan zənglər: <b>" + n + "</b> / " + t; },
       deck: "Danışan heykəllər", locked: "???",
       again: "Yenidən dinlə", share: "Linki göndər", copied: "Link kopyalandı",
       copyFail: "Linki ünvan sətrindən kopyala", tr: "Monoloqun mətni", home: "Bütün heykəllər",
       story: "Storis üçün şəkil", storyLine: ["Mənə", "zəng etdi"],
       sheet: "Şəkli saxlamaq üçün barmağınızı üzərində saxlayın.", close: "Bağla",
-      hint: "Qalan heykəllər gizlidir. Onları tap, yanındakı QR kodu skan et - və zəngi qəbul et.",
-      foot: "Danışan heykəllər · Bakının abidələri danışır",
+      hint: "Digər qəhrəmanlar yaxınlıqda gözləyir. Kodlarını tapın - onlar da zəng edəcək.",
+      foot: "Danışan heykəllər · postamentlərdən bizə baxan insanlar haqqında qeyri-kommersiya layihə",
       heroTitle: "Bakının heykəlləri danışır",
-      heroLead: "Abidənin yanındakı QR kodu skan edin - və o sizə zəng edəcək. Hər heykəl öz hekayəsini danışır.",
-      how: ["Heykəlin yanında QR kodu tapın", "Telefonun kamerası ilə skan edin", "Zəngi qəbul edin və dinləyin", "Bütün zəngləri toplayın"],
+      heroLead: "Abidənin yanındakı kodu skan edin - və o sizə zəng edəcək. Hər biri özü haqqında danışacaq və xatirə olaraq bir fikir qoyub gedəcək.",
+      how: ["Heykəlin yanında kodu tapın", "Kamera ilə skan edin", "Zəngi qəbul edin", "Dayanın və diqqətlə baxın"],
       howTitle: "Necə işləyir", audioErr: "Səs yüklənmədi. İnterneti yoxlayın və yenidən cəhd edin."
     },
     ru: {
       calling: "звонит...", accept: "Принять", decline: "Отклонить", hang: "Завершить",
-      declined: "Звонок отклонён.", callBack: "Перезвонить",
-      dur: function (m) { return "~" + m + " мин"; }, sound: "прибавьте звук",
-      collected: function (n, t) { return "<b>" + n + "</b> из " + t + " звонков собрано"; },
+      declined: "Ничего страшного. Перезвонить?", callBack: "Перезвонить", thanks: "Спасибо, что выслушали.", ai: "Голоса созданы с помощью ИИ. Тексты основаны на проверенных источниках.",
+      dur: function (m) { return "~" + m + " мин"; }, sound: "сделайте звук громче",
+      collected: function (n, t) { return "Собрано звонков: <b>" + n + "</b> из " + t; },
       deck: "Говорящие памятники", locked: "???",
       again: "Послушать ещё раз", share: "Отправить ссылку", copied: "Ссылка скопирована",
       copyFail: "Скопируйте ссылку из адресной строки", tr: "Текст монолога", home: "Все памятники",
       story: "Картинка для сторис", storyLine: ["Мне позвонил", ""],
       sheet: "Нажмите и удерживайте картинку, чтобы сохранить её.", close: "Закрыть",
-      hint: "Остальные памятники скрыты. Найдите их, отсканируйте QR рядом - и примите звонок.",
-      foot: "Danışan heykəllər · памятники Баку разговаривают",
+      hint: "Остальные герои ждут неподалёку. Найдите их код - и они тоже позвонят.",
+      foot: "Danışan heykəllər · некоммерческий проект о людях, которые смотрят на нас с постаментов",
       heroTitle: "Памятники Баку разговаривают",
-      heroLead: "Отсканируйте QR-код у памятника - и он вам позвонит. Каждый рассказывает свою историю.",
-      how: ["Найдите QR-код у памятника", "Отсканируйте камерой телефона", "Примите звонок и слушайте", "Соберите все звонки"],
+      heroLead: "Отсканируйте код у памятника - и он вам позвонит. Каждый расскажет о себе и оставит одну мысль на память.",
+      how: ["Найдите код у памятника", "Отсканируйте его камерой", "Примите звонок", "Задержитесь и присмотритесь"],
       howTitle: "Как это работает", audioErr: "Звук не загрузился. Проверьте интернет и попробуйте ещё раз."
     }
   };
@@ -112,6 +112,7 @@
       $("deckEyebrow").textContent = t.deck;
       $("count").innerHTML = t.collected(renderDeck($("deck")), DH.monuments.length);
       $("foot").textContent = t.foot;
+      $("ai").textContent = t.ai;
     }
     bindLangs(paint); paint();
   }
@@ -150,6 +151,8 @@
       $("declineLbl").textContent = t.decline;
       $("hangLbl").textContent = t.hang;
       $("declinedTxt").textContent = t.declined;
+      $("thanks").textContent = t.thanks;
+      $("ai").textContent = t.ai;
       $("callBack").textContent = t.callBack;
       $("again").textContent = t.again;
       $("share").textContent = t.share;

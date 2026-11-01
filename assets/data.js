@@ -195,6 +195,26 @@ window.DH = {
    "area": {
     "az": "İstiqlaliyyət küçəsi, Sabir bağı",
     "ru": "ул. Истиглалият, сад Сабира"
+   },
+   "ready": false,
+   "initial": "S",
+   "photo": null,
+   "credit": "",
+   "name": {
+    "az": "Mirzə Ələkbər Sabir",
+    "ru": "Мирза Алекпер Сабир"
+   },
+   "role": {
+    "az": "satirik şair · 1862-1911",
+    "ru": "поэт-сатирик · 1862-1911"
+   },
+   "audio": {
+    "az": "audio/sabir-az.mp3",
+    "ru": "audio/sabir-ru.mp3"
+   },
+   "cues": {
+    "az": [],
+    "ru": []
    }
   },
   {
@@ -202,6 +222,26 @@ window.DH = {
    "area": {
     "az": "Azərbaycan kinoteatrının qarşısı",
     "ru": "у кинотеатра \"Азербайджан\""
+   },
+   "ready": false,
+   "initial": "N",
+   "photo": null,
+   "credit": "",
+   "name": {
+    "az": "Xurşidbanu Natəvan",
+    "ru": "Хуршидбану Натаван"
+   },
+   "role": {
+    "az": "şairə, Xan qızı · 1832-1897",
+    "ru": "поэтесса, Хан гызы · 1832-1897"
+   },
+   "audio": {
+    "az": "audio/natavan-az.mp3",
+    "ru": "audio/natavan-ru.mp3"
+   },
+   "cues": {
+    "az": [],
+    "ru": []
    }
   }
  ]
