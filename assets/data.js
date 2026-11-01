@@ -191,45 +191,17 @@ window.DH = {
    }
   },
   {
-   "id": "azimzade",
-   "area": {
-    "az": "İçərişəhər",
-    "ru": "Ичеришехер"
-   }
-  },
-  {
    "id": "sabir",
    "area": {
-    "az": "İstiqlaliyyət küçəsi",
-    "ru": "ул. Истиглалият"
+    "az": "İstiqlaliyyət küçəsi, Sabir bağı",
+    "ru": "ул. Истиглалият, сад Сабира"
    }
   },
   {
    "id": "natavan",
    "area": {
-    "az": "Əziz Əliyev küçəsi",
-    "ru": "ул. Азиза Алиева"
-   }
-  },
-  {
-   "id": "nizami",
-   "area": {
-    "az": "Nizami meydanı",
-    "ru": "площадь Низами"
-   }
-  },
-  {
-   "id": "axundov",
-   "area": {
-    "az": "Axundov bağı",
-    "ru": "сквер Ахундова"
-   }
-  },
-  {
-   "id": "bahram",
-   "area": {
-    "az": "Neftçilər prospekti",
-    "ru": "пр. Нефтчиляр"
+    "az": "Azərbaycan kinoteatrının qarşısı",
+    "ru": "у кинотеатра \"Азербайджан\""
    }
   }
  ]
