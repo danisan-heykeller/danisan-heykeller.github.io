@@ -5,6 +5,8 @@ window.DH = {
    "id": "vahid",
    "ready": true,
    "initial": "V",
+   "photo": null,
+   "credit": "",
    "name": {
     "az": "Əliağa Vahid",
     "ru": "Алиага Вахид"
@@ -18,8 +20,8 @@ window.DH = {
     "ru": "Ичеришехер, сад Вахида"
    },
    "audio": {
-    "az": "../audio/vahid-az.mp3",
-    "ru": "../audio/vahid-ru.mp3"
+    "az": "audio/vahid-az.mp3",
+    "ru": "audio/vahid-ru.mp3"
    },
    "cues": {
     "az": [

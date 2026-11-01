@@ -9,10 +9,13 @@
     az: {
       calling: "zəng edir...", accept: "Qəbul et", decline: "Rədd et", hang: "Bitir",
       declined: "Zəng rədd edildi.", callBack: "Geri zəng et",
+      dur: function (m) { return "~" + m + " dəq"; }, sound: "səsi artırın",
       collected: function (n, t) { return "<b>" + n + "</b> / " + t + " zəng toplanıb"; },
       deck: "Danışan heykəllər", locked: "???",
-      again: "Yenidən dinlə", share: "Dostuna göndər", copied: "Link kopyalandı",
+      again: "Yenidən dinlə", share: "Linki göndər", copied: "Link kopyalandı",
       copyFail: "Linki ünvan sətrindən kopyala", tr: "Monoloqun mətni", home: "Bütün heykəllər",
+      story: "Storis üçün şəkil", storyLine: ["Mənə", "zəng etdi"],
+      sheet: "Şəkli saxlamaq üçün barmağınızı üzərində saxlayın.", close: "Bağla",
       hint: "Qalan heykəllər gizlidir. Onları tap, yanındakı QR kodu skan et - və zəngi qəbul et.",
       foot: "Danışan heykəllər · Bakının abidələri danışır",
       heroTitle: "Bakının heykəlləri danışır",
@@ -23,10 +26,13 @@
     ru: {
       calling: "звонит...", accept: "Принять", decline: "Отклонить", hang: "Завершить",
       declined: "Звонок отклонён.", callBack: "Перезвонить",
+      dur: function (m) { return "~" + m + " мин"; }, sound: "прибавьте звук",
       collected: function (n, t) { return "<b>" + n + "</b> из " + t + " звонков собрано"; },
       deck: "Говорящие памятники", locked: "???",
-      again: "Послушать ещё раз", share: "Отправить другу", copied: "Ссылка скопирована",
+      again: "Послушать ещё раз", share: "Отправить ссылку", copied: "Ссылка скопирована",
       copyFail: "Скопируйте ссылку из адресной строки", tr: "Текст монолога", home: "Все памятники",
+      story: "Картинка для сторис", storyLine: ["Мне позвонил", ""],
+      sheet: "Нажмите и удерживайте картинку, чтобы сохранить её.", close: "Закрыть",
       hint: "Остальные памятники скрыты. Найдите их, отсканируйте QR рядом - и примите звонок.",
       foot: "Danışan heykəllər · памятники Баку разговаривают",
       heroTitle: "Памятники Баку разговаривают",
@@ -50,8 +56,7 @@
   }
 
   /* ---------- analytics (GoatCounter, only when a code is set) ---------- */
-  var params = new URLSearchParams(location.search);
-  var from = params.get("from");
+  var from = new URLSearchParams(location.search).get("from");
   function track(evt) {
     try { if (window.goatcounter && window.goatcounter.count) window.goatcounter.count({ path: PAGE + "-" + evt, event: true }); } catch (e) {}
   }
@@ -66,21 +71,20 @@
   /* ---------- language ---------- */
   var lang = sget("dh-lang");
   if (!T[lang]) lang = (navigator.language || "").slice(0, 2).toLowerCase() === "az" ? "az" : "ru";
-  function bindLangs(onChange) {
-    ["az", "ru"].forEach(function (k) {
-      var b = $("lang-" + k);
-      if (!b) return;
-      b.addEventListener("click", function () { lang = k; sset("dh-lang", k); paintLangs(); onChange(); });
-    });
-    paintLangs();
-  }
   function paintLangs() {
     ["az", "ru"].forEach(function (k) { var b = $("lang-" + k); if (b) b.setAttribute("aria-pressed", k === lang ? "true" : "false"); });
     document.documentElement.lang = lang;
   }
+  function bindLangs(onChange) {
+    ["az", "ru"].forEach(function (k) {
+      var b = $("lang-" + k);
+      if (b) b.addEventListener("click", function () { lang = k; sset("dh-lang", k); paintLangs(); onChange(); });
+    });
+    paintLangs();
+  }
 
   /* ---------- deck of cards ---------- */
-  function renderDeck(el, currentId) {
+  function renderDeck(el) {
     var got = collected(), t = T[lang];
     el.innerHTML = "";
     DH.monuments.forEach(function (m) {
@@ -88,18 +92,15 @@
       var tile = document.createElement(has ? "a" : "div");
       tile.className = "tile " + (has ? "got" : "locked");
       if (has) tile.href = ROOT + m.id + "/";
-      var nm = document.createElement("span"); nm.className = "nm";
-      nm.textContent = has ? m.name[lang] : t.locked;
-      var ar = document.createElement("span"); ar.className = "ar";
-      ar.textContent = m.area[lang];
+      var nm = document.createElement("span"); nm.className = "nm"; nm.textContent = has ? m.name[lang] : t.locked;
+      var ar = document.createElement("span"); ar.className = "ar"; ar.textContent = m.area[lang];
       tile.appendChild(nm); tile.appendChild(ar);
-      if (m.id === currentId && has) tile.setAttribute("aria-current", "true");
       el.appendChild(tile);
     });
-    return got.length;
+    return got.filter(function (id) { return DH.monuments.some(function (m) { return m.id === id; }); }).length;
   }
 
-  /* ---------- home page ---------- */
+  /* ---------- home ---------- */
   function home() {
     function paint() {
       var t = T[lang];
@@ -109,42 +110,60 @@
       var ol = $("how"); ol.innerHTML = "";
       t.how.forEach(function (s) { var li = document.createElement("li"); li.textContent = s; ol.appendChild(li); });
       $("deckEyebrow").textContent = t.deck;
-      var n = renderDeck($("deck"), null);
-      $("count").innerHTML = t.collected(n, DH.monuments.length);
+      $("count").innerHTML = t.collected(renderDeck($("deck")), DH.monuments.length);
       $("foot").textContent = t.foot;
     }
     bindLangs(paint); paint();
   }
 
-  /* ---------- monument call page ---------- */
+  /* ---------- call page ---------- */
   function call(m) {
     var audio = new Audio(); audio.preload = "auto";
-    var state = "ring", clock = null, spans = [], maxSeen = 0;
+    var state = "ring", clock = null, spans = [], maxSeen = 0, story = null;
 
-    function fmt(s) { s = Math.max(0, Math.floor(s)); var r = s % 60; return Math.floor(s / 60) + ":" + (r < 10 ? "0" : "") + r; }
-    function show(id, on) { $(id).hidden = !on; }
+    if (m.photo) {
+      var bg = $("bg"); bg.classList.remove("placeholder");
+      bg.style.backgroundImage = "url('" + ROOT + m.photo + "')";
+    }
 
-    function paintStatic() {
+    function fmt(s) { s = Math.max(0, Math.floor(s || 0)); var r = s % 60; return Math.floor(s / 60) + ":" + (r < 10 ? "0" : "") + r; }
+    function lastCue() { var c = m.cues[lang]; return c[c.length - 1].t + 3; }
+    function setState(s) {
+      state = s;
+      document.body.className = "s-" + s;
+      $("ringView").hidden = s !== "ring";
+      $("declinedView").hidden = s !== "declined";
+      $("talkView").hidden = s !== "call";
+      $("done").hidden = s !== "done";
+    }
+
+    function paint() {
       var t = T[lang];
       document.title = m.name[lang] + " · Danışan heykəllər";
+      $("statusTxt").textContent = t.calling;
       $("name").textContent = m.name[lang];
+      $("talkName").textContent = m.name[lang];
       $("role").textContent = m.role[lang];
-      $("place").textContent = m.area[lang];
+      $("dur").textContent = t.dur(Math.max(1, Math.round(lastCue() / 60)));
+      $("sound").textContent = t.sound;
       $("acceptLbl").textContent = t.accept;
       $("declineLbl").textContent = t.decline;
       $("hangLbl").textContent = t.hang;
+      $("declinedTxt").textContent = t.declined;
+      $("callBack").textContent = t.callBack;
       $("again").textContent = t.again;
       $("share").textContent = t.share;
+      $("storyLbl").textContent = t.story;
       $("homeLink").textContent = t.home;
       $("trSum").textContent = t.tr;
       $("hint").textContent = t.hint;
       $("foot").textContent = t.foot;
-      $("callBack").textContent = t.callBack;
-      if (state === "ring") $("status").textContent = t.calling;
-      if (state === "declined") $("status").textContent = t.declined;
+      $("sheetTxt").textContent = t.sheet;
+      $("sheetClose").textContent = t.close;
+      $("credit").textContent = m.credit || "";
       var tb = $("trBody"); tb.innerHTML = "";
       var p = document.createElement("p");
-      m.cues[lang].forEach(function (c, i) { p.appendChild(document.createTextNode((i ? " " : "") + c.s)); });
+      p.textContent = m.cues[lang].map(function (c) { return c.s; }).join(" ");
       tb.appendChild(p);
       if (state === "done") paintDone();
     }
@@ -166,54 +185,123 @@
         var top = cur.offsetTop - box.offsetTop;
         if (top > box.scrollTop + box.clientHeight - 48 || top < box.scrollTop) box.scrollTop = Math.max(0, top - 24);
       }
-      $("status").textContent = fmt(t);
-      if (audio.duration) maxSeen = Math.max(maxSeen, t / audio.duration);
+      var d = audio.duration || lastCue();
+      $("time").textContent = fmt(t) + " / " + fmt(d);
+      $("prog").style.width = Math.min(100, (t / d) * 100) + "%";
+      maxSeen = Math.max(maxSeen, t / d);
     }
 
     function start() {
-      state = "call";
-      $("caller").classList.remove("ringing");
-      $("caller").classList.add("speaking");
-      show("ringActions", false); show("declinedActions", false); show("callActions", true);
-      show("wave", true); show("subs", true); show("done", false);
-      buildSubs(); maxSeen = 0;
-      audio.src = m.audio[lang];
+      setState("call");
+      try { if (navigator.vibrate) navigator.vibrate(60); } catch (e) {}
+      buildSubs(); maxSeen = 0; story = null;
+      audio.src = ROOT + m.audio[lang];
       audio.currentTime = 0;
       var pr = audio.play();
-      if (pr && pr.catch) pr.catch(function () { $("status").textContent = T[lang].audioErr; });
-      clearInterval(clock); clock = setInterval(sync, 200);
+      if (pr && pr.catch) pr.catch(function () { $("time").textContent = T[lang].audioErr; });
+      clearInterval(clock); clock = setInterval(sync, 200); sync();
       track("accepted");
     }
     function finish() {
       clearInterval(clock);
       try { audio.pause(); } catch (e) {}
       if (maxSeen >= 0.6) { collect(m.id); track("completed"); }
-      state = "done";
-      $("caller").classList.remove("speaking");
-      show("wave", false); show("subs", false); show("callActions", false);
-      paintDone(); show("done", true);
+      setState("done"); paintDone(); window.scrollTo(0, 0);
     }
     function paintDone() {
       var t = T[lang];
-      var n = renderDeck($("deck"), m.id);
-      $("count").innerHTML = t.collected(n, DH.monuments.length);
+      $("count").innerHTML = t.collected(renderDeck($("deck")), DH.monuments.length);
       $("deckEyebrow").textContent = t.deck;
     }
 
+    /* story card: 1080x1920 PNG drawn on canvas */
+    function loadImg(src) {
+      return new Promise(function (res) {
+        if (!src) return res(null);
+        var im = new Image(); im.onload = function () { res(im); }; im.onerror = function () { res(null); }; im.src = src;
+      });
+    }
+    function wrapLines(ctx, text, maxW) {
+      var words = text.split(" "), lines = [], cur = "";
+      words.forEach(function (w) {
+        var tryL = cur ? cur + " " + w : w;
+        if (ctx.measureText(tryL).width > maxW && cur) { lines.push(cur); cur = w; } else cur = tryL;
+      });
+      if (cur) lines.push(cur);
+      return lines;
+    }
+    function makeStory() {
+      var W = 1080, H = 1920, t = T[lang];
+      var fontsReady = (document.fonts && document.fonts.load) ? Promise.all([
+        document.fonts.load("600 120px 'El Messiri'"), document.fonts.load("600 40px 'Golos Text'")
+      ]).catch(function () {}) : Promise.resolve();
+      return Promise.all([loadImg(m.photo ? ROOT + m.photo : null), fontsReady]).then(function (r) {
+        var img = r[0], c = document.createElement("canvas"); c.width = W; c.height = H;
+        var x = c.getContext("2d");
+        if (img) {
+          var s = Math.max(W / img.width, H / img.height), w = img.width * s, h = img.height * s;
+          x.drawImage(img, (W - w) / 2, (H - h) * 0.18, w, h);
+          x.globalCompositeOperation = "saturation"; x.fillStyle = "#808080"; x.fillRect(0, 0, W, H);
+          x.globalCompositeOperation = "color"; x.fillStyle = "#9b6a3c"; x.fillRect(0, 0, W, H);
+          x.globalCompositeOperation = "source-over";
+        } else {
+          var g0 = x.createLinearGradient(0, 0, 0, H); g0.addColorStop(0, "#46352a"); g0.addColorStop(.55, "#2a2018"); g0.addColorStop(1, "#15100c");
+          x.fillStyle = g0; x.fillRect(0, 0, W, H);
+          var g1 = x.createRadialGradient(W / 2, H * .32, 10, W / 2, H * .32, 420); g1.addColorStop(0, "#b98352"); g1.addColorStop(1, "rgba(138,90,48,0)");
+          x.fillStyle = g1; x.fillRect(0, 0, W, H);
+        }
+        var g = x.createLinearGradient(0, 0, 0, H);
+        g.addColorStop(0, "rgba(10,8,6,.25)"); g.addColorStop(.4, "rgba(10,8,6,0)"); g.addColorStop(.68, "rgba(10,8,6,.85)"); g.addColorStop(1, "rgba(10,8,6,.96)");
+        x.fillStyle = g; x.fillRect(0, 0, W, H);
+        // tag
+        x.font = "700 30px 'Golos Text', sans-serif";
+        var tag = "DANIŞAN HEYKƏLLƏR · BAKI", tw = x.measureText(tag).width;
+        x.fillStyle = "#d39a5c"; x.fillRect(80, 110, tw + 48, 64);
+        x.fillStyle = "#1a120a"; x.textBaseline = "middle"; x.fillText(tag, 104, 143);
+        // headline
+        x.textBaseline = "alphabetic";
+        var y = H - 470;
+        x.fillStyle = "#f3ede2"; x.font = "500 64px 'El Messiri', Georgia, serif";
+        x.fillText(t.storyLine[0], 80, y);
+        x.fillStyle = "#d39a5c"; x.font = "600 128px 'El Messiri', Georgia, serif";
+        var lines = wrapLines(x, m.name[lang], W - 160);
+        lines.forEach(function (l) { y += 136; x.fillText(l, 80, y); });
+        if (t.storyLine[1]) { x.fillStyle = "#f3ede2"; x.font = "500 64px 'El Messiri', Georgia, serif"; y += 90; x.fillText(t.storyLine[1], 80, y); }
+        // footer
+        x.font = "500 34px 'Golos Text', sans-serif"; x.fillStyle = "#c4bbad";
+        x.fillText(location.host || "danisan-heykeller.github.io", 80, H - 110);
+        var n = collected().length + "", tot = " / " + DH.monuments.length;
+        x.font = "600 60px 'Golos Text', sans-serif"; var nw = x.measureText(n).width;
+        x.font = "500 40px 'Golos Text', sans-serif"; var tw2 = x.measureText(tot).width;
+        x.fillStyle = "#f3ede2"; x.font = "600 60px 'Golos Text', sans-serif"; x.fillText(n, W - 80 - tw2 - nw, H - 110);
+        x.fillStyle = "#c4bbad"; x.font = "500 40px 'Golos Text', sans-serif"; x.fillText(tot, W - 80 - tw2, H - 110);
+        return c;
+      });
+    }
+    function shareStory() {
+      makeStory().then(function (c) {
+        c.toBlob(function (blob) {
+          var file = blob ? new File([blob], "danisan-heykeller-" + m.id + ".png", { type: "image/png" }) : null;
+          if (file && navigator.canShare && navigator.canShare({ files: [file] })) {
+            navigator.share({ files: [file] }).then(function () { track("story"); }, function () {});
+          } else {
+            $("sheetImg").src = c.toDataURL("image/png");
+            $("sheet").hidden = false; track("story");
+          }
+        }, "image/png");
+      });
+    }
+
     audio.addEventListener("ended", function () { maxSeen = 1; if (state === "call") finish(); });
-    audio.addEventListener("error", function () { if (state === "call") $("status").textContent = T[lang].audioErr; });
+    audio.addEventListener("error", function () { if (state === "call") $("time").textContent = T[lang].audioErr; });
 
     $("accept").addEventListener("click", start);
     $("hangup").addEventListener("click", finish);
     $("again").addEventListener("click", start);
     $("callBack").addEventListener("click", start);
-    $("decline").addEventListener("click", function () {
-      state = "declined";
-      $("caller").classList.remove("ringing");
-      show("ringActions", false); show("declinedActions", true);
-      $("status").textContent = T[lang].declined;
-      track("declined");
-    });
+    $("decline").addEventListener("click", function () { setState("declined"); track("declined"); });
+    $("story").addEventListener("click", shareStory);
+    $("sheetClose").addEventListener("click", function () { $("sheet").hidden = true; });
     $("share").addEventListener("click", function () {
       var url = location.origin + location.pathname + "?from=share", t = T[lang];
       function fail() { $("toast").textContent = t.copyFail; }
@@ -223,10 +311,9 @@
 
     bindLangs(function () {
       if (state === "call") { try { audio.pause(); } catch (e) {} start(); }
-      paintStatic();
+      paint();
     });
-    $("initial").textContent = m.initial;
-    paintStatic();
+    setState("ring"); paint();
   }
 
   if (PAGE === "home") home();
