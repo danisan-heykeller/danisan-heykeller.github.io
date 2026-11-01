@@ -189,7 +189,8 @@ window.DH = {
      }
     ]
    },
-   "voice": true
+   "voice": true,
+   "map": "40.365974,49.832303"
   },
   {
    "id": "sabir",
@@ -414,7 +415,9 @@ window.DH = {
      }
     ]
    },
-   "voice": false
+   "voice": false,
+   "map": "40.3689,49.8350",
+   "creditUrl": "https://erichware.org"
   },
   {
    "id": "natavan",
@@ -655,7 +658,9 @@ window.DH = {
      }
     ]
    },
-   "voice": false
+   "voice": false,
+   "map": "40.3692,49.8372",
+   "creditUrl": "https://erichware.org"
   }
  ]
 };

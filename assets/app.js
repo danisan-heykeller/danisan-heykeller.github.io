@@ -9,7 +9,7 @@
     az: {
       calling: "zəng edir...", accept: "Qəbul et", decline: "Rədd et", hang: "Bitir",
       declined: "Eybi yoxdur. Geri zəng edək?", callBack: "Geri zəng et", thanks: "Dinlədiyiniz üçün sağ olun.", ai: "Səslər süni intellektlə yaradılıb. Mətnlər yoxlanılmış mənbələrə əsaslanır.",
-      dur: function (m) { return "~" + m + " dəq"; }, sound: "səsi artırın", soon: "səs tezliklə, hələlik mətn",
+      dur: function (m) { return "~" + m + " dəq"; }, sound: "diqqət, səs uca olacaq", readRing: "Səssiz oxumaq", read: "Monoloqun mətni", mapHint: "xəritədə göstər →", soon: "səs tezliklə, hələlik mətn",
       collected: function (n, t) { return "Toplanan zənglər: <b>" + n + "</b> / " + t; },
       deck: "Danışan heykəllər", locked: "???",
       again: "Yenidən dinlə", share: "Linki göndər", copied: "Link kopyalandı",
@@ -26,7 +26,7 @@
     ru: {
       calling: "звонит...", accept: "Принять", decline: "Отклонить", hang: "Завершить",
       declined: "Ничего страшного. Перезвонить?", callBack: "Перезвонить", thanks: "Спасибо, что выслушали.", ai: "Голоса созданы с помощью ИИ. Тексты основаны на проверенных источниках.",
-      dur: function (m) { return "~" + m + " мин"; }, sound: "сделайте звук громче", soon: "озвучка скоро, пока текст",
+      dur: function (m) { return "~" + m + " мин"; }, sound: "осторожно, громкий звук", readRing: "Прочитать без звука", read: "Текст монолога", mapHint: "показать на карте →", soon: "озвучка скоро, пока текст",
       collected: function (n, t) { return "Собрано звонков: <b>" + n + "</b> из " + t; },
       deck: "Говорящие памятники", locked: "???",
       again: "Послушать ещё раз", share: "Отправить ссылку", copied: "Ссылка скопирована",
@@ -89,12 +89,14 @@
     el.innerHTML = "";
     DH.monuments.forEach(function (m) {
       var has = got.indexOf(m.id) >= 0 && m.name;
-      var tile = document.createElement(has ? "a" : "div");
+      var tile = document.createElement(has || m.map ? "a" : "div");
       tile.className = "tile " + (has ? "got" : "locked");
       if (has) tile.href = ROOT + m.id + "/";
+      else if (m.map) { tile.href = "https://www.google.com/maps/search/?api=1&query=" + m.map; tile.target = "_blank"; tile.rel = "noopener"; }
       var nm = document.createElement("span"); nm.className = "nm"; nm.textContent = has ? m.name[lang] : t.locked;
       var ar = document.createElement("span"); ar.className = "ar"; ar.textContent = m.area[lang];
       tile.appendChild(nm); tile.appendChild(ar);
+      if (!has && m.map) { var mh = document.createElement("span"); mh.className = "mh"; mh.textContent = t.mapHint; tile.appendChild(mh); }
       el.appendChild(tile);
     });
     return got.filter(function (id) { return DH.monuments.some(function (m) { return m.id === id; }); }).length;
@@ -160,16 +162,26 @@
       $("share").textContent = t.share;
       $("storyLbl").textContent = t.story;
       $("homeLink").textContent = t.home;
-      $("trSum").textContent = t.tr;
+      $("readRing").textContent = t.readRing;
+      $("readDecl").textContent = t.read;
+      $("readDone").textContent = t.read;
+      $("homeDecl").textContent = t.home;
+      $("rdClose").textContent = t.close;
       $("hint").textContent = t.hint;
       $("foot").textContent = t.foot;
       $("sheetTxt").textContent = t.sheet;
       $("sheetClose").textContent = t.close;
-      $("credit").textContent = (m.credit && typeof m.credit === "object") ? (m.credit[lang] || "") : (m.credit || "");
-      var tb = $("trBody"); tb.innerHTML = "";
-      var p = document.createElement("p");
-      p.textContent = m.cues[lang].map(function (c) { return c.s; }).join(" ");
-      tb.appendChild(p);
+      var cr = $("credit"), ctext = (m.credit && typeof m.credit === "object") ? (m.credit[lang] || "") : (m.credit || "");
+      cr.innerHTML = "";
+      if (ctext && m.creditUrl) { var a = document.createElement("a"); a.href = m.creditUrl; a.target = "_blank"; a.rel = "noopener"; a.textContent = ctext; cr.appendChild(a); }
+      else cr.textContent = ctext;
+      $("rdName").textContent = m.name[lang];
+      var rb = $("rdBody"); rb.innerHTML = "";
+      var para = null;
+      m.cues[lang].forEach(function (c, i) {
+        if (i % 4 === 0) { para = document.createElement("p"); rb.appendChild(para); }
+        para.appendChild(document.createTextNode((i % 4 ? " " : "") + c.s));
+      });
       if (state === "done") paintDone();
     }
 
@@ -309,6 +321,10 @@
     $("callBack").addEventListener("click", start);
     $("decline").addEventListener("click", function () { setState("declined"); track("declined"); });
     $("story").addEventListener("click", shareStory);
+    function openReader() { $("reader").hidden = false; $("rdClose").focus(); track("read"); }
+    ["readRing", "readDecl", "readDone"].forEach(function (id) { $(id).addEventListener("click", openReader); });
+    $("rdClose").addEventListener("click", function () { $("reader").hidden = true; });
+    document.addEventListener("keydown", function (e) { if (e.key === "Escape") { $("reader").hidden = true; $("sheet").hidden = true; } });
     $("sheetClose").addEventListener("click", function () { $("sheet").hidden = true; });
     $("share").addEventListener("click", function () {
       var url = location.origin + location.pathname + "?from=share", t = T[lang];

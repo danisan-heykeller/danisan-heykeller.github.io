@@ -138,3 +138,15 @@ details.transcript p{margin:0 0 8px;font-size:15px}
   .round.accept,.wave i,.status .dot{animation:none}
 }
 .done-view > .btn{flex:0 0 auto}
+
+/* navigation pass */
+.linkbtn{align-self:center;margin-top:14px;background:none;border:0;color:var(--ink);font:500 14px/1.2 var(--body);text-decoration:underline;text-underline-offset:4px;cursor:pointer;padding:8px}
+.credit a{color:inherit}
+.tile .mh{font-size:11.5px;color:var(--bronze)}
+.reader{position:fixed;inset:0;z-index:6;background:var(--night);overflow-y:auto;
+  padding:max(18px, env(safe-area-inset-top,0px)) max(18px, env(safe-area-inset-right,0px)) max(18px, env(safe-area-inset-bottom,0px)) max(18px, env(safe-area-inset-left,0px))}
+.reader-in{max-width:520px;margin:0 auto;display:flex;flex-direction:column;gap:16px}
+.reader-top{display:flex;justify-content:space-between;align-items:center;gap:12px;position:sticky;top:0;background:var(--night);padding-block:8px}
+.reader-top b{font-family:var(--name);font-size:24px;font-weight:600}
+.reader-top .btn{flex:0 0 auto}
+#rdBody p{margin:0 0 14px;font-size:18px;line-height:1.7;color:var(--ink)}
