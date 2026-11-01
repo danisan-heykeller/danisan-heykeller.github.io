@@ -5,7 +5,7 @@ window.DH = {
    "id": "vahid",
    "ready": true,
    "initial": "V",
-   "photo": null,
+   "photo": "photo/vahid.jpg",
    "credit": "",
    "name": {
     "az": "Əliağa Vahid",
