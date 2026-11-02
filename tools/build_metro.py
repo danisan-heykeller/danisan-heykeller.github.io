@@ -1,144 +1,27 @@
-# Builds assets/metro.js: lines, 27 stations, pilot monologues with reading-pace cue timings.
-import json, sys
+# Builds assets/metro.js (Metro pasportu): lines, 27 stations, pilot stories, on-site questions, QR keys,
+# and qr/metro-<id>.png|.svg for printing. Edit texts here, then run:
+#   python3 tools/build_metro.py
+import json, os
+import qrcode
+import qrcode.image.svg
 
-OUT = sys.argv[1]
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+SITE = "https://danisan-heykeller.github.io"
 
-def cues(lines):
-    t, out = 0.0, []
-    for s in lines:
-        out.append({"t": round(t, 2), "s": s})
-        t += 0.7 + len(s) / 14.5  # comfortable reading pace for the text-only mode
-    return out
-
-L = {
- "koroglu": {
-  "az": [
-   "Alo?",
-   "Bəli, mənəm, Koroğlu.",
-   "Təəccüblənməyin - Bakıda stansiyalar bəzən zəng vurur.",
-   "Məni bir nəfər uydurmayıb.",
-   "Əsrlər boyu aşıqlar məni nəsildən-nəslə danışıblar.",
-   "Qıratım, sazım və dağlarda Çənlibel qalam - dastanım belə başlayır.",
-   "Mən incidilənləri qorumuşam, artığını özümə götürməmişəm.",
-   "1937-ci ildə Üzeyir Hacıbəyli mənim haqqımda \"Koroğlu\" operasını yazdı.",
-   "Bu stansiya isə 2011-ci il dekabrın 30-dan mənim adımı daşıyır.",
-   "Stansiyanın girişində iyirmi metr hündürlüyündə şüşə piramida durur - çıxanda başınızı qaldırın.",
-   "Platformadakı sütunlar yarı mərmər, yarı poladdır.",
-   "Mənim kimi: yarı mahnı, yarı polad.",
-   "Mənim stansiyamdan ayda bir milyondan çox insan keçir.",
-   "Hər kəs öz işinə tələsir - bu da yaxşıdır.",
-   "Dayandığınız üçün sağ olun.",
-   "Bizdə deyirlər: dost dar gündə tanınar.",
-   "Qəhrəman olmaq üçün qılınc lazım deyil.",
-   "Yanınızda kimsə çətinlik çəkirsə, əl uzadın.",
-   "Elə bu gün. Elə burada."
-  ],
-  "ru": [
-   "Алло?",
-   "Да, это я, Кёроглу.",
-   "Не удивляйтесь - в Баку станции иногда звонят.",
-   "Меня придумал не один человек.",
-   "Веками ашуги рассказывали обо мне - от деда к внуку.",
-   "Мой конь Гырат, мой саз и горная крепость Ченлибель - так начинается моё сказание.",
-   "Я защищал обиженных и не брал себе лишнего.",
-   "В 1937 году Узеир Гаджибейли написал обо мне оперу \"Кёроглу\".",
-   "А эта станция носит моё имя с 30 декабря 2011 года.",
-   "Над входом стоит стеклянная пирамида высотой двадцать метров - на выходе поднимите голову.",
-   "Колонны на платформе - наполовину мрамор, наполовину сталь.",
-   "Как и я: наполовину песня, наполовину сталь.",
-   "Через мою станцию за месяц проходит больше миллиона человек.",
-   "Каждый спешит по своим делам - и это хорошо.",
-   "Спасибо, что остановились.",
-   "У нас говорят: друг познаётся в беде.",
-   "Чтобы быть героем, меч не нужен.",
-   "Если рядом кому-то тяжело - протяните руку.",
-   "Сегодня. Прямо здесь."
-  ]
- },
- "nizami": {
-  "az": [
-   "Alo?",
-   "Salam. Nizami Gəncəvi danışır.",
-   "Mən səkkiz yüz ildən çox əvvəl Gəncədə yaşamışam.",
-   "Bütün ömrüm sözdür.",
-   "Beş poema yazmışam, onları birlikdə \"Xəmsə\" - \"Beşlik\" adlandırırlar.",
-   "\"Sirlər xəzinəsi\", \"Xosrov və Şirin\", \"Leyli və Məcnun\", \"Yeddi gözəl\" və \"İskəndərnamə\".",
-   "Ətrafınızdakı divarlara baxın.",
-   "Bu stansiya 1976-cı il dekabrın 31-də açılıb.",
-   "Rəssam Mikayıl Abdullayev burada mənim portretimi və \"Xəmsə\"nin süjetləri əsasında on səkkiz mozaika panno yaradıb.",
-   "Onlarda aşiqləri, hökmdarları və müdrikləri tapın - onlar mənim qəhrəmanlarımdır.",
-   "Mozaika kiçik daş parçalarından yığılıb.",
-   "Pannolar dağılmağa başlayanda ustalar onları parça-parça bərpa etdilər.",
-   "Söz də belədir: biri kiçikdir, birlikdə isə bütöv bir poemanı saxlayırlar.",
-   "Dayandığınız üçün sağ olun.",
-   "Bizdə deyirlər: söz var, kəsər savaşı, söz var, kəsdirər başı.",
-   "Mən səkkiz yüz ildir yalnız sözlə yaşayıram.",
-   "Sözlərinizi diqqətlə seçin.",
-   "Bu gün kiməsə bir xoş söz deyin - o, düşündüyünüzdən çox yaşayacaq."
-  ],
-  "ru": [
-   "Алло?",
-   "Здравствуйте. Говорит Низами Гянджеви.",
-   "Я жил в Гяндже больше восьмисот лет назад.",
-   "Вся моя жизнь - это слова.",
-   "Я написал пять поэм, их вместе называют \"Хамсе\" - \"Пятерица\".",
-   "\"Сокровищница тайн\", \"Хосров и Ширин\", \"Лейли и Меджнун\", \"Семь красавиц\" и \"Искендер-наме\".",
-   "Посмотрите на стены вокруг.",
-   "Эту станцию открыли 31 декабря 1976 года.",
-   "Художник Микаил Абдуллаев выложил здесь мой портрет и восемнадцать мозаичных панно по сюжетам \"Хамсе\".",
-   "Найдите на них влюблённых, правителей и мудрецов - это мои герои.",
-   "Мозаика собрана из маленьких кусочков камня.",
-   "Когда панно начали разрушаться, мастера восстанавливали их кусочек за кусочком.",
-   "Так и со словами: каждое маленькое, а вместе они держат целую поэму.",
-   "Спасибо, что остановились.",
-   "У нас говорят: есть слово, что останавливает войну, и есть слово, что стоит головы.",
-   "Я восемьсот лет живу только словами.",
-   "Выбирайте свои бережно.",
-   "Скажите сегодня кому-нибудь одно доброе слово - оно проживёт дольше, чем вы думаете."
-  ]
- },
- "icherisheher": {
-  "az": [
-   "Alo?",
-   "Salam. Bu, \"İçərişəhər\" stansiyasıdır.",
-   "Mən Bakı metrosunun ilk stansiyalarından biriyəm - məni 1967-ci il noyabrın 6-da açıblar.",
-   "O vaxt başqa adım vardı.",
-   "2007-ci ildə mənə apardığım Qədim şəhərin adını verdilər.",
-   "Divarlara baxın: burada qədim Bakının on altı təsviri var, onları Fransada hazırlayıblar.",
-   "Zalın dərinliyində isə üzərində \"İçərişəhər\" sözü olan qala divarı parçası var.",
-   "İstiqlaliyyət küçəsinə çıxanda geri dönün: girişim şüşə və metaldan piramidadır.",
-   "Lap yaxında əsrlik qala divarları durur, burada, yerin altında isə qatarlar gedir.",
-   "Köhnə ilə təzə burada mübahisə etmir - bir-birini saxlayır.",
-   "Dayandığınız üçün sağ olun.",
-   "Bizdə deyirlər: atalar sözü ağlın gözüdür.",
-   "Böyüklərimiz bu şəhəri elə görüblər ki, biz onu artıq heç vaxt belə görməyəcəyik.",
-   "Bu gün ailənizin böyüyünə zəng edin və soruşun: uşaqlığında Bakı necə idi?",
-   "Cavabı yazın - bir gün bunu sizdən soruşacaqlar."
-  ],
-  "ru": [
-   "Алло?",
-   "Здравствуйте. Это станция \"Ичеришехер\".",
-   "Я одна из самых первых станций бакинского метро - меня открыли 6 ноября 1967 года.",
-   "Тогда у меня было другое имя.",
-   "В 2007 году меня назвали в честь Старого города, к которому я веду.",
-   "Посмотрите на стены: здесь шестнадцать картин древнего Баку, их сделали во Франции.",
-   "А в глубине зала - фрагмент крепостной стены со словом \"İçərişəhər\".",
-   "Выйдете на улицу Истиглалият - обернитесь: мой вход - пирамида из стекла и металла.",
-   "Совсем рядом стоят стены, которым много веков, а здесь, под землёй, идут поезда.",
-   "Старое и новое здесь не спорят - они держат друг друга.",
-   "Спасибо, что остановились.",
-   "У нас говорят: мудрость предков - глаза разума.",
-   "Старшие видели этот город таким, каким мы его уже не увидим.",
-   "Позвоните сегодня старшему в вашей семье и спросите, каким был Баку в его детстве.",
-   "Запишите ответ - однажды об этом будут спрашивать вас."
-  ]
- }
-}
-
-S = {
+# Pilot stations. "story" unlocks after the stamp; "q" is answerable only on the spot (answer = index in "opts").
+P = {
  "koroglu": {
   "name": {"az": "Koroğlu", "ru": "Кёроглу"},
-  "role": {"az": "dastan qəhrəmanı · Qırmızı xətt", "ru": "герой дастана · Красная линия"},
+  "role": {"az": "dastan qəhrəmanı", "ru": "герой дастана"},
+  "icon": "pyramid", "key": "qrt7",
+  "story": {
+   "az": "Mən Koroğluyam - aşıqların əsrlər boyu nəsildən-nəslə danışdığı dastanın qəhrəmanı. Qıratım, sazım və Çənlibel qalam var. 1937-ci ildə Üzeyir Hacıbəyli mənim haqqımda opera yazdı, 2011-ci il dekabrın 30-dan isə bu stansiya mənim adımı daşıyır. Buradan ayda bir milyondan çox insan keçir. Bizdə deyirlər: dost dar gündə tanınar. Yanınızda kimsə çətinlik çəkirsə, əl uzadın.",
+   "ru": "Я Кёроглу - герой дастана, который веками рассказывали ашуги, от деда к внуку. У меня есть конь Гырат, саз и крепость Ченлибель. В 1937 году Узеир Гаджибейли написал обо мне оперу, а с 30 декабря 2011 года эта станция носит моё имя. Через неё за месяц проходит больше миллиона человек. У нас говорят: друг познаётся в беде. Если рядом кому-то тяжело - протяните руку."
+  },
+  "q": {
+   "az": "Stansiyanın girişindəki zal hansı formadadır?", "ru": "Какой формы зал над входом в станцию?",
+   "opts": {"az": ["Günbəz", "Piramida", "Qüllə"], "ru": ["Купол", "Пирамида", "Башня"]}, "a": 1
+  },
   "look": {
    "az": ["Girişdəki 20 metrlik şüşə piramida", "Yarı mərmər, yarı polad sütunlar", "Mərmər platforma"],
    "ru": ["Стеклянная пирамида над входом - 20 метров", "Колонны: наполовину мрамор, наполовину сталь", "Мраморная платформа"]
@@ -146,7 +29,16 @@ S = {
  },
  "nizami": {
   "name": {"az": "Nizami", "ru": "Низами"},
-  "role": {"az": "şair · XII əsr · Yaşıl xətt", "ru": "поэт · XII век · Зелёная линия"},
+  "role": {"az": "şair · XII əsr", "ru": "поэт · XII век"},
+  "icon": "star", "key": "xms5",
+  "story": {
+   "az": "Mən Nizami Gəncəviyəm, XII əsrdə Gəncədə yaşamış şair. \"Xəmsə\"m beş poemadır və onların süjetləri bu divarlarda canlanıb: stansiya 1976-cı il dekabrın 31-də açılıb, rəssam Mikayıl Abdullayev burada mənim portretimi və on səkkiz mozaika panno yaradıb. Pannolar dağılanda ustalar onları parça-parça bərpa ediblər. Bizdə deyirlər: söz var, kəsər savaşı, söz var, kəsdirər başı. Bu gün kiməsə bir xoş söz deyin.",
+   "ru": "Я Низами Гянджеви, поэт из Гянджи, жил в XII веке. Моя \"Хамсе\" - это пять поэм, и их сюжеты ожили на этих стенах: станцию открыли 31 декабря 1976 года, а художник Микаил Абдуллаев выложил здесь мой портрет и восемнадцать мозаичных панно. Когда панно начали разрушаться, мастера восстанавливали их кусочек за кусочком. У нас говорят: есть слово, что останавливает войну, и есть слово, что стоит головы. Скажите сегодня кому-нибудь доброе слово."
+  },
+  "q": {
+   "az": "Divarlardakı şəkillər nədən düzəldilib?", "ru": "Из чего сделаны картины на стенах?",
+   "opts": {"az": ["Yağlı boya", "Fotoşəkil", "Mozaika"], "ru": ["Масляная краска", "Фотографии", "Мозаика"]}, "a": 2
+  },
   "look": {
    "az": ["Şairin böyük mozaika portreti", "\"Xəmsə\" üzrə 18 panno - Leyli və Məcnunu tapın", "Pannoları müqayisə edin: bərpa olunanları ayırd edə bilərsinizmi?"],
    "ru": ["Большой мозаичный портрет поэта", "18 панно по \"Хамсе\" - найдите Лейли и Меджнуна", "Сравните панно: узнаете ли вы отреставрированные?"]
@@ -154,7 +46,16 @@ S = {
  },
  "icherisheher": {
   "name": {"az": "İçərişəhər", "ru": "Ичеришехер"},
-  "role": {"az": "stansiya · 1967 · Qırmızı xətt", "ru": "станция · 1967 · Красная линия"},
+  "role": {"az": "stansiya · 1967", "ru": "станция · 1967"},
+  "icon": "wall", "key": "qla3",
+  "story": {
+   "az": "Mən \"İçərişəhər\" stansiyasıyam, Bakı metrosunun ilklərindən biri - məni 1967-ci il noyabrın 6-da açıblar. 2007-ci ildə mənə apardığım Qədim şəhərin adını verdilər. Divarlarımda Fransada hazırlanmış qədim Bakının on altı təsviri, zalın dərinliyində isə \"İçərişəhər\" yazılı qala divarı parçası var. Bizdə deyirlər: atalar sözü ağlın gözüdür. Bu gün ailənizin böyüyündən soruşun: uşaqlığında Bakı necə idi?",
+   "ru": "Я станция \"Ичеришехер\", одна из первых в бакинском метро - меня открыли 6 ноября 1967 года. В 2007 году мне дали имя Старого города, к которому я веду. На моих стенах шестнадцать картин древнего Баку, сделанных во Франции, а в глубине зала - кусок крепостной стены с надписью \"İçərişəhər\". У нас говорят: мудрость предков - глаза разума. Спросите сегодня старшего в семье, каким был Баку в его детстве."
+  },
+  "q": {
+   "az": "Zalın dərinliyində nə var?", "ru": "Что находится в глубине зала?",
+   "opts": {"az": ["Köhnə vaqon", "Qala divarı parçası", "Fəvvarə"], "ru": ["Старый вагон", "Кусок крепостной стены", "Фонтан"]}, "a": 1
+  },
   "look": {
    "az": ["Divarlarda qədim Bakının 16 təsviri", "\"İçərişəhər\" yazılı qala divarı parçası", "İstiqlaliyyət küçəsində piramida-giriş"],
    "ru": ["16 картин древнего Баку на стенах", "Фрагмент крепостной стены с надписью \"İçərişəhər\"", "Вход-пирамида на улице Истиглалият"]
@@ -162,7 +63,7 @@ S = {
  }
 }
 
-# 27 stations, route order; "branch" marks the Bakmil spur
+# 27 stations in route order; "branch" marks the Bakmil spur
 LINES = [
  {"id": "red", "color": "#d4553f", "name": {"az": "Qırmızı xətt", "ru": "Красная линия"}, "stations": [
   ["icherisheher", "İçərişəhər"], ["sahil", "Sahil"], ["28may", "28 May"], ["genclik", "Gənclik"],
@@ -180,18 +81,22 @@ LINES = [
 stations = []
 for ln in LINES:
     for st in ln["stations"]:
-        sid, nm = st[0], st[1]
-        d = {"id": sid, "cid": "metro-" + sid, "line": ln["id"], "label": nm, "ready": sid in L}
+        sid, label = st[0], st[1]
+        d = {"id": sid, "line": ln["id"], "color": ln["color"], "label": label, "ready": sid in P}
         if len(st) > 2: d["branch"] = True
-        if sid in L:
-            d.update(S[sid]); d["cues"] = {k: cues(v) for k, v in L[sid].items()}
-            d["voice"] = False; d["photo"] = ""; d["kind"] = "metro"
+        if sid in P: d.update(P[sid])
         stations.append(d)
+assert len(stations) == 27
+
 lines = [{"id": l["id"], "color": l["color"], "name": l["name"], "stations": [s[0] for s in l["stations"]]} for l in LINES]
-assert len(stations) == 27, len(stations)
-with open(OUT, "w", encoding="utf-8") as f:
-    f.write("/* Danışan stansiyalar - metro section data. Generated; texts live in build script. */\n")
+with open(os.path.join(ROOT, "assets/metro.js"), "w", encoding="utf-8") as f:
+    f.write("/* Metro pasportu - generated by tools/build_metro.py; edit texts there. */\n")
     f.write("window.DH_METRO = " + json.dumps({"lines": lines, "stations": stations}, ensure_ascii=False, indent=1) + ";\n")
-for sid in L:
-    for k in ("az", "ru"):
-        c = cues(L[sid][k]); print(sid, k, "~%ds" % (c[-1]["t"] + 3), sum(len(x.split()) for x in L[sid][k]), "words")
+
+for sid, p in P.items():
+    url = "%s/metro/%s/?k=%s" % (SITE, sid, p["key"])
+    qr = qrcode.QRCode(error_correction=qrcode.constants.ERROR_CORRECT_M, box_size=20, border=4)
+    qr.add_data(url); qr.make(fit=True)
+    qr.make_image(fill_color="black", back_color="white").save(os.path.join(ROOT, "qr/metro-%s.png" % sid))
+    qrcode.make(url, image_factory=qrcode.image.svg.SvgPathImage).save(os.path.join(ROOT, "qr/metro-%s.svg" % sid))
+    print(sid, url)

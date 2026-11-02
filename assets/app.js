@@ -21,14 +21,7 @@
       heroTitle: "Bakının heykəlləri danışır",
       heroLead: "Abidənin yanındakı kodu skan edin - və o sizə zəng edəcək. Hər biri özü haqqında danışacaq və xatirə olaraq bir fikir qoyub gedəcək.",
       how: ["Heykəlin yanında kodu tapın", "Kamera ilə skan edin", "Zəngi qəbul edin", "Dayanın və diqqətlə baxın"],
-      howTitle: "Necə işləyir", audioErr: "Səs yüklənmədi. İnterneti yoxlayın və yenidən cəhd edin.",
-      mDeck: "Danışan stansiyalar", mCollected: function (n, t) { return "Dinlənən stansiyalar: <b>" + n + "</b> / " + t; },
-      mTitle: "Metro stansiyaları danışır", mLead: "Qatarı gözləyərkən stansiyaya zəng edin. Bir dəqiqədə o sizə öz hekayəsini danışacaq və ətrafa baxmağı öyrədəcək.",
-      mPilot: "Pilot: hələlik 3 stansiya danışır. Qalanları tezliklə.", mCall: "zəng et →", mSoon: "tezliklə", mBranch: "qol",
-      mCardTitle: "Yeni: danışan stansiyalar", mCardTxt: "Metroda gözləyərkən stansiyaya zəng edin.", mOpen: "Metro xəritəsini aç",
-      mHint: "Digər stansiyalar da danışmağa hazırlaşır. Növbəti dəfə metroda xəritəni açın.", mHome: "Metro xəritəsi",
-      look: "Ətrafa baxın", mFoot: "Danışan stansiyalar · Danışan heykəllər layihəsinin bölməsi. Bakı Metropoliteninin rəsmi layihəsi deyil.",
-      back: "Heykəllərə qayıt"
+      howTitle: "Necə işləyir", audioErr: "Səs yüklənmədi. İnterneti yoxlayın və yenidən cəhd edin."
     },
     ru: {
       calling: "звонит...", accept: "Принять", decline: "Отклонить", hang: "Завершить",
@@ -45,14 +38,7 @@
       heroTitle: "Памятники Баку разговаривают",
       heroLead: "Отсканируйте код у памятника - и он вам позвонит. Каждый расскажет о себе и оставит одну мысль на память.",
       how: ["Найдите код у памятника", "Отсканируйте его камерой", "Примите звонок", "Задержитесь и присмотритесь"],
-      howTitle: "Как это работает", audioErr: "Звук не загрузился. Проверьте интернет и попробуйте ещё раз.",
-      mDeck: "Говорящие станции", mCollected: function (n, t) { return "Прослушано станций: <b>" + n + "</b> из " + t; },
-      mTitle: "Станции метро разговаривают", mLead: "Пока ждёте поезд, позвоните станции. За минуту она расскажет о себе и подскажет, на что посмотреть вокруг.",
-      mPilot: "Пилот: пока говорят 3 станции. Остальные скоро.", mCall: "позвонить →", mSoon: "скоро", mBranch: "ветка",
-      mCardTitle: "Новое: говорящие станции", mCardTxt: "Позвоните станции метро, пока ждёте поезд.", mOpen: "Открыть схему метро",
-      mHint: "Другие станции тоже готовятся заговорить. Откройте схему в следующий раз в метро.", mHome: "Схема метро",
-      look: "Посмотрите вокруг", mFoot: "Danışan stansiyalar · раздел проекта Danışan heykəllər. Не официальный проект Бакинского метрополитена.",
-      back: "Вернуться к памятникам"
+      howTitle: "Как это работает", audioErr: "Звук не загрузился. Проверьте интернет и попробуйте ещё раз."
     }
   };
 
@@ -116,54 +102,6 @@
     return got.filter(function (id) { return DH.monuments.some(function (m) { return m.id === id; }); }).length;
   }
 
-  /* ---------- metro scheme ---------- */
-  var MT = window.DH_METRO || { lines: [], stations: [] };
-  function stById(id) { return MT.stations.filter(function (x) { return x.id === id; })[0]; }
-  function metroCount() {
-    var got = collected();
-    return MT.stations.filter(function (st) { return got.indexOf(st.cid) >= 0; }).length;
-  }
-  function renderMetro(el) {
-    var got = collected(), t = T[lang];
-    el.innerHTML = ""; el.className = "metro";
-    MT.lines.forEach(function (ln) {
-      var sec = document.createElement("div"); sec.className = "mline"; sec.style.setProperty("--lc", ln.color);
-      var h = document.createElement("p"); h.className = "mline-h"; h.textContent = ln.name[lang]; sec.appendChild(h);
-      var ul = document.createElement("ol"); ul.className = "mstops";
-      ln.stations.forEach(function (id) {
-        var st = stById(id); if (!st) return;
-        var has = got.indexOf(st.cid) >= 0;
-        var li = document.createElement("li");
-        li.className = "mstop " + (has ? "got" : st.ready ? "live" : "soon") + (st.branch ? " branch" : "");
-        var a = document.createElement(st.ready ? "a" : "span");
-        if (st.ready) a.href = ROOT + "metro/" + st.id + "/";
-        var nm = document.createElement("span"); nm.className = "mnm"; nm.textContent = st.ready ? st.name[lang] : st.label;
-        var tag = document.createElement("span"); tag.className = "mtag";
-        tag.textContent = has ? "✓" : st.ready ? t.mCall : (st.branch ? t.mBranch + " · " : "") + t.mSoon;
-        a.appendChild(nm); a.appendChild(tag); li.appendChild(a); ul.appendChild(li);
-      });
-      sec.appendChild(ul); el.appendChild(sec);
-    });
-    return metroCount();
-  }
-
-  /* ---------- metro home ---------- */
-  function metroHome() {
-    function paint() {
-      var t = T[lang];
-      document.title = t.mDeck + " · Danışan heykəllər";
-      $("heroTitle").textContent = t.mTitle;
-      $("heroLead").textContent = t.mLead;
-      $("pilot").textContent = t.mPilot;
-      $("deckEyebrow").textContent = t.mDeck;
-      $("count").innerHTML = t.mCollected(renderMetro($("deck")), MT.stations.length);
-      $("back").textContent = t.back;
-      $("foot").textContent = t.mFoot;
-      $("ai").textContent = t.ai;
-    }
-    bindLangs(paint); paint();
-  }
-
   /* ---------- home ---------- */
   function home() {
     function paint() {
@@ -177,11 +115,13 @@
       $("count").innerHTML = t.collected(renderDeck($("deck")), DH.monuments.length);
       $("foot").textContent = t.foot;
       $("ai").textContent = t.ai;
-      if ($("mCard")) {
-        $("mCardTitle").textContent = t.mCardTitle;
-        $("mCardTxt").textContent = t.mCardTxt;
-        $("mCardCount").innerHTML = t.mCollected(metroCount(), MT.stations.length);
-        $("mOpen").textContent = t.mOpen;
+      if ($("mCard") && window.DH_METRO) {
+        var st = {}; try { st = JSON.parse(sget("dh-stamps") || "{}") || {}; } catch (e) {}
+        var n = window.DH_METRO.stations.filter(function (s) { return st[s.id]; }).length, tot = window.DH_METRO.stations.length;
+        $("mCardTitle").textContent = lang === "az" ? "Yeni: Metro pasportu" : "Новое: паспорт метро";
+        $("mCardTxt").textContent = lang === "az" ? "27 stansiya - 27 möhür. Hər möhür stansiyanın hekayəsini açır." : "27 станций - 27 печатей. Каждая печать открывает историю станции.";
+        $("mCardCount").innerHTML = (lang === "az" ? "Möhürlər: <b>" + n + "</b> / " : "Печатей: <b>" + n + "</b> из ") + tot;
+        $("mOpen").textContent = lang === "az" ? "Pasportu aç" : "Открыть паспорт";
       }
     }
     bindLangs(paint); paint();
@@ -192,7 +132,6 @@
     var audio = new Audio(); audio.preload = "auto";
     var state = "ring", clock = null, spans = [], maxSeen = 0, story = null, t0 = 0;
     var voiced = m.voice !== false;
-    var isMetro = m.kind === "metro", key = m.cid || m.id;
     function nowT() { return voiced ? audio.currentTime : (Date.now() - t0) / 1000; }
 
     if (m.photo) {
@@ -213,7 +152,7 @@
 
     function paint() {
       var t = T[lang];
-      document.title = m.name[lang] + (isMetro ? " · Danışan stansiyalar" : " · Danışan heykəllər");
+      document.title = m.name[lang] + " · Danışan heykəllər";
       $("statusTxt").textContent = t.calling;
       $("name").textContent = m.name[lang];
       $("talkName").textContent = m.name[lang];
@@ -230,19 +169,14 @@
       $("again").textContent = t.again;
       $("share").textContent = t.share;
       $("storyLbl").textContent = t.story;
-      $("homeLink").textContent = isMetro ? t.mHome : t.home;
+      $("homeLink").textContent = t.home;
       $("readRing").textContent = t.readRing;
       $("readDecl").textContent = t.read;
       $("readDone").textContent = t.read;
-      $("homeDecl").textContent = isMetro ? t.mHome : t.home;
+      $("homeDecl").textContent = t.home;
       $("rdClose").textContent = t.close;
-      $("hint").textContent = isMetro ? t.mHint : t.hint;
-      $("foot").textContent = isMetro ? t.mFoot : t.foot;
-      if (isMetro && m.look && $("look")) {
-        $("lookTitle").textContent = t.look;
-        var ul = $("lookList"); ul.innerHTML = "";
-        m.look[lang].forEach(function (s) { var li = document.createElement("li"); li.textContent = s; ul.appendChild(li); });
-      }
+      $("hint").textContent = t.hint;
+      $("foot").textContent = t.foot;
       $("sheetTxt").textContent = t.sheet;
       $("sheetClose").textContent = t.close;
       var cr = $("credit"), ctext = (m.credit && typeof m.credit === "object") ? (m.credit[lang] || "") : (m.credit || "");
@@ -299,18 +233,13 @@
     function finish() {
       clearInterval(clock);
       try { audio.pause(); } catch (e) {}
-      if (maxSeen >= 0.6) { collect(key); track("completed"); }
+      if (maxSeen >= 0.6) { collect(m.id); track("completed"); }
       setState("done"); paintDone(); window.scrollTo(0, 0);
     }
     function paintDone() {
       var t = T[lang];
-      if (isMetro) {
-        $("count").innerHTML = t.mCollected(renderMetro($("deck")), MT.stations.length);
-        $("deckEyebrow").textContent = t.mDeck;
-      } else {
-        $("count").innerHTML = t.collected(renderDeck($("deck")), DH.monuments.length);
-        $("deckEyebrow").textContent = t.deck;
-      }
+      $("count").innerHTML = t.collected(renderDeck($("deck")), DH.monuments.length);
+      $("deckEyebrow").textContent = t.deck;
     }
 
     /* story card: 1080x1920 PNG drawn on canvas */
@@ -354,7 +283,7 @@
         x.fillStyle = g; x.fillRect(0, 0, W, H);
         // tag
         x.font = "700 30px 'Golos Text', sans-serif";
-        var tag = isMetro ? "DANIŞAN STANSİYALAR · BAKI" : "DANIŞAN HEYKƏLLƏR · BAKI", tw = x.measureText(tag).width;
+        var tag = "DANIŞAN HEYKƏLLƏR · BAKI", tw = x.measureText(tag).width;
         x.fillStyle = "#d39a5c"; x.fillRect(80, 110, tw + 48, 64);
         x.fillStyle = "#1a120a"; x.textBaseline = "middle"; x.fillText(tag, 104, 143);
         // headline
@@ -369,8 +298,7 @@
         // footer
         x.font = "500 34px 'Golos Text', sans-serif"; x.fillStyle = "#c4bbad";
         x.fillText(location.host || "danisan-heykeller.github.io", 80, H - 110);
-        var n = (isMetro ? metroCount() : collected().filter(function (id) { return DH.monuments.some(function (mm) { return mm.id === id; }); }).length) + "",
-          tot = " / " + (isMetro ? MT.stations.length : DH.monuments.length);
+        var n = collected().length + "", tot = " / " + DH.monuments.length;
         x.font = "600 60px 'Golos Text', sans-serif"; var nw = x.measureText(n).width;
         x.font = "500 40px 'Golos Text', sans-serif"; var tw2 = x.measureText(tot).width;
         x.fillStyle = "#f3ede2"; x.font = "600 60px 'Golos Text', sans-serif"; x.fillText(n, W - 80 - tw2 - nw, H - 110);
@@ -381,7 +309,7 @@
     function shareStory() {
       makeStory().then(function (c) {
         c.toBlob(function (blob) {
-          var file = blob ? new File([blob], "danisan-heykeller-" + key + ".png", { type: "image/png" }) : null;
+          var file = blob ? new File([blob], "danisan-heykeller-" + m.id + ".png", { type: "image/png" }) : null;
           if (file && navigator.canShare && navigator.canShare({ files: [file] })) {
             navigator.share({ files: [file] }).then(function () { track("story"); }, function () {});
           } else {
@@ -420,12 +348,9 @@
     setState("ring"); paint();
   }
 
-  var KIND = document.body.getAttribute("data-kind");
   if (PAGE === "home") home();
-  else if (PAGE === "metro") metroHome();
   else {
-    var pool = KIND === "metro" ? MT.stations : DH.monuments;
-    var m = pool.filter(function (x) { return x.id === PAGE && x.ready; })[0];
+    var m = DH.monuments.filter(function (x) { return x.id === PAGE && x.ready; })[0];
     if (m) call(m); else location.replace(ROOT);
   }
 })();

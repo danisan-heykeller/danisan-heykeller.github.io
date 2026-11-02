@@ -5,31 +5,32 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#12141c">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=El+Messiri:wght@500;600&family=Noto+Serif+Display:ital,wght@0,500;1,400&family=Golos+Text:wght@400;500;600&display=swap">
-<title>Danışan stansiyalar · Danışan heykəllər</title>
-<meta name="description" content="Bakı metrosunun stansiyaları danışır. Qatarı gözləyərkən stansiyaya zəng edin.">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=El+Messiri:wght@500;600&family=Noto+Serif+Display:ital,wght@0,500;1,400&family=Golos+Text:wght@400;500;600;700&display=swap">
+<title>Metro pasportu · Danışan heykəllər</title>
+<meta name="description" content="Bakı metrosunun 27 stansiyası - 27 möhür. Metro pasportunu toplayın.">
 <link rel="stylesheet" href="../assets/style.css">
 </head>
-<body data-page="metro" data-root="../" class="home metro-home">
+<body data-page="passport" data-root="../" class="home metro-home">
 <div class="bg placeholder metro-bg"></div><div class="veil"></div>
 <div class="wrap">
-  <div class="top"><a class="brand" href="../">Danışan heykəllər · Bakı</a><div class="langs" role="group" aria-label="Dil / Язык"><button type="button" id="lang-az">AZ</button><button type="button" id="lang-ru">RU</button></div></div>
-  <section class="hero">
-    <h1 id="heroTitle"></h1>
-  </section>
+  <div class="top"><a class="brand" id="brand" href="../metro/"></a><div class="langs" role="group" aria-label="Dil / Язык"><button type="button" id="lang-az">AZ</button><button type="button" id="lang-ru">RU</button></div></div>
+  <section class="hero"><h1 id="heroTitle"></h1></section>
   <p class="lead" id="heroLead"></p>
   <p class="pilot" id="pilot"></p>
-  <div class="card">
-    <p class="eyebrow" id="deckEyebrow"></p>
+  <div class="passport">
     <p class="count" id="count"></p>
-    <div class="metro" id="deck"></div>
+    <div id="pages"></div>
   </div>
+  <button class="btn primary" type="button" id="share" hidden><span id="shareLbl"></span></button>
   <a class="btn" id="back" href="../"></a>
   <p class="note" id="foot"></p>
-  <p class="note" id="ai"></p>
 </div>
-<script src="../assets/data.js"></script>
+<div class="sheet" id="sheet" hidden>
+  <img id="sheetImg" alt="">
+  <p id="sheetTxt"></p>
+  <button class="btn primary" id="sheetClose" type="button"></button>
+</div>
 <script src="../assets/metro.js"></script>
-<script src="../assets/app.js"></script>
+<script src="../assets/passport.js"></script>
 </body>
 </html>
