@@ -150,3 +150,39 @@ details.transcript p{margin:0 0 8px;font-size:15px}
 .reader-top b{font-family:var(--name);font-size:24px;font-weight:600}
 .reader-top .btn{flex:0 0 auto}
 #rdBody p{margin:0 0 14px;font-size:18px;line-height:1.7;color:var(--ink)}
+
+/* ---------- metro: Danışan stansiyalar ---------- */
+.bg.metro-bg{filter:none;background-image:
+  radial-gradient(60% 30% at 50% 26%, rgba(211,154,92,.28) 0%, transparent 70%),
+  repeating-linear-gradient(90deg, rgba(255,255,255,.035) 0 1px, transparent 1px 56px),
+  linear-gradient(180deg,#2a2420 0%, #17140f 60%, #0e0c09 100%)}
+.pilot{margin:0;font-size:13px;color:var(--bronze)}
+.metro{display:flex;flex-direction:column;gap:18px}
+.mline{--lc:var(--bronze)}
+.mline-h{margin:0 0 8px;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--lc);font-weight:600}
+.mstops{list-style:none;margin:0;padding:0 0 0 6px;position:relative}
+.mstops::before{content:"";position:absolute;left:11px;top:12px;bottom:12px;width:4px;border-radius:2px;background:var(--lc)}
+.mstop a,.mstop > span{position:relative;display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:40px;padding:6px 6px 6px 30px;border-radius:10px;color:var(--ink);text-decoration:none}
+.mstop a::before,.mstop > span::before{content:"";position:absolute;left:0;top:50%;width:14px;height:14px;margin-top:-7px;border-radius:50%;background:var(--night);border:3px solid var(--lc);box-sizing:border-box}
+.mstop.branch a,.mstop.branch > span{padding-left:46px}
+.mstop.branch a::before,.mstop.branch > span::before{left:16px}
+.mnm{font-size:15px;line-height:1.2}
+.mtag{font-size:12px;color:var(--ink-dim);white-space:nowrap}
+.mstop.soon .mnm{color:var(--ink-dim)}
+.mstop.live a{background:rgba(211,154,92,.1)}
+.mstop.live .mnm{font-family:var(--name);font-size:18px;color:var(--ink)}
+.mstop.live .mtag{color:var(--bronze);font-weight:600}
+.mstop.live a::before{width:18px;height:18px;margin-top:-9px;left:-2px;border-color:var(--bronze);background:var(--lc)}
+.mstop.got a{background:linear-gradient(90deg, rgba(211,154,92,.2), rgba(211,154,92,.04))}
+.mstop.got .mnm{font-family:var(--name);font-size:18px;color:var(--bronze)}
+.mstop.got .mtag{color:var(--bronze)}
+.mstop.got a::before{background:var(--bronze);border-color:var(--bronze)}
+.looklist{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:8px;font-size:15px}
+.looklist li::marker{color:var(--bronze)}
+a.mcard{display:flex;flex-direction:column;gap:6px;text-decoration:none;color:var(--ink);border-color:rgba(211,154,92,.45);
+  background:linear-gradient(160deg, rgba(211,154,92,.16), rgba(27,30,41,.92) 60%)}
+.mcard-txt{margin:0 0 4px}
+.mcard .count{margin:4px 0 10px;font-size:22px}
+.mcard .btn{flex:0 0 auto}
+.metro-home .lead{margin-top:-4px}
+.wrap > .btn{flex:0 0 auto}
