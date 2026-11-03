@@ -117,8 +117,9 @@ h1.name{font-family:var(--font-display);font-weight:600;font-size:clamp(40px, 11
 .prog{height:2px;background:var(--line);overflow:hidden;margin:var(--space-1) var(--space-2) 0}
 .prog i{display:block;height:100%;width:0;background:var(--oath);transition:width .2s linear}
 .subs{margin-top:auto;background:var(--paper-raised);border:1px solid var(--line);border-radius:var(--radius-0);padding:var(--space-4) var(--space-4);font-size:19px;line-height:1.6;max-height:44vh;overflow-y:auto}
-.subs span{color:var(--star-off);transition:color .25s}
-.subs span.past{color:var(--ink-soft)}
+.subs span{color:var(--ink-soft);opacity:.8;transition:color .25s,opacity .25s}
+.subs span.past{color:var(--ink-soft);opacity:1}
+.subs span.now{opacity:1}
 .subs span.now{color:var(--ink)}
 .wave{display:flex;gap:4px;align-items:center;justify-content:center;height:30px}
 .wave i{width:3px;background:var(--oath);height:6px;animation:wv 1s ease-in-out infinite}
@@ -277,9 +278,9 @@ body.paused .round .i-play{display:grid}
 .hc-foot{margin-top:auto;display:flex;justify-content:space-between;gap:var(--space-2);font-size:14px;color:var(--ink-soft);padding-top:var(--space-2)}
 .hc-call{color:var(--sky-text);font-weight:500;white-space:nowrap}
 .home .wrap{min-height:0;padding-top:var(--space-8)}
-.hero-card.closed{border-style:dashed;background:transparent;color:var(--ink-soft)}
+.hero-card.closed{background:transparent;color:var(--ink-soft);grid-template-columns:64px minmax(0,1fr)}
 .hero-card.closed .ph{background:var(--paper-sunk) url("brand/veter-svetlyj.svg") repeat;background-size:120px;filter:none;opacity:.7}
-.hero-card.closed .hc-name{letter-spacing:.2em;color:var(--ink-soft)}
+.hero-card.closed .hc-name{font-size:20px;color:var(--ink-soft)}
 .hero-card.closed .hc-role{font-style:italic}
 @media (min-width:700px){ .stage-panel{padding:var(--space-8)} }
 @media (min-width:860px){
@@ -291,4 +292,31 @@ body.paused .round .i-play{display:grid}
   .page{animation:none}
 }
 body.s-call .subs{max-height:34vh}
-.hero-card.closed{min-height:110px}
+.hero-card.closed{min-height:0}
+.hero-card.closed .ph{min-height:84px}
+
+/* ---------- call header: one line ---------- */
+.call .top{flex-wrap:nowrap}
+.call .brand{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.whatbtn{width:34px;height:34px;padding:0;font-size:17px;font-weight:600;display:grid;place-items:center;flex:none}
+.top-r{flex:none}
+body.s-call .subs{max-height:24vh}
+.side-qr{display:none}
+
+/* ---------- desktop: the call is a phone-wide column on the Khazri wind ---------- */
+@media (min-width:760px){
+  body.call{background:var(--paper) url("brand/veter-nochnoj.svg") repeat;background-size:160px}
+  body.call::before{content:"";position:fixed;top:0;bottom:0;left:50%;width:520px;transform:translateX(-50%);background:var(--paper);border-left:1px solid var(--line);border-right:1px solid var(--line);z-index:0}
+  body.call .wrap{padding-left:var(--space-6);padding-right:var(--space-6)}
+  body.call .bg{left:50%;right:auto;width:520px;transform:translateX(-50%);background-size:cover}
+  body.s-read .bg,body.s-done .bg{opacity:0}
+  body.call .top,body.call .ring-view,body.call .talk-view,body.call .declined-view{box-shadow:none;clip-path:none}
+  body.call .top{background:var(--paper);margin-inline:calc(-1 * var(--space-6));padding-inline:var(--space-6);margin-top:calc(-1 * var(--space-4));padding-top:var(--space-4)}
+  body.call .ring-view,body.call .talk-view,body.call .declined-view{margin-inline:calc(-1 * var(--space-6));padding-inline:var(--space-6)}
+}
+@media (min-width:1100px){
+  .side-qr{display:flex;flex-direction:column;gap:var(--space-3);position:fixed;z-index:3;top:50%;transform:translateY(-50%);left:calc(50% + 260px + var(--space-12));width:180px;background:var(--paper);border:1px solid var(--line);padding:var(--space-4)}
+  .side-qr img{width:100%;height:auto;background:#f3ebdd;padding:8px}
+  .side-qr p{margin:0;font-size:15px;line-height:1.45;color:var(--ink-soft)}
+  body.s-done .side-qr,body.s-read .side-qr{display:none}
+}

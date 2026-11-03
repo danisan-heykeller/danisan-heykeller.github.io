@@ -9,35 +9,35 @@
 
   var T = {
     az: {
-      calling: "zəng edir...", accept: "Qəbul et", decline: "Rədd et", hang: "Bitir", pause: "Fasilə", resume: "Davam",
-      dur: function (m) { return "~" + m + " dəq"; }, sound: "diqqət, səs uca olacaq", soon: "səs tezliklə, hələlik mətn",
+      calling: "zəng edir...", accept: "Qəbul et", decline: "İmtina et", hang: "Bitir", pause: "Fasilə", resume: "Davam",
+      dur: function (m) { return "~" + m + " dəq"; }, sound: "qulaqlıqla daha yaxşıdır", soon: "səs tezliklə, hələlik mətn",
       what: "Bu nədir?", whatTitle: "Danışan heykəllər",
       whatText: "Bakının heykəlləri yoldan keçənlərə zəng edir. Qəbul edin - qəhrəman bir dəqiqə özü haqqında danışacaq və xatirə olaraq bir fikir qoyub gedəcək.",
       aboutLink: "Layihə haqqında", close: "Bağla",
       declined: "Eybi yoxdur.", declinedSub: "Geri zəng edə və ya onun nə demək istədiyini oxuya bilərsiniz.",
       callBack: "Geri zəng et", read: "Oxumaq",
       showText: "Mətni göstər", hideText: "Mətni gizlət",
-      back: "Geri", next: "Davam", finish: "Sona",
+      back: "Geri", next: "Davam", finish: "Bitir",
       thanks: "Dinlədiyiniz üçün sağ olun.", thanksRead: "Oxuduğunuz üçün sağ olun.",
       story: "Storis üçün şəkil", again: "Yenidən dinlə", share: "Linki göndər", copied: "Link kopyalandı",
       copyFail: "Linki ünvan sətrindən kopyala", others: "Digər qəhrəmanlar", home: "Layihə haqqında",
       storyLine: "Mənə zəng etdi", sheet: "Şəkli saxlamaq üçün barmağınızı üzərində saxlayın.",
       ai: "Səslər süni intellektlə yaradılıb. Mətnlər yoxlanılmış mənbələrə əsaslanır.",
       audioErr: "Səs yüklənmədi. İnterneti yoxlayın və yenidən cəhd edin.",
-      stageEyebrow: "Bakı · ictimai layihə", toHeroes: "Qəhrəmanlara keç", soonHero: "Tezliklə yeni qəhrəman",
+      stageEyebrow: "Bakı · ictimai layihə", toHeroes: "Qəhrəmanlara keç", soonHero: "Növbəti səs - tezliklə", soonAsk: "Kimi çağıraq? Qəhrəman təklif edin.", qrTxt: "Telefonda açın - zəng belə daha yaxşı səslənir.",
       heroTitle: "Bakının heykəlləri danışır",
       heroLead: "Abidənin yanındakı kodu skan edin - və o sizə zəng edəcək.",
       incStatus: "indi zəng edir", incNext: "Növbəti",
       heroesTitle: "Qəhrəmanlar", callHim: "Zəng et",
       howTitle: "Necə işləyir", how: ["Heykəlin yanında kodu tapın", "Kamera ilə skan edin", "Zəngi qəbul edin", "Dayanın və diqqətlə baxın"],
       aboutTitle: "Layihə haqqında",
-      aboutText: "İstəyirik ki, insanlar heykəllərin yanından laqeyd keçməsin. Hər zəng - qəhrəmanla tanışlıq, həyatından bir əməl və özünüzlə aparmağa dəyən bir dəyərdir: böyüklərə hörmət, yaxınlara səbir, elmə sevgi.",
+      aboutText: "İstəyirik ki, heykəllərin yanında dayansınlar. Hər zəng - qəhrəmanla tanışlıq və özünüzlə aparmağa dəyən bir dəyərdir.",
       endorse: "Gökand layihəsi", author: "Müəllif - Renat Raxmatulin",
       foot: "Danışan heykəllər · postamentlərdən bizə baxan insanlar haqqında qeyri-kommersiya layihə"
     },
     ru: {
       calling: "звонит...", accept: "Принять", decline: "Отклонить", hang: "Завершить", pause: "Пауза", resume: "Дальше",
-      dur: function (m) { return "~" + m + " мин"; }, sound: "осторожно, громкий звук", soon: "озвучка скоро, пока текст",
+      dur: function (m) { return "~" + m + " мин"; }, sound: "лучше в наушниках", soon: "озвучка скоро, пока текст",
       what: "Что это?", whatTitle: "Danışan heykəllər",
       whatText: "Памятники Баку звонят прохожим. Примите звонок - герой минуту расскажет о себе и оставит одну мысль на память.",
       aboutLink: "О проекте", close: "Закрыть",
@@ -51,14 +51,14 @@
       storyLine: "Мне позвонил", sheet: "Нажмите и удерживайте картинку, чтобы сохранить её.",
       ai: "Голоса созданы с помощью ИИ. Тексты основаны на проверенных источниках.",
       audioErr: "Звук не загрузился. Проверьте интернет и попробуйте ещё раз.",
-      stageEyebrow: "Баку · общественный проект", toHeroes: "К героям", soonHero: "Скоро новый герой",
+      stageEyebrow: "Баку · общественный проект", toHeroes: "К героям", soonHero: "Следующий голос - скоро", soonAsk: "Кого позвать? Предложите героя.", qrTxt: "Откройте на телефоне - так звонок звучит как надо.",
       heroTitle: "Памятники Баку разговаривают",
       heroLead: "Отсканируйте код у памятника - и он вам позвонит.",
       incStatus: "сейчас звонит", incNext: "Следующий",
       heroesTitle: "Герои", callHim: "Позвонить",
       howTitle: "Как это работает", how: ["Найдите код у памятника", "Отсканируйте его камерой", "Примите звонок", "Задержитесь и присмотритесь"],
       aboutTitle: "О проекте",
-      aboutText: "Мы хотим, чтобы люди перестали проходить мимо памятников. Каждый звонок - это знакомство с героем, один поступок из его жизни и одна ценность, которую стоит унести с собой: уважение к старшим, терпение к близким, любовь к знанию.",
+      aboutText: "Мы хотим, чтобы у памятников останавливались. Каждый звонок - знакомство с героем и одна ценность, которую стоит унести с собой.",
       endorse: "Проект Gökand", author: "Автор - Ренат Рахматулин",
       foot: "Danışan heykəllər · некоммерческий проект о людях, которые смотрят на нас с постаментов"
     }
@@ -122,8 +122,8 @@
         var c = el("div", "hero-card closed");
         c.appendChild(el("span", "ph"));
         var cb = el("span", "hc-body");
-        cb.appendChild(el("span", "hc-name", "? ? ?"));
-        cb.appendChild(el("span", "hc-role", t.soonHero));
+        cb.appendChild(el("span", "hc-name", t.soonHero));
+        cb.appendChild(el("span", "hc-role", t.soonAsk));
         c.appendChild(cb); box.appendChild(c);
       }
     }
@@ -168,7 +168,7 @@
       $("sound").textContent = voiced ? t.sound : t.soon;
       $("acceptLbl").textContent = t.accept; $("declineLbl").textContent = t.decline; $("hangLbl").textContent = t.hang;
       $("pauseLbl").textContent = paused ? t.resume : t.pause;
-      $("whatBtn").textContent = t.what; $("whatTitle").textContent = t.whatTitle; $("whatText").textContent = t.whatText;
+      $("whatBtn").textContent = "?"; $("whatBtn").setAttribute("aria-label", t.what); $("whatBtn").title = t.what; $("whatTitle").textContent = t.whatTitle; $("whatText").textContent = t.whatText;
       $("whatHome").textContent = t.aboutLink; $("whatClose").textContent = t.close;
       $("declinedTxt").textContent = t.declined; $("declinedSub").textContent = t.declinedSub;
       $("callBack").textContent = t.callBack; $("readBtn").textContent = t.read;
@@ -179,6 +179,7 @@
       $("thanks").textContent = finishedBy === "read" ? t.thanksRead : t.thanks;
       $("storyLbl").textContent = t.story; $("again").textContent = t.again; $("share").textContent = t.share;
       $("othersLbl").textContent = t.others; $("homeLink").textContent = t.home; $("ai").textContent = t.ai;
+      if ($("qrTxt")) $("qrTxt").textContent = t.qrTxt;
       $("sheetTxt").textContent = t.sheet; $("sheetClose").textContent = t.close;
       $("credit").textContent = (m.credit && typeof m.credit === "object") ? (m.credit[lang] || "") : (m.credit || "");
       var oth = $("others"); oth.innerHTML = "";

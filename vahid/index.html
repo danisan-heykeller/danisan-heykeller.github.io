@@ -13,7 +13,7 @@
 <body data-page="vahid" data-root="../" class="call s-ring">
 <div class="bg placeholder" id="bg"></div><div class="veil"></div>
 <div class="wrap">
-  <div class="top"><a class="brand" href="../">Danışan heykəllər · Bakı</a><div class="top-r"><button class="whatbtn" id="whatBtn" type="button"></button><div class="langs" role="group" aria-label="Dil / Язык"><button type="button" id="lang-az">AZ</button><button type="button" id="lang-ru">RU</button></div></div></div>
+  <div class="top"><a class="brand" href="../">Danışan heykəllər</a><div class="top-r"><button class="whatbtn" id="whatBtn" type="button" aria-label="?">?</button><div class="langs" role="group" aria-label="Dil / Язык"><button type="button" id="lang-az">AZ</button><button type="button" id="lang-ru">RU</button></div></div></div>
 
   <section class="ring-view" id="ringView">
     <div class="status" aria-live="polite"><span class="dot"></span><span id="statusTxt"></span></div>
@@ -68,6 +68,8 @@
     <p class="note" id="ai"></p>
   </section>
 </div>
+
+<aside class="side-qr" aria-hidden="true"><img src="../qr/vahid.svg" alt="" width="132" height="132"><p id="qrTxt"></p></aside>
 
 <div class="sheet small" id="what" hidden role="dialog" aria-modal="true" aria-labelledby="whatTitle">
   <div class="what-in"><b id="whatTitle"></b><p id="whatText"></p><div class="row"><a class="btn" id="whatHome" href="../"></a><button class="btn primary" id="whatClose" type="button"></button></div></div>
