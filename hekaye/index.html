@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="az">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#12141c">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=El+Messiri:wght@500;600&family=Noto+Serif+Display:ital,wght@0,500;1,400&family=Golos+Text:wght@400;500;600;700&display=swap">
+<title>Hekayə avtomatı · Danışan heykəllər</title>
+<meta name="description" content="Bakı metrosunda yolunuz qədər uzun bir hekayə. Haradan hara gedirsiniz?">
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body class="home metro-home hekaye-page">
+<div class="bg placeholder metro-bg"></div><div class="veil"></div>
+<div class="wrap">
+  <div class="top"><a class="brand" id="brand" href="../hekaye/"></a><div class="langs" role="group" aria-label="Dil / Язык"><button type="button" id="lang-az">AZ</button><button type="button" id="lang-ru">RU</button></div></div>
+  <section class="hero"><h1 id="heroTitle"></h1></section>
+  <p class="lead" id="heroLead"></p>
+  <div class="card trip">
+    <label class="fld"><span id="fromLbl"></span><select id="from"></select></label>
+    <button class="swap" type="button" id="swap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M7 4v16M7 20l-3-3M7 20l3-3M17 20V4M17 4l-3 3M17 4l3 3"/></svg></button>
+    <label class="fld"><span id="toLbl"></span><select id="to"></select></label>
+    <p class="ride" id="ride" aria-live="polite"></p>
+    <button class="btn primary" type="button" id="go" disabled></button>
+    <p class="mode-hint" id="offline"></p>
+  </div>
+  <article class="card story-card" id="story" hidden>
+    <p class="eyebrow" id="planInfo"></p>
+    <h2 class="s-title" id="sTitle"></h2>
+    <p class="s-meta" id="sMeta"></p>
+    <p class="s-test" id="sTest" hidden></p>
+    <div class="s-body" id="sBody"></div>
+    <p class="s-end" id="endNote"></p>
+    <div class="row">
+      <button class="btn" type="button" id="save"></button>
+      <button class="btn" type="button" id="quote"></button>
+    </div>
+    <button class="btn primary" type="button" id="next"></button>
+  </article>
+  <div class="card">
+    <p class="eyebrow" id="savedTitle"></p>
+    <ul class="saved" id="savedList"></ul>
+  </div>
+  <a class="btn" id="back" href="../metro/"></a>
+  <p class="note" id="foot"></p>
+</div>
+<div class="sheet" id="sheet" hidden>
+  <img id="sheetImg" alt="">
+  <p id="sheetTxt"></p>
+  <button class="btn primary" id="sheetClose" type="button"></button>
+</div>
+<script src="../assets/metro.js"></script>
+<script src="../assets/hekaye.js"></script>
+<script src="../assets/avtomat.js"></script>
+</body>
+</html>
