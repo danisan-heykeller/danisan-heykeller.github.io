@@ -21,6 +21,7 @@
       quote: "Sitat kartı", savedTitle: "Saxladıqlarım", none: "Hələ heç nə saxlamamısınız.",
       offline: "İnternet olmasa da oxumaq olar: hekayələr artıq telefonunuzdadır.",
       test: "Sınaq mətni - pilotda əsl hekayələrlə əvəz olunacaq.",
+      orig: "", src: "",
       done: "Hekayələr bitdi. Yaxşı yol!",
       sheet: "Şəkli saxlamaq üçün barmağınızı üzərində saxlayın.", close: "Bağla",
       back: "Metro pasportu",
@@ -41,6 +42,7 @@
       quote: "Карточка с цитатой", savedTitle: "Сохранённое", none: "Пока ничего не сохранено.",
       offline: "Можно читать без интернета: рассказы уже у вас в телефоне.",
       test: "Тестовый текст - в пилоте его заменят настоящие рассказы.",
+      orig: "Оригинал на азербайджанском. Русский перевод готовится.", src: "",
       done: "Рассказы на эту поездку закончились. Хорошей дороги!",
       sheet: "Нажмите и удерживайте картинку, чтобы сохранить её.", close: "Закрыть",
       back: "Паспорт метро",
@@ -72,20 +74,27 @@
     return { min: dist[b], transfers: x };
   }
 
+  function mn(t) { return t.min[lang] || t.min.az; }
+
   /* ---------- story plan: fill the ride with stories that fit ---------- */
   var plan = [], idx = 0, seen = [];
   function makePlan(m) {
-    var pool = HK.texts.filter(function (t) { return t.text[lang]; });
+    var pool = HK.texts.slice();
     pool = pool.slice().sort(function () { return Math.random() - 0.5; });
     pool.sort(function (x, y) { return (seen.indexOf(x.id) >= 0) - (seen.indexOf(y.id) >= 0); });
     var out = [], left = m;
-    // longest story that fits first, then fill the rest
-    var fits = pool.filter(function (t) { return t.min[lang] <= left; }).sort(function (x, y) { return y.min[lang] - x.min[lang]; });
-    while (fits.length && left > 0) {
-      var t = fits.shift(); out.push(t); left -= t.min[lang];
-      fits = fits.filter(function (f) { return f.min[lang] <= left; });
+    // pick a story that fills most of the remaining time (unread first, otherwise random), then fill the rest
+    while (left > 0) {
+      var fits = pool.filter(function (t) { return mn(t) <= left && out.indexOf(t) < 0; });
+      if (!fits.length) break;
+      var big = fits.filter(function (t) { return mn(t) >= left * 0.6; });
+      var cand = big.length ? big : fits.sort(function (x, y) { return mn(y) - mn(x); }).slice(0, 1);
+      var fresh = cand.filter(function (t) { return seen.indexOf(t.id) < 0; });
+      var c = fresh.length ? fresh : cand;
+      var t = c[Math.floor(Math.random() * c.length)];
+      out.push(t); left -= mn(t);
     }
-    if (!out.length) out.push(pool.sort(function (x, y) { return x.min[lang] - y.min[lang]; })[0]);
+    if (!out.length) out.push(pool.sort(function (x, y) { return mn(x) - mn(y); })[0]);
     return out;
   }
 
@@ -123,13 +132,15 @@
     var t = T[lang], s = plan[idx], box = $("story");
     if (!s) { box.hidden = true; return; }
     box.hidden = false;
-    var total = plan.reduce(function (n, x) { return n + x.min[lang]; }, 0);
+    var total = plan.reduce(function (n, x) { return n + mn(x); }, 0);
     $("planInfo").textContent = t.plan(plan.length, total) + (plan.length > 1 ? " · " + (idx + 1) + "/" + plan.length : "");
     $("sTitle").textContent = s.title[lang];
-    $("sMeta").textContent = s.author[lang] + " · " + t.min(s.min[lang]);
-    $("sTest").hidden = !s.test; $("sTest").textContent = t.test;
-    var body = $("sBody"); body.innerHTML = "";
-    s.text[lang].forEach(function (p) { var el = document.createElement("p"); el.textContent = p; body.appendChild(el); });
+    $("sMeta").textContent = s.author[lang] + " · " + t.min(mn(s));
+    var L = s.text[lang] ? lang : "az";
+    $("sTest").hidden = !s.test && L === lang; $("sTest").textContent = s.test ? t.test : t.orig;
+    $("sSrc").textContent = s.source ? t.src + s.source : "";
+    var body = $("sBody"); body.innerHTML = ""; body.lang = L;
+    s.text[L].forEach(function (p) { var el = document.createElement("p"); el.textContent = p; body.appendChild(el); });
     var isSaved = saved().indexOf(s.id) >= 0;
     $("save").textContent = isSaved ? t.saved : t.save; $("save").setAttribute("aria-pressed", isSaved ? "true" : "false");
     $("next").textContent = idx < plan.length - 1 ? t.next : t.another;
@@ -170,7 +181,7 @@
   }
   function quoteCard() {
     var s = plan[idx]; if (!s) return;
-    var paras = s.text[lang], q = paras.filter(function (p) { return p.length > 60 && p.length < 260; }).pop() || paras[0];
+    var paras = s.text[lang] || s.text.az, q = paras.filter(function (p) { return p.length > 60 && p.length < 260; }).pop() || paras[0];
     var W = 1080, H = 1920, c = document.createElement("canvas"); c.width = W; c.height = H;
     var x = c.getContext("2d");
     var ready = (document.fonts && document.fonts.load) ? Promise.all([document.fonts.load("500 60px 'Noto Serif Display'"), document.fonts.load("600 40px 'Golos Text'")]).catch(function () {}) : Promise.resolve();

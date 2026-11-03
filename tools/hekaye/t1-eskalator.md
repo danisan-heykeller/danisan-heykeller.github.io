@@ -1,6 +1,7 @@
 ---
 id: t1-eskalator
 test: true
+off: true
 author_az: Sınaq mətni
 author_ru: Тестовый текст
 title_az: Eskalator

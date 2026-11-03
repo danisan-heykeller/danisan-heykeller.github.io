@@ -1,6 +1,6 @@
 # Builds assets/hekaye.js for Hekayə avtomatı: texts from tools/hekaye/*.md + metro graph for ride time.
 #   python3 tools/build_hekaye.py
-# Text file format: front matter (id, author_az/ru, title_az/ru, test, source) then [az] ... [ru] ... blocks.
+# Text file format: front matter (id, author_az/ru, title_az/ru, test, off, source) then [az] ... [ru] ... blocks.
 import json, os, re, glob
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -14,7 +14,8 @@ def parse(path):
         k, v = line.split(":", 1); meta[k.strip()] = v.strip()
     parts = re.split(r"^\[(az|ru)\]\s*$", body.strip(), flags=re.M)
     txt = {parts[i]: parts[i + 1].strip() for i in range(1, len(parts), 2)}
-    out = {"id": meta["id"], "test": meta.get("test") == "true", "source": meta.get("source", ""),
+    meta.setdefault("off", "false")
+    out = {"id": meta["id"], "test": meta.get("test") == "true", "off": meta.get("off") == "true", "source": meta.get("source", ""),
            "author": {"az": meta["author_az"], "ru": meta["author_ru"]},
            "title": {"az": meta["title_az"], "ru": meta["title_ru"]}, "text": {}, "min": {}}
     for k, v in txt.items():
@@ -24,7 +25,7 @@ def parse(path):
         out["min"][k] = max(1, round(words / WPM))
     return out
 
-texts = [parse(p) for p in sorted(glob.glob(os.path.join(ROOT, "tools/hekaye/*.md")))]
+texts = [t for t in (parse(p) for p in sorted(glob.glob(os.path.join(ROOT, "tools/hekaye/*.md")))) if not t["off"]]
 
 # Metro graph: travel between neighbours ~2 min, transfer ~4 min (estimates, shown to users as approximate)
 HOP, XFER = 2, 4

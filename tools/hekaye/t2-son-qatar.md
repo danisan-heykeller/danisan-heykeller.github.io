@@ -1,6 +1,7 @@
 ---
 id: t2-son-qatar
 test: true
+off: true
 author_az: Sınaq mətni
 author_ru: Тестовый текст
 title_az: Son qatar
