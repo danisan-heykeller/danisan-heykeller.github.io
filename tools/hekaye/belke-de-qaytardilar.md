@@ -4,6 +4,7 @@ author_az: Cəlil Məmmədquluzadə
 author_ru: Джалил Мамедкулизаде
 title_az: Bəlkə də qaytardılar
 title_ru: Может, и вернули
+off: true
 source: Cəlil Məmmədquluzadə. Əsərləri. I cild. Bakı, Öndər, 2004
 ---
 [az]

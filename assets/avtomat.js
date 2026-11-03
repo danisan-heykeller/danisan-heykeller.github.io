@@ -21,7 +21,7 @@
       quote: "Sitat kartı", savedTitle: "Saxladıqlarım", none: "Hələ heç nə saxlamamısınız.",
       offline: "İnternet olmasa da oxumaq olar: hekayələr artıq telefonunuzdadır.",
       test: "Sınaq mətni - pilotda əsl hekayələrlə əvəz olunacaq.",
-      orig: "", src: "",
+      orig: "", src: "", tr: "",
       done: "Hekayələr bitdi. Yaxşı yol!",
       sheet: "Şəkli saxlamaq üçün barmağınızı üzərində saxlayın.", close: "Bağla",
       back: "Metro pasportu",
@@ -43,6 +43,7 @@
       offline: "Можно читать без интернета: рассказы уже у вас в телефоне.",
       test: "Тестовый текст - в пилоте его заменят настоящие рассказы.",
       orig: "Оригинал на азербайджанском. Русский перевод готовится.", src: "",
+      tr: "Перевод с азербайджанского: Claude (ИИ).",
       done: "Рассказы на эту поездку закончились. Хорошей дороги!",
       sheet: "Нажмите и удерживайте картинку, чтобы сохранить её.", close: "Закрыть",
       back: "Паспорт метро",
@@ -138,7 +139,7 @@
     $("sMeta").textContent = s.author[lang] + " · " + t.min(mn(s));
     var L = s.text[lang] ? lang : "az";
     $("sTest").hidden = !s.test && L === lang; $("sTest").textContent = s.test ? t.test : t.orig;
-    $("sSrc").textContent = s.source ? t.src + s.source : "";
+    $("sSrc").textContent = [s.source ? t.src + s.source : "", (L === "ru" && !s.test) ? t.tr : ""].filter(Boolean).join(" · ");
     var body = $("sBody"); body.innerHTML = ""; body.lang = L;
     s.text[L].forEach(function (p) { var el = document.createElement("p"); el.textContent = p; body.appendChild(el); });
     var isSaved = saved().indexOf(s.id) >= 0;
