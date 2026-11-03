@@ -21,7 +21,7 @@
       heroTitle: "Bakının heykəlləri danışır",
       heroLead: "Abidənin yanındakı kodu skan edin - və o sizə zəng edəcək. Hər biri özü haqqında danışacaq və xatirə olaraq bir fikir qoyub gedəcək.",
       how: ["Heykəlin yanında kodu tapın", "Kamera ilə skan edin", "Zəngi qəbul edin", "Dayanın və diqqətlə baxın"],
-      howTitle: "Necə işləyir", audioErr: "Səs yüklənmədi. İnterneti yoxlayın və yenidən cəhd edin."
+      howTitle: "Necə işləyir", aboutTitle: "Layihə haqqında", aboutText: "İstəyirik ki, insanlar heykəllərin yanından laqeyd keçməsin. Hər zəng - qəhrəmanla tanışlıq, həyatından bir əməl və özünüzlə aparmağa dəyən bir dəyərdir: böyüklərə hörmət, yaxınlara səbir, elmə sevgi.", endorse: "Gökand layihəsi", author: "Müəllif - Renat Raxmatulin", audioErr: "Səs yüklənmədi. İnterneti yoxlayın və yenidən cəhd edin."
     },
     ru: {
       calling: "звонит...", accept: "Принять", decline: "Отклонить", hang: "Завершить",
@@ -38,7 +38,7 @@
       heroTitle: "Памятники Баку разговаривают",
       heroLead: "Отсканируйте код у памятника - и он вам позвонит. Каждый расскажет о себе и оставит одну мысль на память.",
       how: ["Найдите код у памятника", "Отсканируйте его камерой", "Примите звонок", "Задержитесь и присмотритесь"],
-      howTitle: "Как это работает", audioErr: "Звук не загрузился. Проверьте интернет и попробуйте ещё раз."
+      howTitle: "Как это работает", aboutTitle: "О проекте", aboutText: "Мы хотим, чтобы люди перестали проходить мимо памятников. Каждый звонок - это знакомство с героем, один поступок из его жизни и одна ценность, которую стоит унести с собой: уважение к старшим, терпение к близким, любовь к знанию.", endorse: "Проект Gökand", author: "Автор - Ренат Рахматулин", audioErr: "Звук не загрузился. Проверьте интернет и попробуйте ещё раз."
     }
   };
 
@@ -115,6 +115,10 @@
       $("count").innerHTML = t.collected(renderDeck($("deck")), DH.monuments.length);
       $("foot").textContent = t.foot;
       $("ai").textContent = t.ai;
+      $("aboutTitle").textContent = t.aboutTitle;
+      $("aboutText").textContent = t.aboutText;
+      $("endorse").textContent = t.endorse;
+      $("author").textContent = t.author;
     }
     bindLangs(paint); paint();
   }

@@ -177,3 +177,24 @@ h1.name{font-family:var(--font-display);font-weight:600;font-size:clamp(40px, 11
 .top{position:relative;z-index:2;background:var(--paper);box-shadow:0 0 0 100vmax var(--paper);clip-path:inset(-100vmax -100vmax 0 -100vmax);padding-bottom:var(--space-2);border-bottom:1px solid var(--line)}
 .home .top{border-bottom:0}
 .toast:empty{display:none}
+
+/* home: fuller layout, Gökand endorsement */
+.home .wrap{max-width:var(--page);gap:var(--space-8)}
+.hero{display:grid;grid-template-columns:1fr;gap:var(--space-6);align-items:end}
+.hero-text{display:flex;flex-direction:column;gap:var(--space-4);min-width:0}
+.strip{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--space-2)}
+.strip span{display:block;aspect-ratio:9/14;max-width:100%;background-color:var(--paper-sunk);background-size:cover;background-position:center 22%;filter:grayscale(1) contrast(1.05);border:1px solid var(--line)}
+.cols{display:grid;grid-template-columns:1fr;gap:var(--space-4)}
+.about{margin:0;font-size:18px;line-height:1.6;max-width:var(--measure)}
+.foot{display:flex;flex-direction:column;align-items:center;gap:var(--space-3);border-top:1px solid var(--line);padding-top:var(--space-8);margin-top:var(--space-6)}
+.endorse{display:flex;align-items:center;gap:var(--space-3)}
+.endorse img{width:44px;height:auto}
+.endorse > span{display:flex;flex-direction:column;line-height:1.3}
+.endorse b{font-family:var(--font-display);font-size:20px;font-weight:600;letter-spacing:.04em}
+.endorse span span{font-size:14px;color:var(--ink-soft);font-style:italic}
+@media (min-width:860px){
+  .hero{grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:var(--space-12)}
+  .hero h1{margin-top:var(--space-12)}
+  .cols{grid-template-columns:1fr 1fr}
+  .home .deck{grid-template-columns:repeat(3,1fr)}
+}

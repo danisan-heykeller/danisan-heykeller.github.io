@@ -15,20 +15,36 @@
 <div class="wrap">
   <div class="top"><a class="brand" href="./">Danışan heykəllər · Bakı</a><div class="langs" role="group" aria-label="Dil / Язык"><button type="button" id="lang-az">AZ</button><button type="button" id="lang-ru">RU</button></div></div>
   <section class="hero">
-    <h1 id="heroTitle"></h1>
+    <div class="hero-text">
+      <h1 id="heroTitle"></h1>
+      <p class="lead" id="heroLead"></p>
+    </div>
+    <div class="strip" aria-hidden="true">
+      <span style="background-image:url('photo/vahid.jpg')"></span>
+      <span style="background-image:url('photo/sabir.jpg')"></span>
+      <span style="background-image:url('photo/natavan.jpg')"></span>
+    </div>
   </section>
-  <p class="lead" id="heroLead"></p>
-  <div class="card">
-    <p class="eyebrow" id="howTitle"></p>
-    <ol class="steps" id="how"></ol>
+  <div class="cols">
+    <div class="card">
+      <p class="eyebrow" id="howTitle"></p>
+      <ol class="steps" id="how"></ol>
+    </div>
+    <div class="card">
+      <p class="eyebrow" id="aboutTitle"></p>
+      <p class="about" id="aboutText"></p>
+    </div>
   </div>
   <div class="card">
     <p class="eyebrow" id="deckEyebrow"></p>
     <p class="count" id="count"></p>
     <div class="deck" id="deck"></div>
   </div>
-  <p class="note" id="foot"></p>
-  <p class="note" id="ai"></p>
+  <footer class="foot">
+    <div class="endorse"><img src="assets/brand/gokand-mark.svg" alt="" width="44" height="47"><span><b id="endorse"></b><span id="author"></span></span></div>
+    <p class="note" id="foot"></p>
+    <p class="note" id="ai"></p>
+  </footer>
 </div>
 <script src="assets/data.js"></script>
 <script src="assets/app.js"></script>
