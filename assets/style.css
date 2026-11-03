@@ -198,3 +198,5 @@ h1.name{font-family:var(--font-display);font-weight:600;font-size:clamp(40px, 11
   .cols{grid-template-columns:1fr 1fr}
   .home .deck{grid-template-columns:repeat(3,1fr)}
 }
+
+.tile.open .nm{color:var(--ink)}

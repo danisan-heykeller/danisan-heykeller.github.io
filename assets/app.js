@@ -16,7 +16,7 @@
       copyFail: "Linki ünvan sətrindən kopyala", tr: "Monoloqun mətni", home: "Bütün heykəllər",
       story: "Storis üçün şəkil", storyLine: ["Mənə", "zəng etdi"],
       sheet: "Şəkli saxlamaq üçün barmağınızı üzərində saxlayın.", close: "Bağla",
-      hint: "Digər qəhrəmanlar yaxınlıqda gözləyir. Kodlarını tapın - onlar da zəng edəcək.",
+      hint: "Digər qəhrəmanlar yaxınlıqda gözləyir. Kodlarını tapın - onlar da zəng edəcək.", hintOpen: "Qəhrəmanın adına toxunun - o sizə zəng edəcək.",
       foot: "Danışan heykəllər · postamentlərdən bizə baxan insanlar haqqında qeyri-kommersiya layihə",
       heroTitle: "Bakının heykəlləri danışır",
       heroLead: "Abidənin yanındakı kodu skan edin - və o sizə zəng edəcək. Hər biri özü haqqında danışacaq və xatirə olaraq bir fikir qoyub gedəcək.",
@@ -33,7 +33,7 @@
       copyFail: "Скопируйте ссылку из адресной строки", tr: "Текст монолога", home: "Все памятники",
       story: "Картинка для сторис", storyLine: ["Мне позвонил", ""],
       sheet: "Нажмите и удерживайте картинку, чтобы сохранить её.", close: "Закрыть",
-      hint: "Остальные герои ждут неподалёку. Найдите их код - и они тоже позвонят.",
+      hint: "Остальные герои ждут неподалёку. Найдите их код - и они тоже позвонят.", hintOpen: "Нажмите на имя героя - и он вам позвонит.",
       foot: "Danışan heykəllər · некоммерческий проект о людях, которые смотрят на нас с постаментов",
       heroTitle: "Памятники Баку разговаривают",
       heroLead: "Отсканируйте код у памятника - и он вам позвонит. Каждый расскажет о себе и оставит одну мысль на память.",
@@ -89,14 +89,15 @@
     el.innerHTML = "";
     DH.monuments.forEach(function (m) {
       var has = got.indexOf(m.id) >= 0 && m.name;
-      var tile = document.createElement(has || m.map ? "a" : "div");
-      tile.className = "tile " + (has ? "got" : "locked");
-      if (has) tile.href = ROOT + m.id + "/";
+      var open = has || (DH.openAll && m.ready && m.name);
+      var tile = document.createElement(open || m.map ? "a" : "div");
+      tile.className = "tile " + (has ? "got" : (open ? "open" : "locked"));
+      if (open) tile.href = ROOT + m.id + "/";
       else if (m.map) { tile.href = "https://www.google.com/maps/search/?api=1&query=" + m.map; tile.target = "_blank"; tile.rel = "noopener"; }
-      var nm = document.createElement("span"); nm.className = "nm"; nm.textContent = has ? m.name[lang] : t.locked;
+      var nm = document.createElement("span"); nm.className = "nm"; nm.textContent = open ? m.name[lang] : t.locked;
       var ar = document.createElement("span"); ar.className = "ar"; ar.textContent = m.area[lang];
       tile.appendChild(nm); tile.appendChild(ar);
-      if (!has && m.map) { var mh = document.createElement("span"); mh.className = "mh"; mh.textContent = t.mapHint; tile.appendChild(mh); }
+      if (!open && m.map) { var mh = document.createElement("span"); mh.className = "mh"; mh.textContent = t.mapHint; tile.appendChild(mh); }
       el.appendChild(tile);
     });
     return got.filter(function (id) { return DH.monuments.some(function (m) { return m.id === id; }); }).length;
@@ -171,7 +172,7 @@
       $("readDone").textContent = t.read;
       $("homeDecl").textContent = t.home;
       $("rdClose").textContent = t.close;
-      $("hint").textContent = t.hint;
+      $("hint").textContent = DH.openAll ? t.hintOpen : t.hint;
       $("foot").textContent = t.foot;
       $("sheetTxt").textContent = t.sheet;
       $("sheetClose").textContent = t.close;

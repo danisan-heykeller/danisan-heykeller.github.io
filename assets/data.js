@@ -1,4 +1,5 @@
 window.DH = {
+ "openAll": true,
  "analytics": "",
  "monuments": [
   {
