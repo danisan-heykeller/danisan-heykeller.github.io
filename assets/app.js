@@ -137,7 +137,28 @@
     var voiced = m.voice !== false, wakeLock = null, readIdx = 0, finishedBy = "call";
     function nowT() { return voiced ? audio.currentTime : (paused ? pausedAt : (Date.now() - t0) / 1000); }
 
-    if (m.photo) { var bg = $("bg"); bg.classList.remove("placeholder"); bg.style.backgroundImage = "url('" + ROOT + m.photo + "')"; }
+    if (m.photo) { var bg = $("bg"); bg.classList.remove("placeholder"); bg.style.setProperty("--photo", "url('" + ROOT + m.photo + "')"); }
+    /* the whole monument: the photo fills exactly the space between the top bar and the panel */
+    function fitPhoto() {
+      var bgEl = $("bg"), view = { ring: "ringView", declined: "declinedView", call: "talkView" }[state];
+      if (!view) { bgEl.style.top = ""; bgEl.style.height = ""; return; }
+      var top = document.querySelector(".top").getBoundingClientRect().bottom;
+      var subs = $("subs");
+      if (state === "call" && !subs.hidden) {
+        subs.style.maxHeight = "";
+        var room = $(view).getBoundingClientRect().top - top, want = window.innerHeight * (voiced ? 0.36 : 0.28);
+        if (room < want) subs.style.maxHeight = Math.max(120, subs.clientHeight - (want - room)) + "px";
+      }
+      var bottom = $(view).getBoundingClientRect().top;
+      bgEl.style.top = Math.max(0, top) + "px";
+      bgEl.style.height = Math.max(0, bottom - top) + "px";
+      requestAnimationFrame(function () {
+        var v = $(view); if (!v || v.hidden) return;
+        bgEl.style.height = Math.max(0, v.getBoundingClientRect().top - top) + "px";
+      });
+    }
+    window.addEventListener("resize", fitPhoto);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { fitPhoto(); });
 
     function fmt(s) { s = Math.max(0, Math.floor(s || 0)); var r = s % 60; return Math.floor(s / 60) + ":" + (r < 10 ? "0" : "") + r; }
     function lastCue() { var c = m.cues[lang]; return c[c.length - 1].t + 3; }
@@ -151,6 +172,7 @@
       $("readView").hidden = s !== "read";
       $("done").hidden = s !== "done";
       window.scrollTo(0, 0);
+      fitPhoto();
     }
     function paragraphs() {
       var c = m.cues[lang], b = [0].concat(m.paras ? m.paras[lang] : []).concat([c.length]), out = [];
@@ -244,6 +266,7 @@
         dots.appendChild(d);
       });
       card.appendChild(dots); box.appendChild(card);
+      fitPhoto();
     }
     function lockScreen() { try { if (navigator.wakeLock && navigator.wakeLock.request) navigator.wakeLock.request("screen").then(function (l) { wakeLock = l; }, function () {}); } catch (e) {} }
     function unlockScreen() { try { if (wakeLock) wakeLock.release(); } catch (e) {} wakeLock = null; }
@@ -311,9 +334,10 @@
         x.fillStyle = PAPER; x.fillRect(0, 0, W, H);
         var PH = 1000;
         if (img) {
-          var s = Math.max(W / img.width, PH / img.height), w = img.width * s, h = img.height * s;
+          var s = Math.min(W / img.width, PH / img.height), w = img.width * s, h = img.height * s;
+          x.fillStyle = "#08112a"; x.fillRect(0, 0, W, PH);
           x.save(); x.beginPath(); x.rect(0, 0, W, PH); x.clip();
-          x.drawImage(img, (W - w) / 2, (PH - h) * 0.2, w, h);
+          x.drawImage(img, (W - w) / 2, PH - h, w, h);
           x.globalCompositeOperation = "saturation"; x.fillStyle = "#808080"; x.fillRect(0, 0, W, PH);
           x.globalCompositeOperation = "source-over"; x.restore();
         } else { x.fillStyle = "#13284b"; x.fillRect(0, 0, W, PH); }
@@ -359,7 +383,7 @@
     $("pause").addEventListener("click", togglePause);
     $("textToggle").addEventListener("click", function () {
       var s = $("subs"); s.hidden = !s.hidden; document.body.classList.toggle("with-text", !s.hidden);
-      $("textToggle").textContent = s.hidden ? T[lang].showText : T[lang].hideText; paintCards(true); sync(); track("text");
+      $("textToggle").textContent = s.hidden ? T[lang].showText : T[lang].hideText; paintCards(true); sync(); fitPhoto(); track("text");
     });
     $("readBack").addEventListener("click", function () { readIdx--; paintRead(); });
     $("readNext").addEventListener("click", function () { if (readIdx >= paragraphs().length - 1) finish("read"); else { readIdx++; paintRead(); } });
@@ -379,8 +403,9 @@
     bindLangs(function () {
       if (state === "call") { try { audio.pause(); } catch (e) {} start(); }
       paint();
+      fitPhoto();
     });
-    setState("ring"); paint();
+    setState("ring"); paint(); fitPhoto();
   }
 
   if (PAGE === "home") home();
