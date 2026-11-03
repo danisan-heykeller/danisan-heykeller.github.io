@@ -320,3 +320,14 @@ body.s-call .subs{max-height:24vh}
   .side-qr p{margin:0;font-size:15px;line-height:1.45;color:var(--ink-soft)}
   body.s-done .side-qr,body.s-read .side-qr{display:none}
 }
+
+/* ---------- info cards during the call (instead of reading the same text) ---------- */
+.cards{min-height:150px;display:flex}
+.info{flex:1;display:flex;flex-direction:column;gap:var(--space-2);background:var(--paper-raised);border:1px solid var(--line);padding:var(--space-4);animation:fadeIn .5s ease}
+.info .eyebrow{margin:0}
+.info-t{margin:0;font-size:21px;line-height:1.45;text-wrap:pretty}
+.dots{margin-top:auto;display:flex;gap:6px;padding-top:var(--space-2)}
+.dots i{width:18px;height:2px;background:var(--line)}
+.dots i.on{background:var(--oath)}
+.prog{height:4px;margin-inline:0}
+@media (prefers-reduced-motion:reduce){ .info{animation:none} }

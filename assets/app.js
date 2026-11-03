@@ -211,18 +211,34 @@
         var cur = spans[idx], box = $("subs");
         if (cur) { var top = cur.offsetTop - box.offsetTop; if (top > box.scrollTop + box.clientHeight - 48 || top < box.scrollTop) box.scrollTop = Math.max(0, top - 24); }
       }
+      paintCards(false);
       var d = total();
       $("time").textContent = fmt(t) + " / " + fmt(d);
       $("prog").style.width = Math.min(100, (t / d) * 100) + "%";
       maxSeen = Math.max(maxSeen, t / d);
       if (!voiced && !paused && t >= d && state === "call") { maxSeen = 1; finish("call"); }
     }
+    var cardIdx = -1;
+    function paintCards(force) {
+      var box = $("cards"), list = m.cards || [];
+      var show = list.length && voiced && $("subs").hidden;
+      box.hidden = !show; if (!show) return;
+      var i = Math.min(list.length - 1, Math.floor((nowT() / total()) * list.length));
+      if (i === cardIdx && !force) return;
+      cardIdx = i; box.innerHTML = "";
+      var c = list[i], card = el("div", "info");
+      card.appendChild(el("p", "eyebrow", c.label[lang]));
+      card.appendChild(el("p", "info-t", c.text[lang]));
+      var dots = el("div", "dots");
+      list.forEach(function (_, k) { dots.appendChild(el("i", k === i ? "on" : "")); });
+      card.appendChild(dots); box.appendChild(card);
+    }
     function lockScreen() { try { if (navigator.wakeLock && navigator.wakeLock.request) navigator.wakeLock.request("screen").then(function (l) { wakeLock = l; }, function () {}); } catch (e) {} }
     function unlockScreen() { try { if (wakeLock) wakeLock.release(); } catch (e) {} wakeLock = null; }
 
     function start() {
       paused = false;
-      buildSubs(); maxSeen = 0;
+      buildSubs(); maxSeen = 0; cardIdx = -1;
       if (!voiced) $("subs").hidden = false;
       $("textToggle").hidden = !voiced;
       setState("call");
@@ -331,7 +347,7 @@
     $("pause").addEventListener("click", togglePause);
     $("textToggle").addEventListener("click", function () {
       var s = $("subs"); s.hidden = !s.hidden; document.body.classList.toggle("with-text", !s.hidden);
-      $("textToggle").textContent = s.hidden ? T[lang].showText : T[lang].hideText; sync(); track("text");
+      $("textToggle").textContent = s.hidden ? T[lang].showText : T[lang].hideText; paintCards(true); sync(); track("text");
     });
     $("readBack").addEventListener("click", function () { readIdx--; paintRead(); });
     $("readNext").addEventListener("click", function () { if (readIdx >= paragraphs().length - 1) finish("read"); else { readIdx++; paintRead(); } });

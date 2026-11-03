@@ -215,7 +215,49 @@ window.DH = {
      12,
      15
     ]
-   }
+   },
+   "cards": [
+    {
+     "label": {
+      "az": "Kimdir",
+      "ru": "Кто он"
+     },
+     "text": {
+      "az": "Əliağa İsgəndərov, 1895-1965. Şair, qəzəl ustadı.",
+      "ru": "Алиага Искендеров, 1895-1965. Поэт, мастер газели."
+     }
+    },
+    {
+     "label": {
+      "az": "Ad",
+      "ru": "Имя"
+     },
+     "text": {
+      "az": "Vahid - \"yeganə\". Xalq ona Qəzəlxan da deyirdi.",
+      "ru": "Вахид - \"единый\". Народ звал его ещё Газелхан - хан газелей."
+     }
+    },
+    {
+     "label": {
+      "az": "Baxın",
+      "ru": "Посмотрите"
+     },
+     "text": {
+      "az": "Baş torpaqdan ağac kimi boy atır. Bir tərəfdə - toyu və muğam üçlüyü, o biri tərəfdə - dəfni.",
+      "ru": "Голова растёт из земли, как дерево. С одной стороны - его свадьба и трио мугама, с другой - похороны."
+     }
+    },
+    {
+     "label": {
+      "az": "Abidə",
+      "ru": "Памятник"
+     },
+     "text": {
+      "az": "Heykəltəraş Rahib Həsənov, memar Sənan Salamzadə. Tunc, 1990.",
+      "ru": "Скульптор Рахиб Гасанов, архитектор Санан Саламзаде. Бронза, 1990."
+     }
+    }
+   ]
   },
   {
    "id": "sabir",
@@ -464,7 +506,49 @@ window.DH = {
      14,
      19
     ]
-   }
+   },
+   "cards": [
+    {
+     "label": {
+      "az": "Kimdir",
+      "ru": "Кто он"
+     },
+     "text": {
+      "az": "Mirzə Ələkbər Tahirzadə, 1862-1911. Satirik şair.",
+      "ru": "Мирза Алекпер Таирзаде, 1862-1911. Поэт-сатирик."
+     }
+    },
+    {
+     "label": {
+      "az": "Ad",
+      "ru": "Имя"
+     },
+     "text": {
+      "az": "Sabir - \"səbirli\". Hophop - onun başqa imzası, hophop quşu kimi.",
+      "ru": "Сабир - \"терпеливый\". Хопхоп - ещё одна его подпись, как птица удод."
+     }
+    },
+    {
+     "label": {
+      "az": "Baxın",
+      "ru": "Посмотрите"
+     },
+     "text": {
+      "az": "Əllərini dizinin üstündə birləşdirib oturub və bir az aşağı baxır.",
+      "ru": "Он сидит, сложив руки на колене, и смотрит чуть вниз."
+     }
+    },
+    {
+     "label": {
+      "az": "Abidə",
+      "ru": "Памятник"
+     },
+     "text": {
+      "az": "Heykəltəraş Cəlal Qaryağdı, 1958. Əvvəlki heykəl 1922-ci ildə qoyulub.",
+      "ru": "Скульптор Джалал Карьягды, 1958. Прежний памятник поставили в 1922 году."
+     }
+    }
+   ]
   },
   {
    "id": "natavan",
@@ -731,7 +815,49 @@ window.DH = {
      16,
      21
     ]
-   }
+   },
+   "cards": [
+    {
+     "label": {
+      "az": "Kimdir",
+      "ru": "Кто она"
+     },
+     "text": {
+      "az": "Xurşidbanu Natəvan, 1832-1897. Şairə, son Qarabağ xanının qızı.",
+      "ru": "Хуршидбану Натаван, 1832-1897. Поэтесса, дочь последнего карабахского хана."
+     }
+    },
+    {
+     "label": {
+      "az": "Əməl",
+      "ru": "Поступок"
+     },
+     "text": {
+      "az": "1872-ci ildə Şuşaya su kəməri çəkdirdi.",
+      "ru": "В 1872 году провела в Шушу водопровод."
+     }
+    },
+    {
+     "label": {
+      "az": "Baxın",
+      "ru": "Посмотрите"
+     },
+     "text": {
+      "az": "Oturub, bir əli çiyninə qalxıb. Başındakı kəlağayıya diqqətlə baxın.",
+      "ru": "Она сидит, одна рука поднята к плечу. Присмотритесь к кялагаи на голове."
+     }
+    },
+    {
+     "label": {
+      "az": "Abidə",
+      "ru": "Памятник"
+     },
+     "text": {
+      "az": "Heykəltəraş Ömər Eldarov, memarlar E. İsmayılov və F. Leontyev. 1960.",
+      "ru": "Скульптор Омар Эльдаров, архитекторы Э. Исмаилов и Ф. Леонтьев. 1960."
+     }
+    }
+   ]
   }
  ]
 };
