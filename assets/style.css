@@ -208,20 +208,14 @@ h1.name{font-family:var(--font-display);font-weight:600;font-size:clamp(40px, 11
 .sub{margin:0;color:var(--ink-soft);font-size:18px;line-height:1.5}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 
-/* zastavka: photo fills the screen and slowly zooms during the call */
-body.s-call .bg,body.s-declined .bg,body.s-read .bg,body.s-done .bg{height:100vh;height:100dvh;border:0;transform-origin:50% 30%}
-body.s-call .bg{opacity:.55;animation:zoom var(--call-dur,60s) linear forwards}
-body.s-call.paused .bg{animation-play-state:paused}
-body.s-declined .bg{opacity:.3;animation:zoom 40s linear forwards}
-body.s-read .bg{opacity:.16}
-body.s-done .bg{opacity:.12}
-body.s-call .veil,body.s-declined .veil{display:block;position:fixed;inset:0;z-index:0;background:linear-gradient(to bottom, transparent 30%, var(--paper) 92%)}
-@keyframes zoom{from{transform:scale(1)}to{transform:scale(1.18)}}
-body.s-call .top,body.s-declined .top{background:transparent;box-shadow:none;border-bottom:0}
-
+/* call: the standard photo stays as on the ring screen (no zoom) */
+body.s-read .bg{height:100vh;height:100dvh;border:0;opacity:.16}
+body.s-done .bg{height:100vh;height:100dvh;border:0;opacity:.12}
+body.s-call .bg,body.s-declined .bg{height:54vh;height:54dvh;opacity:1}
+.talk-view,.declined-view{margin-top:auto;background:var(--paper);padding-top:var(--space-6);box-shadow:0 0 0 100vmax var(--paper);clip-path:inset(0 -100vmax -100vmax -100vmax);border-top:1px solid var(--line)}
+.talk-view{flex:0 0 auto}
 .declined-view{gap:var(--space-4);padding-bottom:var(--space-6)}
 .talk-view{justify-content:flex-end;padding-bottom:var(--space-4)}
-.talk-view .talk-head{margin-top:auto}
 .talk-view .wave{height:56px;gap:6px}
 .talk-view .wave i{width:4px;background:var(--ink)}
 @keyframes wv2{0%,100%{height:8px}50%{height:52px}}
@@ -259,30 +253,19 @@ body.paused .round .i-play{display:grid}
 .what-in p{margin:0;color:var(--ink);font-size:17px;text-align:left;max-width:none}
 .what-in .btn{flex:1 1 140px;min-width:0}
 
-/* ===================== home v2: a stage that rings ===================== */
-.stage{position:relative;min-height:92vh;min-height:92dvh;background:var(--paper);color:var(--ink);overflow:hidden;display:flex}
-.faces{position:absolute;inset:0}
-.faces span{position:absolute;inset:0;background-size:cover;background-position:center 22%;filter:grayscale(1) contrast(1.05);opacity:0;transform:scale(1.04);transition:opacity 1.6s ease, transform 7s linear}
-.faces span.on{opacity:.6;transform:scale(1.14)}
-.stage-veil{position:absolute;inset:0;background:linear-gradient(to bottom, rgba(11,23,48,.35) 0%, rgba(11,23,48,0) 30%, var(--paper) 88%)}
-.stage-in{position:relative;z-index:1;width:100%;max-width:var(--page);margin:0 auto;display:flex;flex-direction:column;
-  padding-left:max(var(--space-4), env(safe-area-inset-left, 0px));padding-right:max(var(--space-4), env(safe-area-inset-right, 0px));padding-block:var(--space-4) var(--space-6)}
+/* ===================== home v3: project info on the Khazri wind ===================== */
+.stage{position:relative;background:var(--paper) url("brand/veter-nochnoj.svg") repeat;background-size:160px;color:var(--ink);display:flex;flex-direction:column}
+.stage-in{width:100%;max-width:var(--page);margin:0 auto;display:flex;flex-direction:column;gap:var(--space-12);
+  padding-left:max(var(--space-4), env(safe-area-inset-left, 0px));padding-right:max(var(--space-4), env(safe-area-inset-right, 0px));padding-block:var(--space-4) var(--space-12)}
 .stage-top{display:flex;justify-content:space-between;align-items:center;gap:var(--space-3)}
-.stage-main{margin-top:auto;display:flex;flex-direction:column;gap:var(--space-4);max-width:560px}
-.stage-main h1{font-family:var(--font-display);font-weight:600;font-size:clamp(40px,11vw,68px);line-height:.95;margin:0;text-wrap:balance}
-.stage-main .lead{color:var(--ink-soft);font-size:19px}
-.incoming{display:flex;align-items:center;justify-content:space-between;gap:var(--space-3);background:var(--paper-raised);border:1px solid var(--line);padding:var(--space-3) var(--space-4)}
-.inc-text{display:flex;flex-direction:column;min-width:0;gap:2px}
-.inc-name{font-family:var(--font-display);font-size:26px;font-weight:600;line-height:1.1;color:var(--ink);text-decoration:none}
-.inc-role{font-style:italic;font-size:15px;color:var(--oath-text);line-height:1.3}
-.inc-btns{display:flex;gap:var(--space-3);flex:none}
-.round.sm{width:52px;height:52px;text-decoration:none}
-.round.sm svg{width:22px;height:22px}
-.round.accept.sm{animation:ringPulse 1.6s ease-out infinite}
-@keyframes ringPulse{0%{box-shadow:0 0 0 0 rgba(70,179,174,.55)}100%{box-shadow:0 0 0 16px rgba(70,179,174,0)}}
-.stage-wave{justify-content:flex-start;margin-top:var(--space-4);height:36px}
-.stage-wave i{background:var(--oath)}
-
+.stage-main{display:flex;flex-direction:column;gap:var(--space-4);max-width:var(--measure)}
+.stage-main .eyebrow{margin:0}
+.stage-main h1{font-family:var(--font-display);font-weight:600;font-size:clamp(42px,11vw,76px);line-height:.95;margin:0;text-wrap:balance}
+.stage-main .lead{font-size:21px;color:var(--ink)}
+.stage-panel{background:var(--paper);border:1px solid var(--line);padding:var(--space-6) var(--space-4);display:flex;flex-direction:column;gap:var(--space-4);margin-top:var(--space-4)}
+.stage-panel .btn{flex:0 0 auto;align-self:flex-start}
+.kayma{height:68px;background:url("brand/kayma-volna.svg") repeat-x left center;background-size:auto 68px}
+.home .wrap{padding-top:var(--space-12)}
 .block{display:flex;flex-direction:column}
 .heroes{display:grid;grid-template-columns:1fr;gap:var(--space-3)}
 .hero-card{display:grid;grid-template-columns:110px minmax(0,1fr);text-decoration:none;color:var(--ink);background:var(--paper-raised);border:1px solid var(--line)}
@@ -294,13 +277,18 @@ body.paused .round .i-play{display:grid}
 .hc-foot{margin-top:auto;display:flex;justify-content:space-between;gap:var(--space-2);font-size:14px;color:var(--ink-soft);padding-top:var(--space-2)}
 .hc-call{color:var(--sky-text);font-weight:500;white-space:nowrap}
 .home .wrap{min-height:0;padding-top:var(--space-8)}
+.hero-card.closed{border-style:dashed;background:transparent;color:var(--ink-soft)}
+.hero-card.closed .ph{background:var(--paper-sunk) url("brand/veter-svetlyj.svg") repeat;background-size:120px;filter:none;opacity:.7}
+.hero-card.closed .hc-name{letter-spacing:.2em;color:var(--ink-soft)}
+.hero-card.closed .hc-role{font-style:italic}
+@media (min-width:700px){ .stage-panel{padding:var(--space-8)} }
 @media (min-width:860px){
   .heroes{grid-template-columns:repeat(3,1fr)}
   .hero-card{grid-template-columns:1fr}
   .hero-card .ph{aspect-ratio:4/5;height:auto}
 }
 @media (prefers-reduced-motion:reduce){
-  body.s-call .bg,body.s-declined .bg,.round.accept.sm,.page{animation:none}
-  .faces span{transition:opacity .4s}
-  .faces span.on{transform:none}
+  .page{animation:none}
 }
+body.s-call .subs{max-height:34vh}
+.hero-card.closed{min-height:110px}

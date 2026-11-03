@@ -24,6 +24,7 @@
       storyLine: "Mənə zəng etdi", sheet: "Şəkli saxlamaq üçün barmağınızı üzərində saxlayın.",
       ai: "Səslər süni intellektlə yaradılıb. Mətnlər yoxlanılmış mənbələrə əsaslanır.",
       audioErr: "Səs yüklənmədi. İnterneti yoxlayın və yenidən cəhd edin.",
+      stageEyebrow: "Bakı · ictimai layihə", toHeroes: "Qəhrəmanlara keç", soonHero: "Tezliklə yeni qəhrəman",
       heroTitle: "Bakının heykəlləri danışır",
       heroLead: "Abidənin yanındakı kodu skan edin - və o sizə zəng edəcək.",
       incStatus: "indi zəng edir", incNext: "Növbəti",
@@ -50,6 +51,7 @@
       storyLine: "Мне позвонил", sheet: "Нажмите и удерживайте картинку, чтобы сохранить её.",
       ai: "Голоса созданы с помощью ИИ. Тексты основаны на проверенных источниках.",
       audioErr: "Звук не загрузился. Проверьте интернет и попробуйте ещё раз.",
+      stageEyebrow: "Баку · общественный проект", toHeroes: "К героям", soonHero: "Скоро новый герой",
       heroTitle: "Памятники Баку разговаривают",
       heroLead: "Отсканируйте код у памятника - и он вам позвонит.",
       incStatus: "сейчас звонит", incNext: "Следующий",
@@ -97,27 +99,10 @@
 
   /* ---------- home ---------- */
   function home() {
-    var list = heroes(), idx = 0, timer = null, faces = $("faces");
-    list.forEach(function (m, i) {
-      var f = el("span", i === 0 ? "on" : "");
-      f.style.backgroundImage = "url('" + ROOT + m.photo + "')";
-      faces.appendChild(f);
-    });
-    function show(i) {
-      idx = (i + list.length) % list.length;
-      Array.prototype.forEach.call(faces.children, function (f, k) { f.className = k === idx ? "on" : ""; });
-      var m = list[idx], href = ROOT + m.id + "/";
-      $("incName").textContent = m.name[lang]; $("incName").href = href;
-      $("incRole").textContent = m.role[lang];
-      $("incAccept").href = href;
-    }
-    function cycle() { clearInterval(timer); if (!reduce) timer = setInterval(function () { show(idx + 1); }, 6000); }
-    $("incNext").addEventListener("click", function () { show(idx + 1); cycle(); });
-
+    var list = heroes(), SLOTS = 6;
     function paint() {
       var t = T[lang];
-      ["heroTitle", "heroLead", "incStatus", "heroesTitle", "howTitle", "aboutTitle", "aboutText", "endorse", "author", "foot", "ai"].forEach(function (k) { $(k).textContent = t[k]; });
-      $("incNextLbl").textContent = t.incNext; $("incAcceptLbl").textContent = t.accept;
+      ["stageEyebrow", "heroTitle", "heroLead", "aboutText", "toHeroes", "heroesTitle", "endorse", "author", "foot", "ai"].forEach(function (k) { $(k).textContent = t[k]; });
       var ol = $("how"); ol.innerHTML = "";
       t.how.forEach(function (s) { ol.appendChild(el("li", "", s)); });
       var box = $("heroes"); box.innerHTML = "";
@@ -133,9 +118,16 @@
         ft.appendChild(el("span", "hc-call", t.callHim + " →"));
         b.appendChild(ft); a.appendChild(ph); a.appendChild(b); box.appendChild(a);
       });
-      show(idx);
+      for (var i = list.length; i < SLOTS; i++) {
+        var c = el("div", "hero-card closed");
+        c.appendChild(el("span", "ph"));
+        var cb = el("span", "hc-body");
+        cb.appendChild(el("span", "hc-name", "? ? ?"));
+        cb.appendChild(el("span", "hc-role", t.soonHero));
+        c.appendChild(cb); box.appendChild(c);
+      }
     }
-    bindLangs(paint); paint(); cycle();
+    bindLangs(paint); paint();
   }
 
   /* ---------- call page ---------- */
@@ -236,8 +228,6 @@
       try { if (navigator.vibrate) navigator.vibrate(60); } catch (e) {}
       $("textToggle").textContent = $("subs").hidden ? T[lang].showText : T[lang].hideText;
       $("pauseLbl").textContent = T[lang].pause;
-      document.documentElement.style.setProperty("--call-dur", Math.round(total()) + "s");
-      var bgEl = $("bg"); bgEl.style.animation = "none"; void bgEl.offsetWidth; bgEl.style.animation = "";
       if (voiced) {
         audio.src = ROOT + m.audio[lang]; audio.currentTime = 0;
         var pr = audio.play(); if (pr && pr.catch) pr.catch(function () { $("time").textContent = T[lang].audioErr; });
