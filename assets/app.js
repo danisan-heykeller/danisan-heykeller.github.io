@@ -4,66 +4,76 @@
   var ROOT = document.body.getAttribute("data-root") || "./";
   var PAGE = document.body.getAttribute("data-page"); // "home" or a monument id
   var $ = function (id) { return document.getElementById(id); };
+  var reduce = false;
+  try { reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches; } catch (e) {}
 
   var T = {
     az: {
-      calling: "zəng edir...", accept: "Qəbul et", decline: "Rədd et", hang: "Bitir",
-      declined: "Eybi yoxdur. Geri zəng edək?", callBack: "Geri zəng et", thanks: "Dinlədiyiniz üçün sağ olun.", ai: "Səslər süni intellektlə yaradılıb. Mətnlər yoxlanılmış mənbələrə əsaslanır.",
-      dur: function (m) { return "~" + m + " dəq"; }, sound: "diqqət, səs uca olacaq", readRing: "Səssiz oxumaq", read: "Monoloqun mətni", mapHint: "xəritədə göstər →", soon: "səs tezliklə, hələlik mətn",
-      collected: function (n, t) { return "Toplanan zənglər: <b>" + n + "</b> / " + t; },
-      deck: "Danışan heykəllər", locked: "???",
-      again: "Yenidən dinlə", share: "Linki göndər", copied: "Link kopyalandı",
-      copyFail: "Linki ünvan sətrindən kopyala", tr: "Monoloqun mətni", home: "Bütün heykəllər",
-      story: "Storis üçün şəkil", storyLine: ["Mənə", "zəng etdi"],
-      sheet: "Şəkli saxlamaq üçün barmağınızı üzərində saxlayın.", close: "Bağla",
-      hint: "Digər qəhrəmanlar yaxınlıqda gözləyir. Kodlarını tapın - onlar da zəng edəcək.", hintOpen: "Qəhrəmanın adına toxunun - o sizə zəng edəcək.",
-      foot: "Danışan heykəllər · postamentlərdən bizə baxan insanlar haqqında qeyri-kommersiya layihə",
+      calling: "zəng edir...", accept: "Qəbul et", decline: "Rədd et", hang: "Bitir", pause: "Fasilə", resume: "Davam",
+      dur: function (m) { return "~" + m + " dəq"; }, sound: "diqqət, səs uca olacaq", soon: "səs tezliklə, hələlik mətn",
+      what: "Bu nədir?", whatTitle: "Danışan heykəllər",
+      whatText: "Bakının heykəlləri yoldan keçənlərə zəng edir. Qəbul edin - qəhrəman bir dəqiqə özü haqqında danışacaq və xatirə olaraq bir fikir qoyub gedəcək.",
+      aboutLink: "Layihə haqqında", close: "Bağla",
+      declined: "Eybi yoxdur.", declinedSub: "Geri zəng edə və ya onun nə demək istədiyini oxuya bilərsiniz.",
+      callBack: "Geri zəng et", read: "Oxumaq",
+      showText: "Mətni göstər", hideText: "Mətni gizlət",
+      back: "Geri", next: "Davam", finish: "Sona",
+      thanks: "Dinlədiyiniz üçün sağ olun.", thanksRead: "Oxuduğunuz üçün sağ olun.",
+      story: "Storis üçün şəkil", again: "Yenidən dinlə", share: "Linki göndər", copied: "Link kopyalandı",
+      copyFail: "Linki ünvan sətrindən kopyala", others: "Digər qəhrəmanlar", home: "Layihə haqqında",
+      storyLine: "Mənə zəng etdi", sheet: "Şəkli saxlamaq üçün barmağınızı üzərində saxlayın.",
+      ai: "Səslər süni intellektlə yaradılıb. Mətnlər yoxlanılmış mənbələrə əsaslanır.",
+      audioErr: "Səs yüklənmədi. İnterneti yoxlayın və yenidən cəhd edin.",
       heroTitle: "Bakının heykəlləri danışır",
-      heroLead: "Abidənin yanındakı kodu skan edin - və o sizə zəng edəcək. Hər biri özü haqqında danışacaq və xatirə olaraq bir fikir qoyub gedəcək.",
-      how: ["Heykəlin yanında kodu tapın", "Kamera ilə skan edin", "Zəngi qəbul edin", "Dayanın və diqqətlə baxın"],
-      howTitle: "Necə işləyir", aboutTitle: "Layihə haqqında", aboutText: "İstəyirik ki, insanlar heykəllərin yanından laqeyd keçməsin. Hər zəng - qəhrəmanla tanışlıq, həyatından bir əməl və özünüzlə aparmağa dəyən bir dəyərdir: böyüklərə hörmət, yaxınlara səbir, elmə sevgi.", endorse: "Gökand layihəsi", author: "Müəllif - Renat Raxmatulin", audioErr: "Səs yüklənmədi. İnterneti yoxlayın və yenidən cəhd edin."
+      heroLead: "Abidənin yanındakı kodu skan edin - və o sizə zəng edəcək.",
+      incStatus: "indi zəng edir", incNext: "Növbəti",
+      heroesTitle: "Qəhrəmanlar", callHim: "Zəng et",
+      howTitle: "Necə işləyir", how: ["Heykəlin yanında kodu tapın", "Kamera ilə skan edin", "Zəngi qəbul edin", "Dayanın və diqqətlə baxın"],
+      aboutTitle: "Layihə haqqında",
+      aboutText: "İstəyirik ki, insanlar heykəllərin yanından laqeyd keçməsin. Hər zəng - qəhrəmanla tanışlıq, həyatından bir əməl və özünüzlə aparmağa dəyən bir dəyərdir: böyüklərə hörmət, yaxınlara səbir, elmə sevgi.",
+      endorse: "Gökand layihəsi", author: "Müəllif - Renat Raxmatulin",
+      foot: "Danışan heykəllər · postamentlərdən bizə baxan insanlar haqqında qeyri-kommersiya layihə"
     },
     ru: {
-      calling: "звонит...", accept: "Принять", decline: "Отклонить", hang: "Завершить",
-      declined: "Ничего страшного. Перезвонить?", callBack: "Перезвонить", thanks: "Спасибо, что выслушали.", ai: "Голоса созданы с помощью ИИ. Тексты основаны на проверенных источниках.",
-      dur: function (m) { return "~" + m + " мин"; }, sound: "осторожно, громкий звук", readRing: "Прочитать без звука", read: "Текст монолога", mapHint: "показать на карте →", soon: "озвучка скоро, пока текст",
-      collected: function (n, t) { return "Собрано звонков: <b>" + n + "</b> из " + t; },
-      deck: "Говорящие памятники", locked: "???",
-      again: "Послушать ещё раз", share: "Отправить ссылку", copied: "Ссылка скопирована",
-      copyFail: "Скопируйте ссылку из адресной строки", tr: "Текст монолога", home: "Все памятники",
-      story: "Картинка для сторис", storyLine: ["Мне позвонил", ""],
-      sheet: "Нажмите и удерживайте картинку, чтобы сохранить её.", close: "Закрыть",
-      hint: "Остальные герои ждут неподалёку. Найдите их код - и они тоже позвонят.", hintOpen: "Нажмите на имя героя - и он вам позвонит.",
-      foot: "Danışan heykəllər · некоммерческий проект о людях, которые смотрят на нас с постаментов",
+      calling: "звонит...", accept: "Принять", decline: "Отклонить", hang: "Завершить", pause: "Пауза", resume: "Дальше",
+      dur: function (m) { return "~" + m + " мин"; }, sound: "осторожно, громкий звук", soon: "озвучка скоро, пока текст",
+      what: "Что это?", whatTitle: "Danışan heykəllər",
+      whatText: "Памятники Баку звонят прохожим. Примите звонок - герой минуту расскажет о себе и оставит одну мысль на память.",
+      aboutLink: "О проекте", close: "Закрыть",
+      declined: "Ничего страшного.", declinedSub: "Можно перезвонить или прочитать, что он хотел сказать.",
+      callBack: "Перезвонить", read: "Прочитать",
+      showText: "Показать текст", hideText: "Скрыть текст",
+      back: "Назад", next: "Дальше", finish: "Завершить",
+      thanks: "Спасибо, что выслушали.", thanksRead: "Спасибо, что прочитали.",
+      story: "Картинка для сторис", again: "Послушать ещё раз", share: "Отправить ссылку", copied: "Ссылка скопирована",
+      copyFail: "Скопируйте ссылку из адресной строки", others: "Другие герои", home: "О проекте",
+      storyLine: "Мне позвонил", sheet: "Нажмите и удерживайте картинку, чтобы сохранить её.",
+      ai: "Голоса созданы с помощью ИИ. Тексты основаны на проверенных источниках.",
+      audioErr: "Звук не загрузился. Проверьте интернет и попробуйте ещё раз.",
       heroTitle: "Памятники Баку разговаривают",
-      heroLead: "Отсканируйте код у памятника - и он вам позвонит. Каждый расскажет о себе и оставит одну мысль на память.",
-      how: ["Найдите код у памятника", "Отсканируйте его камерой", "Примите звонок", "Задержитесь и присмотритесь"],
-      howTitle: "Как это работает", aboutTitle: "О проекте", aboutText: "Мы хотим, чтобы люди перестали проходить мимо памятников. Каждый звонок - это знакомство с героем, один поступок из его жизни и одна ценность, которую стоит унести с собой: уважение к старшим, терпение к близким, любовь к знанию.", endorse: "Проект Gökand", author: "Автор - Ренат Рахматулин", audioErr: "Звук не загрузился. Проверьте интернет и попробуйте ещё раз."
+      heroLead: "Отсканируйте код у памятника - и он вам позвонит.",
+      incStatus: "сейчас звонит", incNext: "Следующий",
+      heroesTitle: "Герои", callHim: "Позвонить",
+      howTitle: "Как это работает", how: ["Найдите код у памятника", "Отсканируйте его камерой", "Примите звонок", "Задержитесь и присмотритесь"],
+      aboutTitle: "О проекте",
+      aboutText: "Мы хотим, чтобы люди перестали проходить мимо памятников. Каждый звонок - это знакомство с героем, один поступок из его жизни и одна ценность, которую стоит унести с собой: уважение к старшим, терпение к близким, любовь к знанию.",
+      endorse: "Проект Gökand", author: "Автор - Ренат Рахматулин",
+      foot: "Danışan heykəllər · некоммерческий проект о людях, которые смотрят на нас с постаментов"
     }
   };
 
   /* ---------- storage (per-viewer, never required) ---------- */
   function sget(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
   function sset(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
-  function collected() {
-    var a = [];
-    try { a = JSON.parse(sget("dh-collected") || "[]"); } catch (e) {}
-    return Array.isArray(a) ? a : [];
-  }
-  function collect(id) {
-    var c = collected();
-    if (c.indexOf(id) < 0) { c.push(id); sset("dh-collected", JSON.stringify(c)); }
-  }
+  function collected() { var a = []; try { a = JSON.parse(sget("dh-collected") || "[]"); } catch (e) {} return Array.isArray(a) ? a : []; }
+  function collect(id) { var c = collected(); if (c.indexOf(id) < 0) { c.push(id); sset("dh-collected", JSON.stringify(c)); } }
 
   /* ---------- analytics (GoatCounter, only when a code is set) ---------- */
   var from = new URLSearchParams(location.search).get("from");
-  function track(evt) {
-    try { if (window.goatcounter && window.goatcounter.count) window.goatcounter.count({ path: PAGE + "-" + evt, event: true }); } catch (e) {}
-  }
+  function track(evt) { try { if (window.goatcounter && window.goatcounter.count) window.goatcounter.count({ path: PAGE + "-" + evt, event: true }); } catch (e) {} }
   if (DH.analytics) {
     window.goatcounter = { path: function (p) { return p + (from ? "?from=" + from : ""); } };
-    var gs = document.createElement("script");
-    gs.async = true; gs.src = "https://gc.zgo.at/count.js";
+    var gs = document.createElement("script"); gs.async = true; gs.src = "https://gc.zgo.at/count.js";
     gs.setAttribute("data-goatcounter", "https://" + DH.analytics + ".goatcounter.com/count");
     document.head.appendChild(gs);
   }
@@ -82,118 +92,120 @@
     });
     paintLangs();
   }
-
-  /* ---------- deck of cards ---------- */
-  function renderDeck(el) {
-    var got = collected(), t = T[lang];
-    el.innerHTML = "";
-    DH.monuments.forEach(function (m) {
-      var has = got.indexOf(m.id) >= 0 && m.name;
-      var open = has || (DH.openAll && m.ready && m.name);
-      var tile = document.createElement(open || m.map ? "a" : "div");
-      tile.className = "tile " + (has ? "got" : (open ? "open" : "locked"));
-      if (open) tile.href = ROOT + m.id + "/";
-      else if (m.map) { tile.href = "https://www.google.com/maps/search/?api=1&query=" + m.map; tile.target = "_blank"; tile.rel = "noopener"; }
-      var nm = document.createElement("span"); nm.className = "nm"; nm.textContent = open ? m.name[lang] : t.locked;
-      var ar = document.createElement("span"); ar.className = "ar"; ar.textContent = m.area[lang];
-      tile.appendChild(nm); tile.appendChild(ar);
-      if (!open && m.map) { var mh = document.createElement("span"); mh.className = "mh"; mh.textContent = t.mapHint; tile.appendChild(mh); }
-      el.appendChild(tile);
-    });
-    return got.filter(function (id) { return DH.monuments.some(function (m) { return m.id === id; }); }).length;
-  }
+  function heroes() { return DH.monuments.filter(function (m) { return m.ready && m.name; }); }
+  function el(tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
 
   /* ---------- home ---------- */
   function home() {
+    var list = heroes(), idx = 0, timer = null, faces = $("faces");
+    list.forEach(function (m, i) {
+      var f = el("span", i === 0 ? "on" : "");
+      f.style.backgroundImage = "url('" + ROOT + m.photo + "')";
+      faces.appendChild(f);
+    });
+    function show(i) {
+      idx = (i + list.length) % list.length;
+      Array.prototype.forEach.call(faces.children, function (f, k) { f.className = k === idx ? "on" : ""; });
+      var m = list[idx], href = ROOT + m.id + "/";
+      $("incName").textContent = m.name[lang]; $("incName").href = href;
+      $("incRole").textContent = m.role[lang];
+      $("incAccept").href = href;
+    }
+    function cycle() { clearInterval(timer); if (!reduce) timer = setInterval(function () { show(idx + 1); }, 6000); }
+    $("incNext").addEventListener("click", function () { show(idx + 1); cycle(); });
+
     function paint() {
       var t = T[lang];
-      $("heroTitle").textContent = t.heroTitle;
-      $("heroLead").textContent = t.heroLead;
-      $("howTitle").textContent = t.howTitle;
+      ["heroTitle", "heroLead", "incStatus", "heroesTitle", "howTitle", "aboutTitle", "aboutText", "endorse", "author", "foot", "ai"].forEach(function (k) { $(k).textContent = t[k]; });
+      $("incNextLbl").textContent = t.incNext; $("incAcceptLbl").textContent = t.accept;
       var ol = $("how"); ol.innerHTML = "";
-      t.how.forEach(function (s) { var li = document.createElement("li"); li.textContent = s; ol.appendChild(li); });
-      $("deckEyebrow").textContent = t.deck;
-      $("count").innerHTML = t.collected(renderDeck($("deck")), DH.monuments.length);
-      $("foot").textContent = t.foot;
-      $("ai").textContent = t.ai;
-      $("aboutTitle").textContent = t.aboutTitle;
-      $("aboutText").textContent = t.aboutText;
-      $("endorse").textContent = t.endorse;
-      $("author").textContent = t.author;
+      t.how.forEach(function (s) { ol.appendChild(el("li", "", s)); });
+      var box = $("heroes"); box.innerHTML = "";
+      list.forEach(function (m) {
+        var a = el("a", "hero-card"); a.href = ROOT + m.id + "/";
+        var ph = el("span", "ph"); ph.style.backgroundImage = "url('" + ROOT + m.photo + "')";
+        var b = el("span", "hc-body");
+        b.appendChild(el("span", "hc-name", m.name[lang]));
+        b.appendChild(el("span", "hc-role", m.role[lang]));
+        b.appendChild(el("span", "hc-proverb", m.proverb ? m.proverb[lang] : ""));
+        var ft = el("span", "hc-foot");
+        ft.appendChild(el("span", "", m.area[lang]));
+        ft.appendChild(el("span", "hc-call", t.callHim + " →"));
+        b.appendChild(ft); a.appendChild(ph); a.appendChild(b); box.appendChild(a);
+      });
+      show(idx);
     }
-    bindLangs(paint); paint();
+    bindLangs(paint); paint(); cycle();
   }
 
   /* ---------- call page ---------- */
   function call(m) {
     var audio = new Audio(); audio.preload = "auto";
-    var state = "ring", clock = null, spans = [], maxSeen = 0, story = null, t0 = 0;
-    var voiced = m.voice !== false;
-    function nowT() { return voiced ? audio.currentTime : (Date.now() - t0) / 1000; }
+    var state = "ring", clock = null, spans = [], maxSeen = 0, t0 = 0, pausedAt = 0, paused = false;
+    var voiced = m.voice !== false, wakeLock = null, readIdx = 0, finishedBy = "call";
+    function nowT() { return voiced ? audio.currentTime : (paused ? pausedAt : (Date.now() - t0) / 1000); }
 
-    if (m.photo) {
-      var bg = $("bg"); bg.classList.remove("placeholder");
-      bg.style.backgroundImage = "url('" + ROOT + m.photo + "')";
-    }
+    if (m.photo) { var bg = $("bg"); bg.classList.remove("placeholder"); bg.style.backgroundImage = "url('" + ROOT + m.photo + "')"; }
 
     function fmt(s) { s = Math.max(0, Math.floor(s || 0)); var r = s % 60; return Math.floor(s / 60) + ":" + (r < 10 ? "0" : "") + r; }
     function lastCue() { var c = m.cues[lang]; return c[c.length - 1].t + 3; }
+    function total() { return voiced ? (audio.duration || lastCue()) : lastCue(); }
     function setState(s) {
       state = s;
-      document.body.className = "s-" + s;
+      document.body.className = "call s-" + s + (paused ? " paused" : "") + ($("subs").hidden ? "" : " with-text");
       $("ringView").hidden = s !== "ring";
       $("declinedView").hidden = s !== "declined";
       $("talkView").hidden = s !== "call";
+      $("readView").hidden = s !== "read";
       $("done").hidden = s !== "done";
+      window.scrollTo(0, 0);
+    }
+    function paragraphs() {
+      var c = m.cues[lang], b = [0].concat(m.paras ? m.paras[lang] : []).concat([c.length]), out = [];
+      for (var i = 0; i < b.length - 1; i++) out.push(c.slice(b[i], b[i + 1]).map(function (x) { return x.s; }).join(" "));
+      return out;
     }
 
     function paint() {
       var t = T[lang];
       document.title = m.name[lang] + " · Danışan heykəllər";
       $("statusTxt").textContent = t.calling;
-      $("name").textContent = m.name[lang];
-      $("talkName").textContent = m.name[lang];
+      $("name").textContent = m.name[lang]; $("talkName").textContent = m.name[lang]; $("readName").textContent = m.name[lang];
       $("role").textContent = m.role[lang];
       $("dur").textContent = t.dur(Math.max(1, Math.round(lastCue() / 60)));
       $("sound").textContent = voiced ? t.sound : t.soon;
-      $("acceptLbl").textContent = t.accept;
-      $("declineLbl").textContent = t.decline;
-      $("hangLbl").textContent = t.hang;
-      $("declinedTxt").textContent = t.declined;
-      $("thanks").textContent = t.thanks;
-      $("ai").textContent = t.ai;
-      $("callBack").textContent = t.callBack;
-      $("again").textContent = t.again;
-      $("share").textContent = t.share;
-      $("storyLbl").textContent = t.story;
-      $("homeLink").textContent = t.home;
-      $("readRing").textContent = t.readRing;
-      $("readDecl").textContent = t.read;
-      $("readDone").textContent = t.read;
-      $("homeDecl").textContent = t.home;
-      $("rdClose").textContent = t.close;
-      $("hint").textContent = DH.openAll ? t.hintOpen : t.hint;
-      $("foot").textContent = t.foot;
-      $("sheetTxt").textContent = t.sheet;
-      $("sheetClose").textContent = t.close;
-      var cr = $("credit"), ctext = (m.credit && typeof m.credit === "object") ? (m.credit[lang] || "") : (m.credit || "");
-      cr.innerHTML = "";
-      if (ctext && m.creditUrl) { var a = document.createElement("a"); a.href = m.creditUrl; a.target = "_blank"; a.rel = "noopener"; a.textContent = ctext; cr.appendChild(a); }
-      else cr.textContent = ctext;
-      $("rdName").textContent = m.name[lang];
-      var rb = $("rdBody"); rb.innerHTML = "";
-      var para = null;
-      m.cues[lang].forEach(function (c, i) {
-        if (i % 4 === 0) { para = document.createElement("p"); rb.appendChild(para); }
-        para.appendChild(document.createTextNode((i % 4 ? " " : "") + c.s));
+      $("acceptLbl").textContent = t.accept; $("declineLbl").textContent = t.decline; $("hangLbl").textContent = t.hang;
+      $("pauseLbl").textContent = paused ? t.resume : t.pause;
+      $("whatBtn").textContent = t.what; $("whatTitle").textContent = t.whatTitle; $("whatText").textContent = t.whatText;
+      $("whatHome").textContent = t.aboutLink; $("whatClose").textContent = t.close;
+      $("declinedTxt").textContent = t.declined; $("declinedSub").textContent = t.declinedSub;
+      $("callBack").textContent = t.callBack; $("readBtn").textContent = t.read;
+      $("textToggle").textContent = $("subs").hidden ? t.showText : t.hideText;
+      $("readBack").textContent = t.back;
+      $("valueLbl").textContent = m.value ? m.value[lang] : "";
+      $("proverb").textContent = m.proverb ? m.proverb[lang] : "";
+      $("thanks").textContent = finishedBy === "read" ? t.thanksRead : t.thanks;
+      $("storyLbl").textContent = t.story; $("again").textContent = t.again; $("share").textContent = t.share;
+      $("othersLbl").textContent = t.others; $("homeLink").textContent = t.home; $("ai").textContent = t.ai;
+      $("sheetTxt").textContent = t.sheet; $("sheetClose").textContent = t.close;
+      $("credit").textContent = (m.credit && typeof m.credit === "object") ? (m.credit[lang] || "") : (m.credit || "");
+      var oth = $("others"); oth.innerHTML = "";
+      heroes().filter(function (x) { return x.id !== m.id; }).forEach(function (x) {
+        var a = el("a", "other"); a.href = ROOT + x.id + "/";
+        var ph = el("span", "ph"); ph.style.backgroundImage = "url('" + ROOT + x.photo + "')";
+        var tx = el("span", "ot");
+        tx.appendChild(el("b", "", x.name[lang]));
+        tx.appendChild(el("span", "", x.value ? x.value[lang] : ""));
+        a.appendChild(ph); a.appendChild(tx); oth.appendChild(a);
       });
-      if (state === "done") paintDone();
+      if (state === "read") paintRead();
     }
 
+    /* optional subtitles during the call */
     function buildSubs() {
       var box = $("subs"); box.innerHTML = ""; spans = [];
       m.cues[lang].forEach(function (c, i) {
-        var s = document.createElement("span"); s.textContent = c.s;
+        var s = el("span", "", c.s);
         box.appendChild(s); if (i < m.cues[lang].length - 1) box.appendChild(document.createTextNode(" "));
         spans.push(s);
       });
@@ -201,71 +213,84 @@
     function sync() {
       var t = nowT(), cues = m.cues[lang], idx = 0;
       for (var i = 0; i < cues.length; i++) if (cues[i].t <= t + 0.05) idx = i;
-      spans.forEach(function (s, i) { s.className = i < idx ? "past" : (i === idx ? "now" : ""); });
-      var cur = spans[idx], box = $("subs");
-      if (cur) {
-        var top = cur.offsetTop - box.offsetTop;
-        if (top > box.scrollTop + box.clientHeight - 48 || top < box.scrollTop) box.scrollTop = Math.max(0, top - 24);
+      if (!$("subs").hidden) {
+        spans.forEach(function (s, i) { s.className = i < idx ? "past" : (i === idx ? "now" : ""); });
+        var cur = spans[idx], box = $("subs");
+        if (cur) { var top = cur.offsetTop - box.offsetTop; if (top > box.scrollTop + box.clientHeight - 48 || top < box.scrollTop) box.scrollTop = Math.max(0, top - 24); }
       }
-      var d = voiced ? (audio.duration || lastCue()) : lastCue();
+      var d = total();
       $("time").textContent = fmt(t) + " / " + fmt(d);
       $("prog").style.width = Math.min(100, (t / d) * 100) + "%";
       maxSeen = Math.max(maxSeen, t / d);
-      if (!voiced && t >= d && state === "call") { maxSeen = 1; finish(); }
+      if (!voiced && !paused && t >= d && state === "call") { maxSeen = 1; finish("call"); }
     }
+    function lockScreen() { try { if (navigator.wakeLock && navigator.wakeLock.request) navigator.wakeLock.request("screen").then(function (l) { wakeLock = l; }, function () {}); } catch (e) {} }
+    function unlockScreen() { try { if (wakeLock) wakeLock.release(); } catch (e) {} wakeLock = null; }
 
     function start() {
+      paused = false;
+      buildSubs(); maxSeen = 0;
+      if (!voiced) $("subs").hidden = false;
+      $("textToggle").hidden = !voiced;
       setState("call");
       try { if (navigator.vibrate) navigator.vibrate(60); } catch (e) {}
-      buildSubs(); maxSeen = 0; story = null;
+      $("textToggle").textContent = $("subs").hidden ? T[lang].showText : T[lang].hideText;
+      $("pauseLbl").textContent = T[lang].pause;
+      document.documentElement.style.setProperty("--call-dur", Math.round(total()) + "s");
+      var bgEl = $("bg"); bgEl.style.animation = "none"; void bgEl.offsetWidth; bgEl.style.animation = "";
       if (voiced) {
-        audio.src = ROOT + m.audio[lang];
-        audio.currentTime = 0;
-        var pr = audio.play();
-        if (pr && pr.catch) pr.catch(function () { $("time").textContent = T[lang].audioErr; });
+        audio.src = ROOT + m.audio[lang]; audio.currentTime = 0;
+        var pr = audio.play(); if (pr && pr.catch) pr.catch(function () { $("time").textContent = T[lang].audioErr; });
       } else { t0 = Date.now(); }
+      lockScreen();
       clearInterval(clock); clock = setInterval(sync, 200); sync();
       track("accepted");
     }
-    function finish() {
-      clearInterval(clock);
-      try { audio.pause(); } catch (e) {}
-      if (maxSeen >= 0.6) { collect(m.id); track("completed"); }
-      setState("done"); paintDone(); window.scrollTo(0, 0);
+    function togglePause() {
+      if (state !== "call") return;
+      if (!paused) { paused = true; if (voiced) audio.pause(); else pausedAt = nowT(); }
+      else { paused = false; if (voiced) audio.play(); else t0 = Date.now() - pausedAt * 1000; }
+      document.body.classList.toggle("paused", paused);
+      $("pauseLbl").textContent = paused ? T[lang].resume : T[lang].pause;
+      $("pause").setAttribute("aria-pressed", paused ? "true" : "false");
     }
-    function paintDone() {
-      var t = T[lang];
-      $("count").innerHTML = t.collected(renderDeck($("deck")), DH.monuments.length);
-      $("deckEyebrow").textContent = t.deck;
+    function finish(by) {
+      clearInterval(clock); unlockScreen();
+      try { audio.pause(); } catch (e) {}
+      finishedBy = by;
+      if (by === "read" || maxSeen >= 0.6) { collect(m.id); track(by === "read" ? "read-done" : "completed"); }
+      paused = false; setState("done"); paint();
     }
 
-    /* story card: 1080x1920 PNG drawn on canvas */
-    function loadImg(src) {
-      return new Promise(function (res) {
-        if (!src) return res(null);
-        var im = new Image(); im.onload = function () { res(im); }; im.onerror = function () { res(null); }; im.src = src;
-      });
+    /* reading, paragraph by paragraph */
+    function paintRead() {
+      var ps = paragraphs(), t = T[lang];
+      readIdx = Math.max(0, Math.min(readIdx, ps.length - 1));
+      $("page").textContent = ps[readIdx];
+      $("readPos").textContent = (readIdx + 1) + " / " + ps.length;
+      $("readBack").disabled = readIdx === 0;
+      $("readNext").textContent = readIdx === ps.length - 1 ? t.finish : t.next;
     }
-    function wrapLines(ctx, text, maxW) {
+    function openRead() { readIdx = 0; setState("read"); paintRead(); track("read"); }
+
+    /* story card: 1080x1920 PNG with the hero's proverb */
+    function loadImg(src) { return new Promise(function (res) { if (!src) return res(null); var im = new Image(); im.onload = function () { res(im); }; im.onerror = function () { res(null); }; im.src = src; }); }
+    function wrapLines(x, text, maxW) {
       var words = text.split(" "), lines = [], cur = "";
-      words.forEach(function (w) {
-        var tryL = cur ? cur + " " + w : w;
-        if (ctx.measureText(tryL).width > maxW && cur) { lines.push(cur); cur = w; } else cur = tryL;
-      });
-      if (cur) lines.push(cur);
-      return lines;
+      words.forEach(function (w) { var tl = cur ? cur + " " + w : w; if (x.measureText(tl).width > maxW && cur) { lines.push(cur); cur = w; } else cur = tl; });
+      if (cur) lines.push(cur); return lines;
     }
     function makeStory() {
       var W = 1080, H = 1920, t = T[lang];
       var fontsReady = (document.fonts && document.fonts.load) ? Promise.all([
-        document.fonts.load("600 112px 'Cormorant SC'"), document.fonts.load("italic 400 54px Alegreya")
+        document.fonts.load("600 96px 'Cormorant SC'"), document.fonts.load("italic 400 54px Alegreya")
       ]).catch(function () {}) : Promise.resolve();
       return Promise.all([loadImg(m.photo ? ROOT + m.photo : null), fontsReady]).then(function (r) {
         var img = r[0], c = document.createElement("canvas"); c.width = W; c.height = H;
         var x = c.getContext("2d");
         var PAPER = "#0b1730", INK = "#f3ebdd", SOFT = "#c9c2b2", OATH = "#c8743a", OATHT = "#d88a52", LINE = "#2a3d63";
         x.fillStyle = PAPER; x.fillRect(0, 0, W, H);
-        var PH = 1180;
+        var PH = 1000;
         if (img) {
           var s = Math.max(W / img.width, PH / img.height), w = img.width * s, h = img.height * s;
           x.save(); x.beginPath(); x.rect(0, 0, W, PH); x.clip();
@@ -274,26 +299,22 @@
           x.globalCompositeOperation = "source-over"; x.restore();
         } else { x.fillStyle = "#13284b"; x.fillRect(0, 0, W, PH); }
         x.fillStyle = LINE; x.fillRect(0, PH, W, 2);
-        // rubric label
-        x.fillStyle = OATH; x.fillRect(80, PH + 96, 56, 4);
-        x.font = "600 34px 'Cormorant SC', Georgia, serif"; x.fillStyle = OATHT; x.textBaseline = "middle";
-        x.fillText("DANIŞAN HEYKƏLLƏR", 156, PH + 98);
+        x.fillStyle = OATH; x.fillRect(80, PH + 86, 56, 4);
+        x.font = "600 32px 'Cormorant SC', Georgia, serif"; x.fillStyle = OATHT; x.textBaseline = "middle";
+        x.fillText("DANIŞAN HEYKƏLLƏR · BAKI", 156, PH + 88);
         x.textBaseline = "alphabetic";
-        var y = PH + 210;
-        x.fillStyle = INK; x.font = "italic 400 54px Alegreya, Georgia, serif";
-        x.fillText(t.storyLine[0], 80, y);
-        x.font = "600 112px 'Cormorant SC', Georgia, serif";
-        var lines = wrapLines(x, m.name[lang], W - 160);
-        lines.forEach(function (l) { y += 116; x.fillText(l, 80, y); });
-        if (t.storyLine[1]) { x.font = "italic 400 54px Alegreya, Georgia, serif"; y += 80; x.fillText(t.storyLine[1], 80, y); }
-        // footer
-        x.font = "400 34px Alegreya, Georgia, serif"; x.fillStyle = SOFT;
-        x.fillText(location.host || "danisan-heykeller.github.io", 80, H - 110);
-        var n = collected().length + "", tot = " / " + DH.monuments.length;
-        x.font = "600 60px 'Cormorant SC', Georgia, serif"; var nw = x.measureText(n).width;
-        x.font = "400 40px Alegreya, Georgia, serif"; var tw2 = x.measureText(tot).width;
-        x.fillStyle = INK; x.font = "600 60px 'Cormorant SC', Georgia, serif"; x.fillText(n, W - 80 - tw2 - nw, H - 110);
-        x.fillStyle = SOFT; x.font = "400 40px Alegreya, Georgia, serif"; x.fillText(tot, W - 80 - tw2, H - 110);
+        var y = PH + 190;
+        x.fillStyle = SOFT; x.font = "italic 400 46px Alegreya, Georgia, serif"; x.fillText(t.storyLine, 80, y);
+        x.fillStyle = INK; x.font = "600 96px 'Cormorant SC', Georgia, serif";
+        wrapLines(x, m.name[lang], W - 160).forEach(function (l) { y += 100; x.fillText(l, 80, y); });
+        if (m.proverb) {
+          y += 96;
+          x.fillStyle = OATHT; x.font = "600 30px 'Cormorant SC', Georgia, serif"; x.fillText((m.value ? m.value[lang] : "").toUpperCase(), 80, y);
+          x.fillStyle = INK; x.font = "italic 400 54px Alegreya, Georgia, serif";
+          wrapLines(x, m.proverb[lang], W - 160).forEach(function (l) { y += 70; x.fillText(l, 80, y); });
+        }
+        x.font = "400 32px Alegreya, Georgia, serif"; x.fillStyle = SOFT;
+        x.fillText((location.host || "danisan-heykeller.github.io") + "/" + m.id, 80, H - 90);
         return c;
       });
     }
@@ -303,33 +324,37 @@
           var file = blob ? new File([blob], "danisan-heykeller-" + m.id + ".png", { type: "image/png" }) : null;
           if (file && navigator.canShare && navigator.canShare({ files: [file] })) {
             navigator.share({ files: [file] }).then(function () { track("story"); }, function () {});
-          } else {
-            $("sheetImg").src = c.toDataURL("image/png");
-            $("sheet").hidden = false; track("story");
-          }
+          } else { $("sheetImg").src = c.toDataURL("image/png"); $("sheet").hidden = false; track("story"); }
         }, "image/png");
       });
     }
 
-    audio.addEventListener("ended", function () { maxSeen = 1; if (state === "call") finish(); });
+    audio.addEventListener("ended", function () { maxSeen = 1; if (state === "call") finish("call"); });
     audio.addEventListener("error", function () { if (state === "call") $("time").textContent = T[lang].audioErr; });
 
     $("accept").addEventListener("click", start);
-    $("hangup").addEventListener("click", finish);
-    $("again").addEventListener("click", start);
-    $("callBack").addEventListener("click", start);
     $("decline").addEventListener("click", function () { setState("declined"); track("declined"); });
+    $("callBack").addEventListener("click", start);
+    $("readBtn").addEventListener("click", openRead);
+    $("hangup").addEventListener("click", function () { finish("call"); });
+    $("pause").addEventListener("click", togglePause);
+    $("textToggle").addEventListener("click", function () {
+      var s = $("subs"); s.hidden = !s.hidden; document.body.classList.toggle("with-text", !s.hidden);
+      $("textToggle").textContent = s.hidden ? T[lang].showText : T[lang].hideText; sync(); track("text");
+    });
+    $("readBack").addEventListener("click", function () { readIdx--; paintRead(); });
+    $("readNext").addEventListener("click", function () { if (readIdx >= paragraphs().length - 1) finish("read"); else { readIdx++; paintRead(); } });
+    $("again").addEventListener("click", start);
     $("story").addEventListener("click", shareStory);
-    function openReader() { $("reader").hidden = false; $("rdClose").focus(); track("read"); }
-    ["readRing", "readDecl", "readDone"].forEach(function (id) { $(id).addEventListener("click", openReader); });
-    $("rdClose").addEventListener("click", function () { $("reader").hidden = true; });
-    document.addEventListener("keydown", function (e) { if (e.key === "Escape") { $("reader").hidden = true; $("sheet").hidden = true; } });
+    $("whatBtn").addEventListener("click", function () { $("what").hidden = false; $("whatClose").focus(); });
+    $("whatClose").addEventListener("click", function () { $("what").hidden = true; });
     $("sheetClose").addEventListener("click", function () { $("sheet").hidden = true; });
+    document.addEventListener("keydown", function (e) { if (e.key === "Escape") { $("what").hidden = true; $("sheet").hidden = true; } });
+    document.addEventListener("visibilitychange", function () { if (!document.hidden && state === "call") lockScreen(); });
     $("share").addEventListener("click", function () {
       var url = location.origin + location.pathname + "?from=share", t = T[lang];
       function fail() { $("toast").textContent = t.copyFail; }
-      try { navigator.clipboard.writeText(url).then(function () { $("toast").textContent = t.copied; track("shared"); }, fail); }
-      catch (e) { fail(); }
+      try { navigator.clipboard.writeText(url).then(function () { $("toast").textContent = t.copied; track("shared"); }, fail); } catch (e) { fail(); }
     });
 
     bindLangs(function () {
