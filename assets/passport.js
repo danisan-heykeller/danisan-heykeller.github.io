@@ -213,7 +213,7 @@
     var params = new URLSearchParams(location.search);
     var viaQR = params.get("k") === st.key;
     var mode = sget("dh-stamp-mode");
-    if (!{ quiz: 1, honor: 1, qr: 1 }[mode]) mode = "quiz";
+    if (!{ quiz: 1, honor: 1, qr: 1 }[mode]) mode = "honor";
     if (viaQR) mode = "qr";
     document.body.style.setProperty("--lc", st.color);
     var justNow = false;
