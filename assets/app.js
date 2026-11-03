@@ -253,48 +253,42 @@
     function makeStory() {
       var W = 1080, H = 1920, t = T[lang];
       var fontsReady = (document.fonts && document.fonts.load) ? Promise.all([
-        document.fonts.load("600 120px 'El Messiri'"), document.fonts.load("600 40px 'Golos Text'")
+        document.fonts.load("600 112px 'Cormorant SC'"), document.fonts.load("italic 400 54px Alegreya")
       ]).catch(function () {}) : Promise.resolve();
       return Promise.all([loadImg(m.photo ? ROOT + m.photo : null), fontsReady]).then(function (r) {
         var img = r[0], c = document.createElement("canvas"); c.width = W; c.height = H;
         var x = c.getContext("2d");
+        var PAPER = "#0b1730", INK = "#f3ebdd", SOFT = "#c9c2b2", OATH = "#c8743a", OATHT = "#d88a52", LINE = "#2a3d63";
+        x.fillStyle = PAPER; x.fillRect(0, 0, W, H);
+        var PH = 1180;
         if (img) {
-          var s = Math.max(W / img.width, H / img.height), w = img.width * s, h = img.height * s;
-          x.drawImage(img, (W - w) / 2, (H - h) * 0.18, w, h);
-          x.globalCompositeOperation = "saturation"; x.fillStyle = "#808080"; x.fillRect(0, 0, W, H);
-          x.globalCompositeOperation = "color"; x.fillStyle = "#9b6a3c"; x.fillRect(0, 0, W, H);
-          x.globalCompositeOperation = "source-over";
-        } else {
-          var g0 = x.createLinearGradient(0, 0, 0, H); g0.addColorStop(0, "#46352a"); g0.addColorStop(.55, "#2a2018"); g0.addColorStop(1, "#15100c");
-          x.fillStyle = g0; x.fillRect(0, 0, W, H);
-          var g1 = x.createRadialGradient(W / 2, H * .32, 10, W / 2, H * .32, 420); g1.addColorStop(0, "#b98352"); g1.addColorStop(1, "rgba(138,90,48,0)");
-          x.fillStyle = g1; x.fillRect(0, 0, W, H);
-        }
-        var g = x.createLinearGradient(0, 0, 0, H);
-        g.addColorStop(0, "rgba(10,8,6,.25)"); g.addColorStop(.4, "rgba(10,8,6,0)"); g.addColorStop(.68, "rgba(10,8,6,.85)"); g.addColorStop(1, "rgba(10,8,6,.96)");
-        x.fillStyle = g; x.fillRect(0, 0, W, H);
-        // tag
-        x.font = "700 30px 'Golos Text', sans-serif";
-        var tag = "DANIŞAN HEYKƏLLƏR · BAKI", tw = x.measureText(tag).width;
-        x.fillStyle = "#d39a5c"; x.fillRect(80, 110, tw + 48, 64);
-        x.fillStyle = "#1a120a"; x.textBaseline = "middle"; x.fillText(tag, 104, 143);
-        // headline
+          var s = Math.max(W / img.width, PH / img.height), w = img.width * s, h = img.height * s;
+          x.save(); x.beginPath(); x.rect(0, 0, W, PH); x.clip();
+          x.drawImage(img, (W - w) / 2, (PH - h) * 0.2, w, h);
+          x.globalCompositeOperation = "saturation"; x.fillStyle = "#808080"; x.fillRect(0, 0, W, PH);
+          x.globalCompositeOperation = "source-over"; x.restore();
+        } else { x.fillStyle = "#13284b"; x.fillRect(0, 0, W, PH); }
+        x.fillStyle = LINE; x.fillRect(0, PH, W, 2);
+        // rubric label
+        x.fillStyle = OATH; x.fillRect(80, PH + 96, 56, 4);
+        x.font = "600 34px 'Cormorant SC', Georgia, serif"; x.fillStyle = OATHT; x.textBaseline = "middle";
+        x.fillText("DANIŞAN HEYKƏLLƏR", 156, PH + 98);
         x.textBaseline = "alphabetic";
-        var y = H - 470;
-        x.fillStyle = "#f3ede2"; x.font = "500 64px 'El Messiri', Georgia, serif";
+        var y = PH + 210;
+        x.fillStyle = INK; x.font = "italic 400 54px Alegreya, Georgia, serif";
         x.fillText(t.storyLine[0], 80, y);
-        x.fillStyle = "#d39a5c"; x.font = "600 128px 'El Messiri', Georgia, serif";
+        x.font = "600 112px 'Cormorant SC', Georgia, serif";
         var lines = wrapLines(x, m.name[lang], W - 160);
-        lines.forEach(function (l) { y += 136; x.fillText(l, 80, y); });
-        if (t.storyLine[1]) { x.fillStyle = "#f3ede2"; x.font = "500 64px 'El Messiri', Georgia, serif"; y += 90; x.fillText(t.storyLine[1], 80, y); }
+        lines.forEach(function (l) { y += 116; x.fillText(l, 80, y); });
+        if (t.storyLine[1]) { x.font = "italic 400 54px Alegreya, Georgia, serif"; y += 80; x.fillText(t.storyLine[1], 80, y); }
         // footer
-        x.font = "500 34px 'Golos Text', sans-serif"; x.fillStyle = "#c4bbad";
+        x.font = "400 34px Alegreya, Georgia, serif"; x.fillStyle = SOFT;
         x.fillText(location.host || "danisan-heykeller.github.io", 80, H - 110);
         var n = collected().length + "", tot = " / " + DH.monuments.length;
-        x.font = "600 60px 'Golos Text', sans-serif"; var nw = x.measureText(n).width;
-        x.font = "500 40px 'Golos Text', sans-serif"; var tw2 = x.measureText(tot).width;
-        x.fillStyle = "#f3ede2"; x.font = "600 60px 'Golos Text', sans-serif"; x.fillText(n, W - 80 - tw2 - nw, H - 110);
-        x.fillStyle = "#c4bbad"; x.font = "500 40px 'Golos Text', sans-serif"; x.fillText(tot, W - 80 - tw2, H - 110);
+        x.font = "600 60px 'Cormorant SC', Georgia, serif"; var nw = x.measureText(n).width;
+        x.font = "400 40px Alegreya, Georgia, serif"; var tw2 = x.measureText(tot).width;
+        x.fillStyle = INK; x.font = "600 60px 'Cormorant SC', Georgia, serif"; x.fillText(n, W - 80 - tw2 - nw, H - 110);
+        x.fillStyle = SOFT; x.font = "400 40px Alegreya, Georgia, serif"; x.fillText(tot, W - 80 - tw2, H - 110);
         return c;
       });
     }
