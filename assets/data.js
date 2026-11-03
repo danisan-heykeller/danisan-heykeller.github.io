@@ -201,10 +201,7 @@ window.DH = {
    "ready": true,
    "initial": "S",
    "photo": "photo/sabir.jpg",
-   "credit": {
-    "az": "Foto: erichware.org",
-    "ru": "Фото: Эрих Гаузер, erichware.org"
-   },
+   "credit": "",
    "name": {
     "az": "Mirzə Ələkbər Sabir",
     "ru": "Мирза Алекпер Сабир"
@@ -416,8 +413,7 @@ window.DH = {
     ]
    },
    "voice": false,
-   "map": "40.3689,49.8350",
-   "creditUrl": "https://erichware.org"
+   "map": "40.3689,49.8350"
   },
   {
    "id": "natavan",
@@ -428,10 +424,7 @@ window.DH = {
    "ready": true,
    "initial": "N",
    "photo": "photo/natavan.jpg",
-   "credit": {
-    "az": "Foto: erichware.org",
-    "ru": "Фото: Эрих Гаузер, erichware.org"
-   },
+   "credit": "",
    "name": {
     "az": "Xurşidbanu Natəvan",
     "ru": "Хуршидбану Натаван"
@@ -659,8 +652,7 @@ window.DH = {
     ]
    },
    "voice": false,
-   "map": "40.3692,49.8372",
-   "creditUrl": "https://erichware.org"
+   "map": "40.3692,49.8372"
   }
  ]
 };
