@@ -218,19 +218,31 @@
       maxSeen = Math.max(maxSeen, t / d);
       if (!voiced && !paused && t >= d && state === "call") { maxSeen = 1; finish("call"); }
     }
-    var cardIdx = -1;
+    var cardIdx = -1, manual = null, manualSlot = -1;
+    function autoSlot(n) { return Math.min(n - 1, Math.floor((nowT() / total()) * n)); }
+    function pickCard(k) {
+      var n = (m.cards || []).length; if (!n) return;
+      manual = (k + n) % n; manualSlot = autoSlot(n); paintCards(true); track("card");
+    }
     function paintCards(force) {
       var box = $("cards"), list = m.cards || [];
       var show = list.length && voiced && $("subs").hidden;
       box.hidden = !show; if (!show) return;
-      var i = Math.min(list.length - 1, Math.floor((nowT() / total()) * list.length));
+      var slot = autoSlot(list.length), i = slot;
+      if (manual !== null) { if (slot === manualSlot) i = manual; else manual = null; }
       if (i === cardIdx && !force) return;
       cardIdx = i; box.innerHTML = "";
       var c = list[i], card = el("div", "info");
+      card.addEventListener("click", function (e) { if (e.target.tagName !== "BUTTON") pickCard(cardIdx + 1); });
       card.appendChild(el("p", "eyebrow", c.label[lang]));
       card.appendChild(el("p", "info-t", c.text[lang]));
       var dots = el("div", "dots");
-      list.forEach(function (_, k) { dots.appendChild(el("i", k === i ? "on" : "")); });
+      list.forEach(function (x, k) {
+        var d = el("button", k === i ? "on" : ""); d.type = "button";
+        d.setAttribute("aria-label", x.label[lang]); d.title = x.label[lang];
+        d.addEventListener("click", function () { pickCard(k); });
+        dots.appendChild(d);
+      });
       card.appendChild(dots); box.appendChild(card);
     }
     function lockScreen() { try { if (navigator.wakeLock && navigator.wakeLock.request) navigator.wakeLock.request("screen").then(function (l) { wakeLock = l; }, function () {}); } catch (e) {} }
@@ -238,7 +250,7 @@
 
     function start() {
       paused = false;
-      buildSubs(); maxSeen = 0; cardIdx = -1;
+      buildSubs(); maxSeen = 0; cardIdx = -1; manual = null;
       if (!voiced) $("subs").hidden = false;
       $("textToggle").hidden = !voiced;
       setState("call");
