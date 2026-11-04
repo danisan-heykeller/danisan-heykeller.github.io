@@ -90,9 +90,52 @@
   function bindLangs(onChange) {
     ["az", "ru"].forEach(function (k) {
       var b = $("lang-" + k);
-      if (b) b.addEventListener("click", function () { lang = k; sset("dh-lang", k); paintLangs(); onChange(); });
+      if (b) b.addEventListener("click", function () { lang = k; sset("dh-lang", k); paintLangs(); applyStyle(); onChange(); });
     });
     paintLangs();
+  }
+
+  /* ---------- Z style: same site, louder packaging, "ты" ---------- */
+  var Z = {
+    az: {
+      calling: "sənə zəng edir...", zStatus: "indi sənə zəng edir", zNextLbl: "Növbəti", zAcceptLbl: "Qəbul et",
+      zPass: "Zəngi dosta ötür →", zHint: "Heykəlin yanında deyilsən? Eybi yox - elə buradan zəng et. Bir dəqiqə, qeydiyyatsız.",
+      heroesTitle: "Hamısını topla", heard: function (n, t) { return "Toplandı: " + n + " / " + t; }, heardTag: "toplandı", notGot: "hələ zəng etməyib",
+      declined: "Oldu, problem yoxdur.", declinedSub: "Geri zəng et və ya nə demək istədiyini oxu.",
+      whatText: "Bakının heykəlləri yanından keçənlərə zəng edir. Zəngi qəbul et - qəhrəman bir dəqiqəyə özü haqqında danışacaq.",
+      thanks: "Hazırdır. Qəhrəman kolleksiyana düşdü.", thanksRead: "Hazırdır. Qəhrəman kolleksiyana düşdü.",
+      pass: "Zəngi dosta ötür", passTitle: "Zəngi dosta ötür", passText: function (nm) { return nm + " dostuna zəng edəcək. Onun adını yaz."; },
+      passBy: "Sənin adın (yazmaya da bilərsən)", others: "Daha kim zəng edir", home: "Bütün qəhrəmanlar",
+      qrTxt: "Telefonda aç - zəng belə daha yaxşı səslənir.", callingTo: function (to) { return to + ", sənə zəng edir..."; },
+      styleOn: "Klassik", styleTitleOn: "Klassik görünüşə qayıt", styleTitleOff: "Z-üslubu aç"
+    },
+    ru: {
+      calling: "звонит тебе...", zStatus: "звонит тебе прямо сейчас", zNextLbl: "Следующий", zAcceptLbl: "Принять",
+      zPass: "Передай звонок другу →", zHint: "Не у памятника? Ничего - звони прямо отсюда. Минута, без регистрации.",
+      heroesTitle: "Собери всех", heard: function (n, t) { return "Собрано: " + n + " из " + t; }, heardTag: "собран", notGot: "ещё не звонил",
+      declined: "Окей, без проблем.", declinedSub: "Перезвони или прочитай, что он хотел сказать.",
+      whatText: "Памятники Баку звонят тем, кто рядом. Прими звонок - герой за минуту расскажет о себе.",
+      thanks: "Готово. Герой в твоей коллекции.", thanksRead: "Готово. Герой в твоей коллекции.",
+      pass: "Передай звонок другу", passTitle: "Передай звонок другу", passText: function (nm) { return nm + " позвонит твоему другу. Напиши его имя."; },
+      passBy: "Твоё имя (можно не писать)", others: "Кто ещё звонит", home: "Все герои",
+      qrTxt: "Открой на телефоне - так звонок звучит как надо.", callingTo: function (to) { return to + ", тебе звонит..."; },
+      styleOn: "Классика", styleTitleOn: "Вернуть классический вид", styleTitleOff: "Включить Z-стиль"
+    }
+  };
+  var zMode = sget("dh-style") === "z", repaint = function () {};
+  function tx() { return zMode ? Object.assign({}, T[lang], Z[lang]) : T[lang]; }
+  function applyStyle() {
+    document.documentElement.classList.toggle("z", zMode);
+    var b = $("styleBtn"); if (!b) return;
+    b.textContent = zMode ? Z[lang].styleOn : "Z";
+    b.title = zMode ? Z[lang].styleTitleOn : Z[lang].styleTitleOff;
+    b.setAttribute("aria-label", b.title);
+    b.setAttribute("aria-pressed", zMode ? "true" : "false");
+  }
+  function bindStyle() {
+    var b = $("styleBtn");
+    if (b) b.addEventListener("click", function () { zMode = !zMode; sset("dh-style", zMode ? "z" : "classic"); applyStyle(); repaint(); track(zMode ? "style-z" : "style-classic"); });
+    applyStyle();
   }
   function heroes() { return DH.monuments.filter(function (m) { return m.ready && m.name; }); }
   function el(tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
@@ -101,18 +144,19 @@
   function home() {
     var list = heroes();
     function paint() {
-      var t = T[lang], got = collected();
+      var t = tx(), got = collected();
       ["stageEyebrow", "heroTitle", "heroLead", "homeCall", "qrHint", "aboutText", "toHeroes", "heroesTitle", "endorse", "author", "foot", "ai"].forEach(function (k) { $(k).textContent = t[k]; });
       var ol = $("how"); ol.innerHTML = "";
       t.how.forEach(function (x) { ol.appendChild(el("li", "", x)); });
       var heard = list.filter(function (m) { return got.indexOf(m.id) >= 0; }).length;
-      $("progress").hidden = heard === 0;
+      $("progress").hidden = heard === 0 && !zMode;
       $("progress").textContent = t.heard(heard, list.length);
       var box = $("heroes"); box.innerHTML = "";
       list.forEach(function (m) {
-        var card = el("div", "hero-card" + (got.indexOf(m.id) >= 0 ? " got" : ""));
+        var card = el("div", "hero-card" + (got.indexOf(m.id) >= 0 ? " got" : " notgot"));
         var ph = el("span", "ph"), phi = el("i"); phi.style.backgroundImage = "url('" + ROOT + m.photo + "')"; ph.appendChild(phi);
         if (got.indexOf(m.id) >= 0) ph.appendChild(el("span", "tag", t.heardTag));
+        else if (zMode) ph.appendChild(el("span", "tag off", t.notGot));
         var b = el("span", "hc-body");
         var link = el("a", "hc-name", m.name[lang]); link.href = ROOT + m.id + "/";
         b.appendChild(link);
@@ -133,7 +177,20 @@
       var tg = el("a", "hc-tg", t.soonAsk); tg.href = "https://t.me/Fremor"; tg.target = "_blank"; tg.rel = "noopener";
       cb.appendChild(tg); c.appendChild(cb); box.appendChild(c);
     }
-    bindLangs(paint); paint();
+    var zi = Math.floor(Math.random() * list.length), ztimer = null;
+    function zShow(i) {
+      var t = tx(); zi = (i + list.length) % list.length;
+      var m = list[zi], href = ROOT + m.id + "/";
+      $("zImg").src = ROOT + m.photo; $("zImg").alt = m.name[lang];
+      $("zName").textContent = m.name[lang]; $("zRole").textContent = m.role[lang];
+      $("zAccept").href = href; $("zPass").href = href + "#pass";
+      ["zStatus", "zNextLbl", "zAcceptLbl", "zPass", "zHint"].forEach(function (k) { $(k).textContent = t[k] || ""; });
+      var art = $("zCall").querySelector(".z-art"); art.classList.remove("ring"); void art.offsetWidth; art.classList.add("ring");
+    }
+    $("zNext").addEventListener("click", function () { zShow(zi + 1); track("z-next"); });
+    function all() { paint(); zShow(zi); }
+    repaint = all; bindStyle();
+    bindLangs(all); all();
   }
 
   /* ---------- call page ---------- */
@@ -189,7 +246,7 @@
     }
 
     function paint() {
-      var t = T[lang];
+      var t = tx();
       document.title = m.name[lang] + " · Danışan heykəllər";
       $("statusTxt").textContent = passTo ? t.callingTo(passTo) : t.calling;
       $("fromChip").hidden = !passBy; $("fromChip").textContent = passBy ? t.fromBy(passBy) : "";
@@ -379,7 +436,7 @@
     }
     function sendPass(e) {
       e.preventDefault();
-      var t = T[lang], to = clean($("passTo").value), by = clean($("passBy").value);
+      var t = tx(), to = clean($("passTo").value), by = clean($("passBy").value);
       if (!to) { $("passTo").focus(); return; }
       var url = passLink(to, by), text = t.passShareText(m.name[lang], to);
       function copy() {
@@ -440,12 +497,17 @@
       try { navigator.clipboard.writeText(shareUrl()).then(function () { $("sheetToast").textContent = t.copied; track("shared"); }, fail); } catch (e) { fail(); }
     });
 
+    function openPass() { $("passToast").textContent = ""; $("passSheet").hidden = false; $("passTo").focus(); }
+    $("zPassRing").addEventListener("click", openPass);
+    if (location.hash === "#pass") setTimeout(openPass, 300);
+    repaint = function () { paint(); $("zPassRing").textContent = tx().pass + " →"; fitPhoto(); };
+    bindStyle();
     bindLangs(function () {
       if (state === "call") { try { audio.pause(); } catch (e) {} start(); }
-      paint();
+      paint(); $("zPassRing").textContent = tx().pass + " →";
       fitPhoto();
     });
-    setState("ring"); paint(); fitPhoto();
+    setState("ring"); paint(); $("zPassRing").textContent = tx().pass + " →"; fitPhoto();
   }
 
   if (PAGE === "home") home();
