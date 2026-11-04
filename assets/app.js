@@ -19,7 +19,7 @@
       showText: "Mətni göstər", hideText: "Mətni gizlət",
       back: "Geri", next: "Davam", finish: "Bitir",
       thanks: "Dinlədiyiniz üçün sağ olun.", thanksRead: "Oxuduğunuz üçün sağ olun.",
-      story: "Storis üçün şəkil", again: "Yenidən dinlə", share: "Linki göndər", copied: "Link kopyalandı",
+      story: "Paylaş", sheetShare: "Göndər", sheetReady: "Şəkliniz belə görünəcək. Göndərmək üçün düyməni basın.", again: "Yenidən dinlə", share: "Linki kopyala", copied: "Link kopyalandı",
       copyFail: "Linki ünvan sətrindən kopyala", others: "Digər qəhrəmanlar", home: "Layihə haqqında",
       storyLine: "Mənə zəng etdi", sheet: "Şəkli saxlamaq üçün barmağınızı üzərində saxlayın.",
       ai: "Səslər süni intellektlə yaradılıb. Mətnlər yoxlanılmış mənbələrə əsaslanır.",
@@ -46,7 +46,7 @@
       showText: "Показать текст", hideText: "Скрыть текст",
       back: "Назад", next: "Дальше", finish: "Завершить",
       thanks: "Спасибо, что выслушали.", thanksRead: "Спасибо, что прочитали.",
-      story: "Картинка для сторис", again: "Послушать ещё раз", share: "Отправить ссылку", copied: "Ссылка скопирована",
+      story: "Поделиться", sheetShare: "Отправить", sheetReady: "Так будет выглядеть ваша картинка. Нажмите \"Отправить\" и выберите, кому.", again: "Послушать ещё раз", share: "Скопировать ссылку", copied: "Ссылка скопирована",
       copyFail: "Скопируйте ссылку из адресной строки", others: "Другие герои", home: "О проекте",
       storyLine: "Мне позвонил", sheet: "Нажмите и удерживайте картинку, чтобы сохранить её.",
       ai: "Голоса созданы с помощью ИИ. Тексты основаны на проверенных источниках.",
@@ -202,7 +202,7 @@
       $("storyLbl").textContent = t.story; $("again").textContent = t.again; $("share").textContent = t.share;
       $("othersLbl").textContent = t.others; $("homeLink").textContent = t.home; $("ai").textContent = t.ai;
       if ($("qrTxt")) $("qrTxt").textContent = t.qrTxt;
-      $("sheetTxt").textContent = t.sheet; $("sheetClose").textContent = t.close;
+      $("sheetTxt").textContent = canShareFiles ? t.sheetReady : t.sheet; $("sheetClose").textContent = t.close; $("sheetShare").textContent = t.sheetShare;
       $("credit").textContent = (m.credit && typeof m.credit === "object") ? (m.credit[lang] || "") : (m.credit || "");
       var oth = $("others"); oth.innerHTML = "";
       heroes().filter(function (x) { return x.id !== m.id; }).forEach(function (x) {
@@ -347,7 +347,7 @@
         x.fillText("DANIŞAN HEYKƏLLƏR · BAKI", 156, PH + 88);
         x.textBaseline = "alphabetic";
         var y = PH + 190;
-        x.fillStyle = SOFT; x.font = "italic 400 46px Alegreya, Georgia, serif"; x.fillText(t.storyLine, 80, y);
+        x.fillStyle = SOFT; x.font = "italic 400 46px Alegreya, Georgia, serif"; x.fillText(storyLine(t), 80, y);
         x.fillStyle = INK; x.font = "600 96px 'Cormorant SC', Georgia, serif";
         wrapLines(x, m.name[lang], W - 160).forEach(function (l) { y += 100; x.fillText(l, 80, y); });
         if (m.proverb) {
@@ -361,15 +361,25 @@
         return c;
       });
     }
+    function storyLine(t) { return (m.female && lang === "ru") ? "Мне позвонила" : t.storyLine; }
+    var storyFile = null, canShareFiles = false;
+    function shareUrl() { return location.origin + location.pathname + "?from=share"; }
     function shareStory() {
+      $("sheetToast").textContent = "";
       makeStory().then(function (c) {
+        $("sheetImg").src = c.toDataURL("image/png");
         c.toBlob(function (blob) {
-          var file = blob ? new File([blob], "danisan-heykeller-" + m.id + ".png", { type: "image/png" }) : null;
-          if (file && navigator.canShare && navigator.canShare({ files: [file] })) {
-            navigator.share({ files: [file] }).then(function () { track("story"); }, function () {});
-          } else { $("sheetImg").src = c.toDataURL("image/png"); $("sheet").hidden = false; track("story"); }
+          storyFile = blob ? new File([blob], "danisan-heykeller-" + m.id + ".png", { type: "image/png" }) : null;
+          try { canShareFiles = !!(storyFile && navigator.canShare && navigator.canShare({ files: [storyFile] })); } catch (e) { canShareFiles = false; }
+          $("sheetShare").hidden = !(canShareFiles || navigator.share);
+          $("sheetTxt").textContent = canShareFiles ? T[lang].sheetReady : T[lang].sheet;
+          $("sheet").hidden = false; track("story-preview");
         }, "image/png");
       });
+    }
+    function sendStory() {
+      var t = T[lang], data = canShareFiles ? { files: [storyFile], text: storyLine(t) + " " + m.name[lang] + " - " + shareUrl() } : { title: m.name[lang], url: shareUrl() };
+      try { navigator.share(data).then(function () { track("story"); }, function () {}); } catch (e) {}
     }
 
     audio.addEventListener("ended", function () { maxSeen = 1; if (state === "call") finish("call"); });
@@ -394,10 +404,11 @@
     $("sheetClose").addEventListener("click", function () { $("sheet").hidden = true; });
     document.addEventListener("keydown", function (e) { if (e.key === "Escape") { $("what").hidden = true; $("sheet").hidden = true; } });
     document.addEventListener("visibilitychange", function () { if (!document.hidden && state === "call") lockScreen(); });
+    $("sheetShare").addEventListener("click", sendStory);
     $("share").addEventListener("click", function () {
-      var url = location.origin + location.pathname + "?from=share", t = T[lang];
-      function fail() { $("toast").textContent = t.copyFail; }
-      try { navigator.clipboard.writeText(url).then(function () { $("toast").textContent = t.copied; track("shared"); }, fail); } catch (e) { fail(); }
+      var t = T[lang];
+      function fail() { $("sheetToast").textContent = t.copyFail; }
+      try { navigator.clipboard.writeText(shareUrl()).then(function () { $("sheetToast").textContent = t.copied; track("shared"); }, fail); } catch (e) { fail(); }
     });
 
     bindLangs(function () {

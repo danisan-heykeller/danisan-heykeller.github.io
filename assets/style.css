@@ -360,3 +360,7 @@ body.s-call .talk-head .nm{font-size:28px}
 /* ---------- copper stage behind the monuments ---------- */
 .bg{background:var(--oath) url("brand/grain.png") repeat;background-size:200px}
 .hero-card .ph,.other .ph{background:#c8743a url("brand/grain.png") repeat;background-size:160px}
+
+.sheet-row{width:100%;max-width:420px;justify-content:center}
+.sheet .sheet-row .btn{flex:1 1 150px;min-width:0}
+.sheet img{max-height:60vh}

@@ -860,7 +860,8 @@ window.DH = {
      }
     }
    ],
-   "story": "photo/natavan-story.jpg"
+   "story": "photo/natavan-story.jpg",
+   "female": true
   }
  ]
 };
