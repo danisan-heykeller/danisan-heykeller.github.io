@@ -138,6 +138,7 @@ window.DH_HEKAYE = {
    "id": "baqqal-meshedi-rehim",
    "test": false,
    "off": false,
+   "kind": "prose",
    "source": "Cəlil Məmmədquluzadə. Əsərləri. I cild. Bakı, Öndər, 2004",
    "author": {
     "az": "Cəlil Məmmədquluzadə",
@@ -209,9 +210,47 @@ window.DH_HEKAYE = {
    }
   },
   {
+   "id": "daglar",
+   "test": false,
+   "off": false,
+   "kind": "poem",
+   "source": "Mikayıl Müşfiq. Seçilmiş əsərləri. Bakı, Şərq-Qərb, 2004",
+   "author": {
+    "az": "Mikayıl Müşfiq",
+    "ru": "Микаил Мушфиг"
+   },
+   "title": {
+    "az": "Dağlar",
+    "ru": "Горы"
+   },
+   "text": {
+    "az": [
+     "Siz ki bir-birinizdən ayrılmayan əşdiniz,\nSinənizə ayrılıq dağı çəkildi, dağlar!\nAya, hankı cəlladın pəncəsinə keçdiniz,\nNiçin böylə qəddiniz sındı, büküldü, dağlar?",
+     "Sizin ki, üzünüzdən qaralırdı çox işıq,\nÜstünüzdən ötməyə yol bulmazdı bir aşıq.\nQaynaqlara edərkən gədikləri çarpaşıq\nBu gün çəlik bağrınız nədən söküldü, dağlar?",
+     "Nallarını küheylan atların qırardınız,\nÖnünüz əngin dərə, uçurumdu ardınız.\nÇayların gur səsilə, üfqə hayqırardınız,\nSizin öncə halınız belə deyildi, dağlar!",
+     "Ruzgarları yararkən köksünüz parça-parça,\nAyrı qalırdı quşlar sıradan haftalarca,\nAlnınızı buludlar oxşarkən bəxtiyarca,\nDik başınız önümdə nədən əyildi, dağlar?",
+     "Üst-üstdən o zaman ki, bıçaqlandı qəlbiniz,\nÇaylar sapdı yolundan, narə yandı qəlbiniz,\nBarıt dumanlarilə saçaqlandı qəlbiniz,\nAxırda bir mum kimi söndü, töküldü, dağlar!",
+     "İnsan oğlu – əzəldən o sinə dağlayandı,\nYoxsa onun xəncəri köksünüzə dayandı?!\nBaşınıza kül oldu, könlünüz oda yandı,\nOnda ki, yerinizdə raylar çəkildi, dağlar!"
+    ],
+    "ru": [
+     "Вы были неразлучны друг с другом, а на груди у вас выжгли клеймо разлуки, горы! Скажите, в лапы какого палача вы попали, отчего так сломался, согнулся ваш стан, горы?",
+     "От вашего лица меркнул яркий свет, ни один ашуг не находил дороги, чтобы перейти через вас. Вы сплетали перевалы с родниками - отчего же сегодня разворочено ваше стальное сердце, горы?",
+     "Вы ломали подковы породистым коням, перед вами - бездонные ущелья, позади - обрывы. Голосом бурных рек вы кричали до самого горизонта - прежде вы были не такими, горы!",
+     "Когда вы грудью раскалывали ветры на части, птицы неделями отбивались от стаи; когда облака счастливо ласкали ваш лоб - отчего склонилась передо мной ваша гордая голова, горы?",
+     "Когда вашему сердцу наносили удар за ударом, реки сбились с пути, ваше сердце запылало огнём, пороховой дым разорвал его в клочья - и наконец оно погасло и стекло, как воск, горы!",
+     "Человек издавна умел жечь вам грудь - или это его кинжал упёрся вам в сердце?! На вашу голову посыпался пепел, ваша душа сгорела в огне - тогда, когда на вашем месте проложили рельсы, горы!"
+    ]
+   },
+   "min": {
+    "az": 1,
+    "ru": 2
+   }
+  },
+  {
    "id": "fatma-xala",
    "test": false,
    "off": false,
+   "kind": "prose",
    "source": "\"Molla Nəsrəddin\", 1906, 29 sentyabr və 6 oktyabr, №26-27",
    "author": {
     "az": "Cəlil Məmmədquluzadə",
@@ -307,9 +346,41 @@ window.DH_HEKAYE = {
    }
   },
   {
+   "id": "gezdiyim-yerler",
+   "test": false,
+   "off": false,
+   "kind": "poem",
+   "source": "Mikayıl Müşfiq. Seçilmiş əsərləri. Bakı, Şərq-Qərb, 2004",
+   "author": {
+    "az": "Mikayıl Müşfiq",
+    "ru": "Микаил Мушфиг"
+   },
+   "title": {
+    "az": "Gəzdiyim yerlər",
+    "ru": "Места, где я бродил"
+   },
+   "text": {
+    "az": [
+     "Əsrlərdən bəri, illərdən bəri\nDərdinə qaldığım yerdir bu yerlər.\nBiliyor saçları qızıl bir pəri\nQurbanı olduğum yerdir bu yerlər!",
+     "Bu gözəl aləmi gəzdikcə dağ-dağ,\nOldum sevincinə, qəminə ortaq.\nEy söyüdlü dərə, ey dumanlı dağ,\nSəfaya daldığım yerdir bu yerlər!",
+     "Qapıldım bu yerdə əyləncələrə,\nAnlamış hər irmaq, bilmiş hər dərə,\nYa dalıb diqqətlə düşüncələrə,\nYa ilham aldığım yerdir bu yerlər!"
+    ],
+    "ru": [
+     "Веками, годами я тосковал по этим местам. Златовласая пери знает: я отдал за эти места всего себя!",
+     "Обходя этот прекрасный мир гора за горой, я делил с ним и радость, и печаль. Ущелье с ивами, гора в тумане - это места, где я утопал в блаженстве!",
+     "Здесь я отдавался веселью - это поняла каждая река, это знает каждое ущелье; здесь я погружался в раздумья или получал вдохновение - вот что это за места!"
+    ]
+   },
+   "min": {
+    "az": 1,
+    "ru": 1
+   }
+  },
+  {
    "id": "iki-alma",
    "test": false,
    "off": false,
+   "kind": "prose",
    "source": "Cəlil Məmmədquluzadə. Əsərləri. I cild. Bakı, Öndər, 2004",
    "author": {
     "az": "Cəlil Məmmədquluzadə",
@@ -355,9 +426,129 @@ window.DH_HEKAYE = {
    }
   },
   {
+   "id": "kulekler",
+   "test": false,
+   "off": false,
+   "kind": "poem",
+   "source": "Mikayıl Müşfiq. Seçilmiş əsərləri. Bakı, Şərq-Qərb, 2004",
+   "author": {
+    "az": "Mikayıl Müşfiq",
+    "ru": "Микаил Мушфиг"
+   },
+   "title": {
+    "az": "Küləklər",
+    "ru": "Ветры"
+   },
+   "text": {
+    "az": [
+     "Hər səhər, hər axşam, hər axşam, hər səhər\nÇox zaman sərsəri küləklər bixəbər\nBir yaxın dost kimi qapımı döyərlər,\nKüləklər, küləklər, bəstəkar küləklər,\nDünyanı dolaşan bəxtiyar küləklər!",
+     "Bəziniz qorxulu, bəziniz qorxusuz,\nBəziniz duyğulu, bəziniz duyğusuz,\nBəziniz uyqulu, bəziniz uyqusuz,\nKüləklər, küləklər, ey sərin küləklər,\nSizdə var qoxusu hər yerin, küləklər!",
+     "Ey çılğın küləklər, nəşəniz daşarkən,\nBağların şehindən mey sorub coşarkən,\nNalqıran dağları atlayıb aşarkən,\nMəni də alınız, uçayım dağlara,\nKönlümdə nə varsa, açayım dağlara!",
+     "Gurlayın, ilhamım, sənətim gurlasın!\nFırtınam, qasırğam, qüdrətim gurlasın!\nŞimşəyim parlasın, zülmətim gurlasın!\nEy məni sərazad bəsləyən küləklər,\nBir dağın başından səsləyən küləklər!"
+    ],
+    "ru": [
+     "Каждое утро, каждый вечер, каждый вечер, каждое утро часто бродяги-ветры, без предупреждения, стучатся в мою дверь, как близкий друг. Ветры, ветры, ветры-композиторы, счастливые ветры, обходящие мир!",
+     "Одни из вас страшные, другие не страшные, одни чуткие, другие бесчувственные, одни сонные, другие бессонные. Ветры, ветры, прохладные ветры, в вас запах всех мест на земле!",
+     "Безумные ветры, когда вас переполняет радость, когда вы пьянеете, выпив вина из росы садов, когда перепрыгиваете горы, о которые ломаются подковы, возьмите и меня, дайте полететь в горы, раскрыть горам всё, что у меня на душе!",
+     "Гремите - пусть гремит моё вдохновение, моё искусство! Пусть гремит моя буря, мой ураган, моя сила! Пусть сверкает моя молния, пусть гремит моя тьма! Ветры, что вырастили меня вольным, ветры, что зовут меня с вершины горы!"
+    ]
+   },
+   "min": {
+    "az": 1,
+    "ru": 1
+   }
+  },
+  {
+   "id": "millet-nece-tarac",
+   "test": false,
+   "off": false,
+   "kind": "poem",
+   "source": "M.Ə.Sabir. Hophopnamə. I cild. Bakı, Şərq-Qərb, 2004",
+   "author": {
+    "az": "Mirzə Ələkbər Sabir",
+    "ru": "Мирза Алекпер Сабир"
+   },
+   "title": {
+    "az": "Millət necə tarac olur olsun, nə işim var?!",
+    "ru": "Пусть народ разоряют - мне-то что?!"
+   },
+   "text": {
+    "az": [
+     "Millət necə tarac olur olsun, nə işim var?!\nDüşmənlərə möhtac olur olsun, nə işim var?!\nQoy mən tox olum, özgələr ilə nədi karim,\nDünyavü cahan ac olur olsun, nə işim var?!",
+     "Səs salma, yatanlar ayılar, qoy hələ yatsın,\nYatmışları razı deyiləm kimsə oyatsın,\nTək-tək ayılan varsa da, həq dadıma çatsın,\nMən salim olum, cümlə cahan batsa da, batsın;\nMillət necə tarac olur olsun, nə işim var?!\nDüşmənlərə möhtac olur olsun, nə işim var?!",
+     "Salma yadıma söhbəti-tarixi-cəhani,\nƏyyami-sələfdən demə söz bir də, filani,\nHal isə gətir meyl eləyim dolmanı, nani,\nMüstəqbəli görmək nə gərək, ömrdü fani;\nMillət necə tarac olur olsun, nə işim var?!\nDüşmənlərə möhtac olur olsun, nə işim var?!",
+     "Övladi-vətən qoy hələ avarə dolansın,\nÇirkabi-səfalətlə əli, başı bulansın,\nDul övrət isə sailə olsun, oda yansın,\nAncaq mənim avazeyi-şə’nim ucalansın;\nMillət necə tarac olur olsun, nə işim var?!\nDüşmənlərə möhtac olur olsun, nə işim var?!",
+     "Hər millət edir səfheyi-dünyadə tərəqqi,\nEylər hərə bir mənzili-mə’vadə tərəqqi,\nYorğan-döşəyimdə düşə gər yadə tərəqqi,\nBiz də edərik aləmi-rö’yadə tərəqqi;\nMillət necə tarac olur olsun, nə işim var?!\nDüşmənlərə möhtac olur olsun, nə işim var?!"
+    ],
+    "ru": [
+     "Пусть народ как угодно разоряют - мне-то что?! Пусть он зависит от врагов - мне-то что?! Лишь бы я был сыт, какое мне дело до других? Пусть весь мир голодает - мне-то что?!",
+     "Не шуми: спящие проснутся, пусть ещё поспят. Не хочу, чтобы кто-нибудь будил спящих. А если кто-то и проснётся поодиночке - пусть бог мне поможет. Лишь бы я был цел, а весь мир пусть тонет, раз тонет. Пусть народ как угодно разоряют - мне-то что?! Пусть он зависит от врагов - мне-то что?!",
+     "Не напоминай мне о мировой истории, не говори больше ни слова о былых временах, такой-сякой. Лучше подай мне долму и хлеб, буду есть. Зачем смотреть в будущее, жизнь ведь бренна. Пусть народ как угодно разоряют - мне-то что?! Пусть он зависит от врагов - мне-то что?!",
+     "Пусть дети родины ещё побродяжничают, пусть их руки и головы вымажутся в грязи нищеты, пусть вдова идёт с протянутой рукой, пусть горит в огне - лишь бы гремела слава обо мне. Пусть народ как угодно разоряют - мне-то что?! Пусть он зависит от врагов - мне-то что?!",
+     "Каждый народ на страницах мира идёт вперёд, каждый движется к своей цели. А если мне на перине вспомнится прогресс - что ж, мы тоже прогрессируем, во сне. Пусть народ как угодно разоряют - мне-то что?! Пусть он зависит от врагов - мне-то что?!"
+    ]
+   },
+   "min": {
+    "az": 1,
+    "ru": 2
+   }
+  },
+  {
+   "id": "oglan-oxumaqdan",
+   "test": false,
+   "off": false,
+   "kind": "poem",
+   "source": "M.Ə.Sabir. Hophopnamə. I cild. Bakı, Şərq-Qərb, 2004",
+   "author": {
+    "az": "Mirzə Ələkbər Sabir",
+    "ru": "Мирза Алекпер Сабир"
+   },
+   "title": {
+    "az": "Bilməm nə görübdür bizim oğlan oxumaqdan?!",
+    "ru": "Что нашёл наш сын в этом чтении?!"
+   },
+   "text": {
+    "az": [
+     "Bilməm nə görübdür bizim oğlan oxumaqdan?!\nDəng oldu qulağım!\nJurnal, qəzetə, hərzəvü hədyan oxumaqdan\nİncəldi uşağım!",
+     "Əqlin aparıb bəs ki, baxır gündə qərayə,\nYa rəb, nə həmaqət!\nSöz etməz əsər, çarə qalıb imdi duayə,\nTədbir elə, övrət!",
+     "Lə’nət sənə, ifritə, sənindir bu cəhalət,\nEtdin nə xəyanət!\nSəndən törənibdir bizim evdə belə bid’ət,\nEy mayeyi-hiylət!",
+     "Dutsun çörəyim gözlərinin ağü qarasın,\nEy həmsəri-bədxah!\nHaşa, oda yaxmaz ana istəkli balasın,\nKəssin səni allah!",
+     "Bu tifli oxutmaqlığa etdin məni tərğib,\nHəp eylədin iğva.\nİmdi nədi fikrin? İşimiz oldu bu tərkib,\nYox çarəsi əsla.",
+     "Heyhat ki, tədbir ola bu xanəxərabə,\nZail olub əqli.\nDərsə, qəzetə, məktəbə, jurnalə, kitabə\nMail olub əqli.",
+     "Yıxdın evimi, eylədin övladımı zaye,\nİş keçdi məhəldən.\nMən anlamıram elm nədir, ya ki sənaye,\nZarəm bu əməldən!",
+     "İstərdim o da mən kimi bir hörmətə çatsın,\nDünyadə dolansın;\nTa qol gücünə malik olub şöhrətə çatsın,\nAzadə dolansın;",
+     "Bir vəqtidir imdi ki, olub Rüstəmi-dövran,\nBir ad qazanaydı;\nQarətlər edib ta ki, tapaydı sərü saman,\nBir şey də qanaydı.",
+     "Puç eylədin, övrət, bu gözəl, sadə cəvani!\nDilbilməz oğul, vay!\nRəngi saralıb, qalmıyıb əsla yarı cani,\nBir gülməz oğul, vay!",
+     "Ax, naxələf oğlum, nə çətin məşqə düşübsən,\nEy kaş, usanaydın!\nQuldurluğa yox, elmə tərəf eşqə düşübsən,\nBu qübhü qanaydın!",
+     "Ey nuri-düçeşmim, oxumaqdan həzər eylə,\nSaleh vələd ol, gəl!\nAt min, hünər öyrəş, məni də bəxtəvər eylə,\nİşdə bələd ol, gəl!",
+     "Bəsdir oxudun, az qala canın tələf oldu,\nBu kardən əl çək!\nYazmaq, oxumaq başına əngəl-kələf oldu,\nƏş’ardən əl çək!",
+     "Min elm oxuyub söz biləsən hörmətin olmaz\nBu dari-cəhanda;\nSöz bəhrinə gövhər olasan qiymətin olmaz\nXasə bu zəmanda.",
+     "Yox, yox, baxıram fikrinə, səndən oğul olmaz,\nCanın bəcəhənnəm!\nMırt-mırt oxumaqdan, kişi, bir qan ki, pul olmaz!\nMırtılda dəmadəm,",
+     "Qıl elm fərahəm,\nOl qüssəyə həmdəm;\nÖmrün olacaq kəm,\nDüşmən sənə aləm!.."
+    ],
+    "ru": [
+     "Не знаю, что нашёл наш сын в этом чтении?! Уши у меня от него гудят! От журналов, газет, всякой болтовни и чепухи исхудал мой ребёнок!",
+     "Чтение лишило его ума: целыми днями смотрит в буквы - господи, что за глупость! Слова не действуют, осталась одна надежда - молитва. Придумай что-нибудь, жена!",
+     "Проклятье тебе, ведьма, это твоё невежество, какую измену ты совершила! От тебя пошло в нашем доме это новшество, о источник хитрости!",
+     "Да ослепит тебя мой хлеб, о злонамеренная супруга! Упаси бог, мать не бросит в огонь любимое дитя - чтоб тебя Аллах покарал! Это ты подбивала меня учить мальчишку, всё ты меня соблазняла. Что теперь думаешь? Вот до чего дошло - и никакого выхода.",
+     "Увы, какой тут поможешь совет этому разорителю: ум у него пропал. Его ум тянется к урокам, к газете, к школе, к журналу, к книге. Ты разрушила мой дом, погубила моего ребёнка - дело зашло слишком далеко. Я не понимаю, что такое наука или ремесло, я страдаю от всего этого!",
+     "Я хотел, чтобы и он, как я, добился почёта, жил вольготно; чтобы силой рук прославился и жил свободно. Сейчас бы ему стать богатырём своего времени и заработать имя, грабежом добыть себе богатство, тогда бы он хоть что-то понял.",
+     "Ты погубила, жена, этого славного простого юношу! Сын, не знающий языка, - горе! Лицо пожелтело, полжизни в нём не осталось. Сын, который не смеётся, - горе! Ах, непутёвый мой сын, каким тяжким делом ты увлёкся, лучше бы тебе надоело! Ты увлёкся не разбоем, а наукой - понял бы ты, какой это позор!",
+     "Свет моих очей, берегись чтения, будь благонравным сыном, иди сюда! Садись на коня, учись удали, сделай меня счастливым, будь сведущ в деле, иди сюда! Хватит читать, ты чуть не загубил свою жизнь, брось это занятие! Писание и чтение стали для тебя обузой, брось стихи!",
+     "Прочтёшь хоть тысячу наук, будешь знать слова - почёта тебе не будет в этом мире. Станешь жемчужиной в море слов - цены тебе не будет, особенно в наше время. Нет, нет, гляжу я на твои мысли - не выйдет из тебя сына, будь ты неладен!",
+     "От этого бормотания над книгой, пойми ты, денег не будет! Ну, бормочи без конца, копи свою науку, дружи с печалью; жизнь твоя будет короткой, весь мир станет тебе врагом!.."
+    ]
+   },
+   "min": {
+    "az": 2,
+    "ru": 4
+   }
+  },
+  {
    "id": "pirverdinin-xoruzu",
    "test": false,
    "off": false,
+   "kind": "prose",
    "source": "Cəlil Məmmədquluzadə. Əsərləri. I cild. Bakı, Öndər, 2004",
    "author": {
     "az": "Cəlil Məmmədquluzadə",
@@ -450,6 +641,7 @@ window.DH_HEKAYE = {
    "id": "poct-qutusu",
    "test": false,
    "off": false,
+   "kind": "prose",
    "source": "12 noyabr 1903",
    "author": {
     "az": "Cəlil Məmmədquluzadə",
@@ -638,6 +830,7 @@ window.DH_HEKAYE = {
    "id": "qessab",
    "test": false,
    "off": false,
+   "kind": "prose",
    "source": "Cəlil Məmmədquluzadə. Əsərləri. I cild. Bakı, Öndər, 2004",
    "author": {
     "az": "Cəlil Məmmədquluzadə",
@@ -720,6 +913,7 @@ window.DH_HEKAYE = {
    "id": "quzu",
    "test": false,
    "off": false,
+   "kind": "prose",
    "source": "İyun 1914, Tiflis",
    "author": {
     "az": "Cəlil Məmmədquluzadə",
@@ -885,9 +1079,45 @@ window.DH_HEKAYE = {
    }
   },
   {
+   "id": "terpenme-amandir",
+   "test": false,
+   "off": false,
+   "kind": "poem",
+   "source": "M.Ə.Sabir. Hophopnamə. I cild. Bakı, Şərq-Qərb, 2004",
+   "author": {
+    "az": "Mirzə Ələkbər Sabir",
+    "ru": "Мирза Алекпер Сабир"
+   },
+   "title": {
+    "az": "Tərpənmə, amandır, bala, qəflətdən ayılma!",
+    "ru": "Не шевелись, дитя, не просыпайся!"
+   },
+   "text": {
+    "az": [
+     "Tərpənmə, amandır, bala, qəflətdən ayılma!\nAçma gözünü, xabi-cəhalətdən ayılma!\nLaylay, bala, laylay!\nYat, qal dala, laylay!",
+     "Aldanma ayıqlıqda fəraqət ola, heyhat!\nQəflətdə keçənlər kimi ləzzət ola, heyhat!\nBidar olanın başı səlamət ola, heyhat!\nAt başını yat, bəstəri-rahətdən ayılma!\nLaylay, bala, laylay!\nYat, qal dala, laylay!",
+     "Açsan gözünü, rəncü məşəqqət görəcəksən,\nMillətdə qəm, ümmətdə küdurət görəcəksən,\nQıldıqca nəzər millətə heyrət görəcəksən,\nÇək başına yorğanını, nikbətdən ayılma!\nLaylay, bala, laylay!\nYat, qal dala, laylay!",
+     "Bir ləhzə ayıldınsa, qutar canını, yuxla,\nAt tiryakını, meyl elə qəlyanını, yuxla,\nİncinsə sağın, ver yerə sol yanını, yuxla,\nİllərcə şüar etdiyin adətdən ayılma!\nLaylay, bala, laylay!\nYat, qal dala, laylay!",
+     "Göz nurudur uyqu, onu dur etmə gözündən,\nYol vermə məbada çıxa bir an sözündən,\nAmma elə bərk yuxla ki, hətta get özündən,\nAfaqı dutan şurü qiyamətdən ayılma!\nLaylay, bala, laylay!\nYat, qal dala, laylay!"
+    ],
+    "ru": [
+     "Не шевелись, ради бога, дитя, не просыпайся от беспечности! Не открывай глаз, не просыпайся от сна невежества! Баю-бай, дитя, баю-бай! Спи, отставай, баю-бай!",
+     "Не обманывайся: наяву покоя не бывает, увы! Не бывает такого удовольствия, как у тех, кто живёт в беспечности, увы! У того, кто проснулся, голова не будет цела, увы! Положи голову и спи, не просыпайся на мягкой постели! Баю-бай, дитя, баю-бай! Спи, отставай, баю-бай!",
+     "Откроешь глаза - увидишь муки и тяготы, увидишь горе в народе и смуту в общине, посмотришь на народ - и придёшь в ужас. Натяни на голову одеяло, не просыпайся от несчастья! Баю-бай, дитя, баю-бай! Спи, отставай, баю-бай!",
+     "Если на миг проснулся - спасай свою душу, спи. Прими свой опий, затянись кальяном, спи. Затекла правая сторона - повернись на левую, спи. Не просыпайся от обычаев, которые годами были твоим девизом! Баю-бай, дитя, баю-бай! Спи, отставай, баю-бай!",
+     "Сон - свет для глаз, не гони его от себя, не дай ему ни на миг тебя покинуть. Только спи так крепко, чтобы совсем забыться, - не просыпайся от светопреставления, охватившего весь мир! Баю-бай, дитя, баю-бай! Спи, отставай, баю-бай!"
+    ]
+   },
+   "min": {
+    "az": 1,
+    "ru": 2
+   }
+  },
+  {
    "id": "ucuzluq",
    "test": false,
    "off": false,
+   "kind": "prose",
    "source": "Cəlil Məmmədquluzadə. Əsərləri. I cild. Bakı, Öndər, 2004",
    "author": {
     "az": "Cəlil Məmmədquluzadə",
@@ -942,6 +1172,37 @@ window.DH_HEKAYE = {
    "min": {
     "az": 3,
     "ru": 3
+   }
+  },
+  {
+   "id": "yadima-dusdu",
+   "test": false,
+   "off": false,
+   "kind": "poem",
+   "source": "Mikayıl Müşfiq. Seçilmiş əsərləri. Bakı, Şərq-Qərb, 2004",
+   "author": {
+    "az": "Mikayıl Müşfiq",
+    "ru": "Микаил Мушфиг"
+   },
+   "title": {
+    "az": "Yadıma düşdü",
+    "ru": "Мне вспомнилось"
+   },
+   "text": {
+    "az": [
+     "Keçən günlərimi vərəqləyirkən\nSevdalı dillərin yadıma düşdü.\nXəyalın qarşımda canlandı, birdən\nGöyərçin əllərin yadıma düşdü.",
+     "Deyildir eşq odu məni yandıran,\nRuhumun şəhrini işıqlandıran.\nPozğun şəfəqləri mənə andıran\nZiyalı tellərin yadıma düşdü.",
+     "O gün də bir gündü, ey üzü dönmüş,\nSandım içində bir qaplan döyünmüş.\nBir anda köpürmüş, bir anda sönmüş\nXırçın əməllərin yadıma düşdü."
+    ],
+    "ru": [
+     "Листая прошедшие дни, я вспомнил твои влюблённые слова. Передо мной ожил твой образ, и вдруг вспомнились твои руки, похожие на голубей.",
+     "Меня жжёт не огонь любви, а то, что освещает город моей души. Мне вспомнились твои светлые пряди, напоминавшие мне беспокойные зори.",
+     "Тот день тоже был днём, о ты, что отвернулась от меня: мне казалось, что в груди бьётся барс. Мне вспомнились твои капризные поступки - то вспыхнут пеной, то погаснут в один миг."
+    ]
+   },
+   "min": {
+    "az": 1,
+    "ru": 1
    }
   }
  ]

@@ -21,7 +21,7 @@
       quote: "Sitat kartı", savedTitle: "Saxladıqlarım", none: "Hələ heç nə saxlamamısınız.",
       offline: "İnternet olmasa da oxumaq olar: hekayələr artıq telefonunuzdadır.",
       test: "Sınaq mətni - pilotda əsl hekayələrlə əvəz olunacaq.",
-      orig: "", src: "", tr: "",
+      orig: "", src: "", tr: "", trPoem: "", podstr: "", poem: "şeir",
       done: "Hekayələr bitdi. Yaxşı yol!",
       sheet: "Şəkli saxlamaq üçün barmağınızı üzərində saxlayın.", close: "Bağla",
       back: "Metro pasportu",
@@ -36,7 +36,7 @@
       pick: "Выберите станцию",
       ride: function (m, x) { return "В пути: примерно <b>" + m + " мин</b>" + (x ? " · пересадок: " + x : ""); },
       same: "Это одна и та же станция. Выберите другую.",
-      plan: function (n, m) { return n === 1 ? "На эту поездку - 1 рассказ, ~" + m + " мин" : "На эту поездку - рассказов: " + n + ", ~" + m + " мин"; },
+      plan: function (n, m) { return n === 1 ? "На эту поездку - 1 текст, ~" + m + " мин" : "На эту поездку - текстов: " + n + ", ~" + m + " мин"; },
       min: function (m) { return "~" + m + " мин чтения"; },
       next: "Следующий рассказ", another: "Другие рассказы", save: "Сохранить", saved: "Сохранено",
       quote: "Карточка с цитатой", savedTitle: "Сохранённое", none: "Пока ничего не сохранено.",
@@ -44,6 +44,7 @@
       test: "Тестовый текст - в пилоте его заменят настоящие рассказы.",
       orig: "Оригинал на азербайджанском. Русский перевод готовится.", src: "",
       tr: "Перевод с азербайджанского: Claude (ИИ).",
+      trPoem: "Подстрочный перевод: Claude (ИИ). Рифма и ритм оригинала не сохранены.", podstr: "Подстрочник", poem: "стихи",
       done: "Рассказы на эту поездку закончились. Хорошей дороги!",
       sheet: "Нажмите и удерживайте картинку, чтобы сохранить её.", close: "Закрыть",
       back: "Паспорт метро",
@@ -136,12 +137,19 @@
     var total = plan.reduce(function (n, x) { return n + mn(x); }, 0);
     $("planInfo").textContent = t.plan(plan.length, total) + (plan.length > 1 ? " · " + (idx + 1) + "/" + plan.length : "");
     $("sTitle").textContent = s.title[lang];
-    $("sMeta").textContent = s.author[lang] + " · " + t.min(mn(s));
+    $("sMeta").textContent = s.author[lang] + (s.kind === "poem" ? " · " + t.poem : "") + " · " + t.min(mn(s));
     var L = s.text[lang] ? lang : "az";
     $("sTest").hidden = !s.test && L === lang; $("sTest").textContent = s.test ? t.test : t.orig;
-    $("sSrc").textContent = [s.source ? t.src + s.source : "", (L === "ru" && !s.test) ? t.tr : ""].filter(Boolean).join(" · ");
+    var isPoem = s.kind === "poem";
+    $("sSrc").textContent = [s.source ? t.src + s.source : "", (L === "ru" && !s.test) ? (isPoem ? t.trPoem : t.tr) : ""].filter(Boolean).join(" · ");
     var body = $("sBody"); body.innerHTML = ""; body.lang = L;
-    s.text[L].forEach(function (p) { var el = document.createElement("p"); el.textContent = p; body.appendChild(el); });
+    body.className = "s-body" + (isPoem ? " poem" : "");
+    function put(list, cls, lg) { list.forEach(function (p) { var el = document.createElement("p"); el.textContent = p; if (cls) el.className = cls; if (lg) el.lang = lg; body.appendChild(el); }); }
+    if (isPoem && L === "ru" && s.text.az) {
+      put(s.text.az, "verse", "az");
+      var h = document.createElement("p"); h.className = "podstr"; h.textContent = t.podstr; body.appendChild(h);
+      put(s.text.ru, "prose", "ru");
+    } else put(s.text[L], isPoem ? "verse" : "", "");
     var isSaved = saved().indexOf(s.id) >= 0;
     $("save").textContent = isSaved ? t.saved : t.save; $("save").setAttribute("aria-pressed", isSaved ? "true" : "false");
     $("next").textContent = idx < plan.length - 1 ? t.next : t.another;
@@ -182,7 +190,7 @@
   }
   function quoteCard() {
     var s = plan[idx]; if (!s) return;
-    var paras = s.text[lang] || s.text.az, q = paras.filter(function (p) { return p.length > 60 && p.length < 260; }).pop() || paras[0];
+    var paras = (s.kind === "poem" ? s.text.az : (s.text[lang] || s.text.az)).map(function (p) { return p.replace(/\n/g, " / "); }), q = paras.filter(function (p) { return p.length > 60 && p.length < 260; }).pop() || paras[0];
     var W = 1080, H = 1920, c = document.createElement("canvas"); c.width = W; c.height = H;
     var x = c.getContext("2d");
     var ready = (document.fonts && document.fonts.load) ? Promise.all([document.fonts.load("500 60px 'Noto Serif Display'"), document.fonts.load("600 40px 'Golos Text'")]).catch(function () {}) : Promise.resolve();

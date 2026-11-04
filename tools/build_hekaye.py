@@ -15,7 +15,7 @@ def parse(path):
     parts = re.split(r"^\[(az|ru)\]\s*$", body.strip(), flags=re.M)
     txt = {parts[i]: parts[i + 1].strip() for i in range(1, len(parts), 2)}
     meta.setdefault("off", "false")
-    out = {"id": meta["id"], "test": meta.get("test") == "true", "off": meta.get("off") == "true", "source": meta.get("source", ""),
+    out = {"id": meta["id"], "test": meta.get("test") == "true", "off": meta.get("off") == "true", "kind": meta.get("kind", "prose"), "source": meta.get("source", ""),
            "author": {"az": meta["author_az"], "ru": meta["author_ru"]},
            "title": {"az": meta["title_az"], "ru": meta["title_ru"]}, "text": {}, "min": {}}
     for k, v in txt.items():
@@ -23,6 +23,10 @@ def parse(path):
         words = sum(len(p.split()) for p in paras)
         out["text"][k] = paras
         out["min"][k] = max(1, round(words / WPM))
+        out.setdefault("words", {})[k] = words
+    if out["kind"] == "poem" and "ru" in out["min"]:
+        out["min"]["ru"] = max(1, round((out["words"]["az"] + out["words"]["ru"]) / WPM))
+    out.pop("words", None)
     return out
 
 texts = [t for t in (parse(p) for p in sorted(glob.glob(os.path.join(ROOT, "tools/hekaye/*.md")))) if not t["off"]]
