@@ -364,3 +364,9 @@ body.s-call .talk-head .nm{font-size:28px}
 .sheet-row{width:100%;max-width:420px;justify-content:center}
 .sheet .sheet-row .btn{flex:1 1 150px;min-width:0}
 .sheet img{max-height:60vh}
+/* bigger share preview: the picture takes most of the screen */
+#sheet{justify-content:flex-start;gap:var(--space-3);padding-top:max(var(--space-4), env(safe-area-inset-top, 0px));padding-bottom:max(var(--space-4), env(safe-area-inset-bottom, 0px))}
+#sheet img{width:min(100%, calc((100dvh - 210px) * 9 / 16));max-height:none;height:auto;margin-top:auto}
+#sheet p{font-size:15px;max-width:40ch}
+#sheet .linkbtn{margin:0 0 auto;padding:var(--space-1)}
+#sheet .toast:empty{display:none}
