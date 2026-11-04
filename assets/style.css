@@ -356,3 +356,7 @@ body.s-call .talk-head .nm{font-size:28px}
 .hero-card .ph{background:#0b1730 url("brand/veter-nochnoj.svg") repeat;background-size:96px}
 .other .ph{background:#0b1730 url("brand/veter-nochnoj.svg") repeat;background-size:96px}
 .ph i{display:block;width:100%;height:100%;background:center bottom/contain no-repeat}
+
+/* ---------- copper stage behind the monuments ---------- */
+.bg{background:var(--oath) url("brand/grain.png") repeat;background-size:200px}
+.hero-card .ph,.other .ph{background:#c8743a url("brand/grain.png") repeat;background-size:160px}
