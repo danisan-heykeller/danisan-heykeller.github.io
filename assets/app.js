@@ -108,7 +108,7 @@
       var box = $("heroes"); box.innerHTML = "";
       list.forEach(function (m) {
         var a = el("a", "hero-card"); a.href = ROOT + m.id + "/";
-        var ph = el("span", "ph"); ph.style.backgroundImage = "url('" + ROOT + m.photo + "')";
+        var ph = el("span", "ph"), phi = el("i"); phi.style.backgroundImage = "url('" + ROOT + m.photo + "')"; ph.appendChild(phi);
         var b = el("span", "hc-body");
         b.appendChild(el("span", "hc-name", m.name[lang]));
         b.appendChild(el("span", "hc-role", m.role[lang]));
@@ -207,7 +207,7 @@
       var oth = $("others"); oth.innerHTML = "";
       heroes().filter(function (x) { return x.id !== m.id; }).forEach(function (x) {
         var a = el("a", "other"); a.href = ROOT + x.id + "/";
-        var ph = el("span", "ph"); ph.style.backgroundImage = "url('" + ROOT + x.photo + "')";
+        var ph = el("span", "ph"), phi = el("i"); phi.style.backgroundImage = "url('" + ROOT + x.photo + "')"; ph.appendChild(phi);
         var tx = el("span", "ot");
         tx.appendChild(el("b", "", x.name[lang]));
         tx.appendChild(el("span", "", x.value ? x.value[lang] : ""));
@@ -327,18 +327,18 @@
       var fontsReady = (document.fonts && document.fonts.load) ? Promise.all([
         document.fonts.load("600 96px 'Cormorant SC'"), document.fonts.load("italic 400 54px Alegreya")
       ]).catch(function () {}) : Promise.resolve();
-      return Promise.all([loadImg(m.photo ? ROOT + m.photo : null), fontsReady]).then(function (r) {
+      return Promise.all([loadImg(m.story ? ROOT + m.story : (m.photo ? ROOT + m.photo : null)), fontsReady]).then(function (r) {
         var img = r[0], c = document.createElement("canvas"); c.width = W; c.height = H;
         var x = c.getContext("2d");
         var PAPER = "#0b1730", INK = "#f3ebdd", SOFT = "#c9c2b2", OATH = "#c8743a", OATHT = "#d88a52", LINE = "#2a3d63";
         x.fillStyle = PAPER; x.fillRect(0, 0, W, H);
         var PH = 1000;
         if (img) {
-          var s = Math.min(W / img.width, PH / img.height), w = img.width * s, h = img.height * s;
+          var cover = !!m.story, s = cover ? Math.max(W / img.width, PH / img.height) : Math.min(W / img.width, PH / img.height), w = img.width * s, h = img.height * s;
           x.fillStyle = "#08112a"; x.fillRect(0, 0, W, PH);
           x.save(); x.beginPath(); x.rect(0, 0, W, PH); x.clip();
-          x.drawImage(img, (W - w) / 2, PH - h, w, h);
-          x.globalCompositeOperation = "saturation"; x.fillStyle = "#808080"; x.fillRect(0, 0, W, PH);
+          x.drawImage(img, (W - w) / 2, cover ? 0 : PH - h, w, h);
+          if (!cover) { x.globalCompositeOperation = "saturation"; x.fillStyle = "#808080"; x.fillRect(0, 0, W, PH); }
           x.globalCompositeOperation = "source-over"; x.restore();
         } else { x.fillStyle = "#13284b"; x.fillRect(0, 0, W, PH); }
         x.fillStyle = LINE; x.fillRect(0, PH, W, 2);

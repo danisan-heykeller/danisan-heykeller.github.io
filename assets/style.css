@@ -347,3 +347,12 @@ body.s-call .talk-view .wave{height:40px}
 @keyframes wv3{0%,100%{height:6px}50%{height:36px}}
 body.s-call .talk-view .wave i{animation-name:wv3}
 body.s-call .talk-head .nm{font-size:28px}
+
+/* ---------- sticker art (cut-out monument with a bone outline, transparent) ---------- */
+.bg{background:var(--paper) url("brand/veter-nochnoj.svg") repeat;background-size:160px}
+.bg::before{display:none}
+.bg::after{inset:var(--space-2) 0 0;filter:none}
+.hero-card .ph,.other .ph{background-color:#0b1730;filter:none;background-origin:content-box;padding:8px 6px 0;box-sizing:border-box;background-image:none}
+.hero-card .ph{background:#0b1730 url("brand/veter-nochnoj.svg") repeat;background-size:96px}
+.other .ph{background:#0b1730 url("brand/veter-nochnoj.svg") repeat;background-size:96px}
+.ph i{display:block;width:100%;height:100%;background:center bottom/contain no-repeat}

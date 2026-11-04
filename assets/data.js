@@ -6,7 +6,7 @@ window.DH = {
    "id": "vahid",
    "ready": true,
    "initial": "V",
-   "photo": "photo/vahid.jpg",
+   "photo": "photo/vahid-art.webp",
    "credit": "",
    "name": {
     "az": "Əliağa Vahid",
@@ -257,7 +257,8 @@ window.DH = {
       "ru": "Скульптор Рахиб Гасанов, архитектор Санан Саламзаде. Бронза, 1990."
      }
     }
-   ]
+   ],
+   "story": "photo/vahid-story.jpg"
   },
   {
    "id": "sabir",
@@ -267,7 +268,7 @@ window.DH = {
    },
    "ready": true,
    "initial": "S",
-   "photo": "photo/sabir.jpg",
+   "photo": "photo/sabir-art.webp",
    "credit": "",
    "name": {
     "az": "Mirzə Ələkbər Sabir",
@@ -548,7 +549,8 @@ window.DH = {
       "ru": "Скульптор Джалал Карьягды, 1958. Прежний памятник поставили в 1922 году."
      }
     }
-   ]
+   ],
+   "story": "photo/sabir-story.jpg"
   },
   {
    "id": "natavan",
@@ -558,7 +560,7 @@ window.DH = {
    },
    "ready": true,
    "initial": "N",
-   "photo": "photo/natavan.jpg",
+   "photo": "photo/natavan-art.webp",
    "credit": "",
    "name": {
     "az": "Xurşidbanu Natəvan",
@@ -857,7 +859,8 @@ window.DH = {
       "ru": "Скульптор Омар Эльдаров, архитекторы Э. Исмаилов и Ф. Леонтьев. 1960."
      }
     }
-   ]
+   ],
+   "story": "photo/natavan-story.jpg"
   }
  ]
 };
