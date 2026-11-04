@@ -370,3 +370,33 @@ body.s-call .talk-head .nm{font-size:28px}
 #sheet p{font-size:15px;max-width:40ch}
 #sheet .linkbtn{margin:0 0 auto;padding:var(--space-1)}
 #sheet .toast:empty{display:none}
+
+/* ===================== home v4 ===================== */
+.lead2{margin:0;font-size:17px;color:var(--ink-soft);max-width:var(--measure)}
+.stage-row{display:flex;gap:var(--space-12);align-items:flex-end;justify-content:space-between}
+.stage-qr{display:none}
+@media (min-width:960px){
+  .stage-qr{display:flex;flex-direction:column;align-items:center;gap:var(--space-3);flex:none;width:240px}
+  .plaque{background:#f3ebdd;color:#13284b;padding:var(--space-4);display:flex;flex-direction:column;align-items:center;gap:var(--space-2);border:1px solid var(--line);transform:rotate(-3deg)}
+  .plaque img{width:180px;height:180px}
+  .plaque b{font-family:var(--font-display);font-size:18px;letter-spacing:.06em}
+  .stage-qr p{margin:0;font-size:15px;color:var(--ink-soft);text-align:center}
+}
+@media (max-width:699px){ #toHeroes{display:none} }
+.progress{margin:calc(-1 * var(--space-2)) 0 var(--space-3);font-size:16px;color:var(--ink-soft)}
+.hero-card{position:relative}
+.hero-card .hc-name{color:var(--ink);text-decoration:none}
+.hero-card .hc-name::after{content:"";position:absolute;inset:0;z-index:1}
+.hc-map,.hc-tg{position:relative;z-index:2;color:var(--sky-text)}
+.hc-loc{display:flex;flex-direction:column;gap:2px;min-width:0}
+.hc-soon{align-self:flex-start;font-size:13px;color:var(--oath-text);border:1px solid var(--line);padding:1px 8px}
+.ph{position:relative}
+.ph .tag{position:absolute;left:6px;top:6px;background:#0b1730;color:#f3ebdd;font-size:12px;padding:2px 8px;letter-spacing:.04em}
+.hero-card.got{border-color:var(--oath)}
+.hero-card.closed{grid-template-columns:64px minmax(0,1fr)}
+.hc-tg{font-size:16px}
+/* pass the call */
+.fld{display:flex;flex-direction:column;gap:4px;font-size:15px;color:var(--ink-soft)}
+.fld input{font:inherit;font-size:18px;color:var(--ink);background:var(--paper-raised);border:1px solid var(--line);padding:10px 12px;border-radius:var(--radius-sm)}
+.fld input:focus{outline:2px solid var(--focus);outline-offset:1px}
+#passToast{word-break:break-all}

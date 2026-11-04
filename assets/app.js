@@ -24,16 +24,16 @@
       storyLine: "Mənə zəng etdi", sheet: "Şəkli saxlamaq üçün barmağınızı üzərində saxlayın.",
       ai: "Səslər süni intellektlə yaradılıb. Mətnlər yoxlanılmış mənbələrə əsaslanır.",
       audioErr: "Səs yüklənmədi. İnterneti yoxlayın və yenidən cəhd edin.",
-      stageEyebrow: "Bakı · ictimai layihə", toHeroes: "Qəhrəmanlara keç", soonHero: "Növbəti səs - tezliklə", soonAsk: "Kimi çağıraq? Qəhrəman təklif edin.", qrTxt: "Telefonda açın - zəng belə daha yaxşı səslənir.",
-      heroTitle: "Bakının heykəlləri danışır",
-      heroLead: "Abidənin yanındakı kodu skan edin - və o sizə zəng edəcək.",
+      stageEyebrow: "Bakı · maarifləndirici layihə", toHeroes: "Qəhrəmanlara keç", soonHero: "Növbəti kim zəng edəcək?", soonAsk: "Telegram-da yazın: @Fremor", homeCall: "Heykəlin yanında deyilsiniz? Elə buradan zəng edin - aşağıda qəhrəman seçin.", qrHint: "Heykəlin yanında belə kod axtarın.", heard: function (n, t) { return "Eşitdiniz: " + n + " / " + t; }, heardTag: "eşidildi", onMap: "Xəritədə", voiceSoon: "səs tezliklə", pass: "Zəngi dosta ötür", passTitle: "Zəngi dosta ötür", passText: function (nm) { return nm + " dostunuza zəng edəcək. Onun adını yazın - zəng ona ünvanlanacaq."; }, passTo: "Dostun adı", passBy: "Sizin adınız (istəyə görə)", passSend: "Göndər", passCopied: "Link kopyalandı - dostunuza göndərin", callingTo: function (to) { return to + ", sizə zəng edir..."; }, fromBy: function (by) { return "kimdən: " + by; }, passShareText: function (nm, to) { return to + ", sizə " + nm + " zəng edir."; }, qrTxt: "Telefonda açın - zəng belə daha yaxşı səslənir.",
+      heroTitle: "Bakının heykəlləri dil açdı",
+      heroLead: "Kameranı heykəlin yanındakı koda tutun - qəhrəman sizə zəng edəcək.",
       incStatus: "indi zəng edir", incNext: "Növbəti",
       heroesTitle: "Qəhrəmanlar", callHim: "Zəng et",
-      howTitle: "Necə işləyir", how: ["Heykəlin yanında kodu tapın", "Kamera ilə skan edin", "Zəngi qəbul edin", "Dayanın və diqqətlə baxın"],
+      howTitle: "Necə işləyir", how: ["Heykəlin yanında kodu tapın və kameranı ona tutun", "Zəngi qəbul edin - cəmi bir dəqiqədir", "Dayanın və diqqətlə baxın"],
       aboutTitle: "Layihə haqqında",
-      aboutText: "İstəyirik ki, heykəllərin yanında dayansınlar. Hər zəng - qəhrəmanla tanışlıq və özünüzlə aparmağa dəyən bir dəyərdir.",
+      aboutText: "Bu layihə postamentlərdən bizə baxan insanlar haqqındadır. İstəyirik ki, heykəllərin yanında dayansınlar. Hər zəng - qəhrəmanla tanışlıq və yadda saxlamağa dəyən bir atalar sözüdür.",
       endorse: "Gökand layihəsi", author: "Müəllif - Renat Raxmatulin",
-      foot: "Danışan heykəllər · postamentlərdən bizə baxan insanlar haqqında qeyri-kommersiya layihə"
+      foot: "Danışan heykəllər · qeyri-kommersiya layihə. Kopenhagen, London və Çikaqonun danışan heykəlləri - Talking Statues nümunəsində."
     },
     ru: {
       calling: "звонит...", accept: "Принять", decline: "Отклонить", hang: "Завершить", pause: "Пауза", resume: "Дальше",
@@ -51,16 +51,16 @@
       storyLine: "Мне позвонил", sheet: "Нажмите и удерживайте картинку, чтобы сохранить её.",
       ai: "Голоса созданы с помощью ИИ. Тексты основаны на проверенных источниках.",
       audioErr: "Звук не загрузился. Проверьте интернет и попробуйте ещё раз.",
-      stageEyebrow: "Баку · общественный проект", toHeroes: "К героям", soonHero: "Следующий голос - скоро", soonAsk: "Кого позвать? Предложите героя.", qrTxt: "Откройте на телефоне - так звонок звучит как надо.",
-      heroTitle: "Памятники Баку разговаривают",
-      heroLead: "Отсканируйте код у памятника - и он вам позвонит.",
+      stageEyebrow: "Баку · просветительский проект", toHeroes: "К героям", soonHero: "Кто позвонит следующим?", soonAsk: "Напишите в Telegram: @Fremor", homeCall: "Не у памятника? Позвоните прямо отсюда - выберите героя ниже.", qrHint: "Такой код ищите у памятника.", heard: function (n, t) { return "Вы услышали " + n + " из " + t; }, heardTag: "услышан", onMap: "На карте", voiceSoon: "озвучка скоро", pass: "Передать звонок другу", passTitle: "Передать звонок другу", passText: function (nm) { return nm + " позвонит вашему другу. Напишите его имя - звонок будет адресован ему."; }, passTo: "Имя друга", passBy: "Ваше имя (по желанию)", passSend: "Отправить", passCopied: "Ссылка скопирована - отправьте её другу", callingTo: function (to) { return to + ", вам звонит..."; }, fromBy: function (by) { return "звонок от: " + by; }, passShareText: function (nm, to) { return to + ", вам звонит " + nm + "."; }, qrTxt: "Откройте на телефоне - так звонок звучит как надо.",
+      heroTitle: "Памятники Баку заговорили",
+      heroLead: "Наведите камеру на код у памятника - и герой вам позвонит.",
       incStatus: "сейчас звонит", incNext: "Следующий",
       heroesTitle: "Герои", callHim: "Позвонить",
-      howTitle: "Как это работает", how: ["Найдите код у памятника", "Отсканируйте его камерой", "Примите звонок", "Задержитесь и присмотритесь"],
+      howTitle: "Как это работает", how: ["Найдите код у памятника и наведите на него камеру", "Примите звонок - он длится минуту", "Задержитесь и присмотритесь"],
       aboutTitle: "О проекте",
-      aboutText: "Мы хотим, чтобы у памятников останавливались. Каждый звонок - знакомство с героем и одна ценность, которую стоит унести с собой.",
+      aboutText: "Это проект о людях, которые смотрят на нас с постаментов. Мы хотим, чтобы у памятников останавливались. Каждый звонок - знакомство с героем и одна пословица, которую хочется запомнить.",
       endorse: "Проект Gökand", author: "Автор - Ренат Рахматулин",
-      foot: "Danışan heykəllər · некоммерческий проект о людях, которые смотрят на нас с постаментов"
+      foot: "Danışan heykəllər · некоммерческий проект. По образцу Talking Statues - говорящих памятников Копенгагена, Лондона и Чикаго."
     }
   };
 
@@ -99,33 +99,39 @@
 
   /* ---------- home ---------- */
   function home() {
-    var list = heroes(), SLOTS = 6;
+    var list = heroes();
     function paint() {
-      var t = T[lang];
-      ["stageEyebrow", "heroTitle", "heroLead", "aboutText", "toHeroes", "heroesTitle", "endorse", "author", "foot", "ai"].forEach(function (k) { $(k).textContent = t[k]; });
+      var t = T[lang], got = collected();
+      ["stageEyebrow", "heroTitle", "heroLead", "homeCall", "qrHint", "aboutText", "toHeroes", "heroesTitle", "endorse", "author", "foot", "ai"].forEach(function (k) { $(k).textContent = t[k]; });
       var ol = $("how"); ol.innerHTML = "";
-      t.how.forEach(function (s) { ol.appendChild(el("li", "", s)); });
+      t.how.forEach(function (x) { ol.appendChild(el("li", "", x)); });
+      var heard = list.filter(function (m) { return got.indexOf(m.id) >= 0; }).length;
+      $("progress").hidden = heard === 0;
+      $("progress").textContent = t.heard(heard, list.length);
       var box = $("heroes"); box.innerHTML = "";
       list.forEach(function (m) {
-        var a = el("a", "hero-card"); a.href = ROOT + m.id + "/";
+        var card = el("div", "hero-card" + (got.indexOf(m.id) >= 0 ? " got" : ""));
         var ph = el("span", "ph"), phi = el("i"); phi.style.backgroundImage = "url('" + ROOT + m.photo + "')"; ph.appendChild(phi);
+        if (got.indexOf(m.id) >= 0) ph.appendChild(el("span", "tag", t.heardTag));
         var b = el("span", "hc-body");
-        b.appendChild(el("span", "hc-name", m.name[lang]));
+        var link = el("a", "hc-name", m.name[lang]); link.href = ROOT + m.id + "/";
+        b.appendChild(link);
         b.appendChild(el("span", "hc-role", m.role[lang]));
+        if (m.voice === false) b.appendChild(el("span", "hc-soon", t.voiceSoon));
         b.appendChild(el("span", "hc-proverb", m.proverb ? m.proverb[lang] : ""));
-        var ft = el("span", "hc-foot");
-        ft.appendChild(el("span", "", m.area[lang]));
+        var ft = el("span", "hc-foot"), loc = el("span", "hc-loc");
+        loc.appendChild(el("span", "", m.area[lang]));
+        if (m.map) { var mp = el("a", "hc-map", t.onMap); mp.href = "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(m.map); mp.target = "_blank"; mp.rel = "noopener"; loc.appendChild(mp); }
+        ft.appendChild(loc);
         ft.appendChild(el("span", "hc-call", t.callHim + " →"));
-        b.appendChild(ft); a.appendChild(ph); a.appendChild(b); box.appendChild(a);
+        b.appendChild(ft); card.appendChild(ph); card.appendChild(b); box.appendChild(card);
       });
-      for (var i = list.length; i < SLOTS; i++) {
-        var c = el("div", "hero-card closed");
-        c.appendChild(el("span", "ph"));
-        var cb = el("span", "hc-body");
-        cb.appendChild(el("span", "hc-name", t.soonHero));
-        cb.appendChild(el("span", "hc-role", t.soonAsk));
-        c.appendChild(cb); box.appendChild(c);
-      }
+      var c = el("div", "hero-card closed");
+      c.appendChild(el("span", "ph"));
+      var cb = el("span", "hc-body");
+      cb.appendChild(el("span", "hc-name", t.soonHero));
+      var tg = el("a", "hc-tg", t.soonAsk); tg.href = "https://t.me/Fremor"; tg.target = "_blank"; tg.rel = "noopener";
+      cb.appendChild(tg); c.appendChild(cb); box.appendChild(c);
     }
     bindLangs(paint); paint();
   }
@@ -135,6 +141,8 @@
     var audio = new Audio(); audio.preload = "auto";
     var state = "ring", clock = null, spans = [], maxSeen = 0, t0 = 0, pausedAt = 0, paused = false;
     var voiced = m.voice !== false, wakeLock = null, readIdx = 0, finishedBy = "call";
+    function clean(v) { return String(v || "").replace(/[\u0000-\u001f<>]/g, "").replace(/\s+/g, " ").trim().slice(0, 24); }
+    var qs = new URLSearchParams(location.search), passTo = clean(qs.get("to")), passBy = clean(qs.get("by"));
     function nowT() { return voiced ? audio.currentTime : (paused ? pausedAt : (Date.now() - t0) / 1000); }
 
     if (m.photo) { var bg = $("bg"); bg.classList.remove("placeholder"); bg.style.setProperty("--photo", "url('" + ROOT + m.photo + "')"); }
@@ -183,7 +191,10 @@
     function paint() {
       var t = T[lang];
       document.title = m.name[lang] + " · Danışan heykəllər";
-      $("statusTxt").textContent = t.calling;
+      $("statusTxt").textContent = passTo ? t.callingTo(passTo) : t.calling;
+      $("fromChip").hidden = !passBy; $("fromChip").textContent = passBy ? t.fromBy(passBy) : "";
+      $("pass").textContent = t.pass; $("passTitle").textContent = t.passTitle; $("passText").textContent = t.passText(m.name[lang]);
+      $("passToLbl").textContent = t.passTo; $("passByLbl").textContent = t.passBy; $("passSend").textContent = t.passSend; $("passClose").textContent = t.close;
       $("name").textContent = m.name[lang]; $("talkName").textContent = m.name[lang]; $("readName").textContent = m.name[lang];
       $("role").textContent = m.role[lang];
       $("dur").textContent = t.dur(Math.max(1, Math.round(lastCue() / 60)));
@@ -362,6 +373,21 @@
       });
     }
     function storyLine(t) { return (m.female && lang === "ru") ? "Мне позвонила" : t.storyLine; }
+    function passLink(to, by) {
+      var q = "?to=" + encodeURIComponent(to) + (by ? "&by=" + encodeURIComponent(by) : "") + "&from=pass";
+      return location.origin + location.pathname + q;
+    }
+    function sendPass(e) {
+      e.preventDefault();
+      var t = T[lang], to = clean($("passTo").value), by = clean($("passBy").value);
+      if (!to) { $("passTo").focus(); return; }
+      var url = passLink(to, by), text = t.passShareText(m.name[lang], to);
+      function copy() {
+        try { navigator.clipboard.writeText(url).then(function () { $("passToast").textContent = t.passCopied; }, function () { $("passToast").textContent = url; }); } catch (err) { $("passToast").textContent = url; }
+      }
+      if (navigator.share) { try { navigator.share({ title: m.name[lang], text: text, url: url }).then(function () { track("pass"); }, function () {}); } catch (err) { copy(); } }
+      else copy();
+    }
     var storyFile = null, canShareFiles = false;
     function shareUrl() { return location.origin + location.pathname + "?from=share"; }
     function shareStory() {
@@ -402,9 +428,12 @@
     $("whatBtn").addEventListener("click", function () { $("what").hidden = false; $("whatClose").focus(); });
     $("whatClose").addEventListener("click", function () { $("what").hidden = true; });
     $("sheetClose").addEventListener("click", function () { $("sheet").hidden = true; });
-    document.addEventListener("keydown", function (e) { if (e.key === "Escape") { $("what").hidden = true; $("sheet").hidden = true; } });
+    document.addEventListener("keydown", function (e) { if (e.key === "Escape") { $("what").hidden = true; $("sheet").hidden = true; $("passSheet").hidden = true; } });
     document.addEventListener("visibilitychange", function () { if (!document.hidden && state === "call") lockScreen(); });
     $("sheetShare").addEventListener("click", sendStory);
+    $("pass").addEventListener("click", function () { $("passToast").textContent = ""; $("passSheet").hidden = false; $("passTo").focus(); });
+    $("passClose").addEventListener("click", function () { $("passSheet").hidden = true; });
+    $("passForm").addEventListener("submit", sendPass);
     $("share").addEventListener("click", function () {
       var t = T[lang];
       function fail() { $("sheetToast").textContent = t.copyFail; }

@@ -6,24 +6,37 @@
 <meta name="theme-color" content="#0b1730">
 <title>Danışan heykəllər</title>
 <meta name="description" content="Bakının heykəlləri danışır. QR kodu skan edin - abidə sizə zəng edəcək.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Danışan heykəllər">
+<meta property="og:title" content="Danışan heykəllər · Говорящие памятники Баку">
+<meta property="og:description" content="Bakının heykəlləri danışır. Памятники Баку заговорили: примите звонок от героя.">
+<meta property="og:image" content="https://danisan-heykeller.github.io/og/home.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:url" content="https://danisan-heykeller.github.io/">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+SC:wght@500;600&family=Alegreya:ital,wght@0,400;0,500;1,400&display=swap">
-<link rel="stylesheet" href="assets/style.css?v=share2">
+<link rel="stylesheet" href="assets/style.css?v=home4">
 </head>
 <body data-page="home" data-root="./" class="home">
 
 <section class="stage" data-theme="pesnya" id="stage">
   <div class="stage-in">
     <div class="stage-top"><span class="brand">Danışan heykəllər · Bakı</span><div class="langs" role="group" aria-label="Dil / Язык"><button type="button" id="lang-az">AZ</button><button type="button" id="lang-ru">RU</button></div></div>
+    <div class="stage-row">
     <div class="stage-main">
       <p class="eyebrow" id="stageEyebrow"></p>
       <h1 id="heroTitle"></h1>
       <p class="lead" id="heroLead"></p>
+      <p class="lead2" id="homeCall"></p>
       <div class="stage-panel">
         <ol class="steps" id="how"></ol>
         <p class="about" id="aboutText"></p>
         <a class="btn primary" id="toHeroes" href="#heroesBlock"></a>
       </div>
+    </div>
+    <aside class="stage-qr" aria-hidden="true"><div class="plaque"><img src="qr/vahid.svg" alt="" width="160" height="160"><b>Danışan heykəllər</b></div><p id="qrHint"></p></aside>
     </div>
   </div>
   <div class="kayma" aria-hidden="true"></div>
@@ -32,6 +45,7 @@
 <div class="wrap">
   <section class="block" id="heroesBlock">
     <p class="eyebrow" id="heroesTitle"></p>
+    <p class="progress" id="progress" hidden></p>
     <div class="heroes" id="heroes"></div>
   </section>
 
@@ -41,7 +55,7 @@
     <p class="note" id="ai"></p>
   </footer>
 </div>
-<script src="assets/data.js?v=share2"></script>
-<script src="assets/app.js?v=share2"></script>
+<script src="assets/data.js?v=home4"></script>
+<script src="assets/app.js?v=home4"></script>
 </body>
 </html>
