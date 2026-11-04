@@ -10,7 +10,7 @@
   var T = {
     az: {
       calling: "zəng edir...", accept: "Qəbul et", decline: "İmtina et", hang: "Bitir", pause: "Fasilə", resume: "Davam",
-      dur: function (m) { return "~" + m + " dəq"; }, sound: "qulaqlıqla daha yaxşıdır", soon: "səs tezliklə, hələlik mətn",
+      dur: function (m) { return "~" + m + " dəq"; }, sound: "qulaqlıqla daha yaxşıdır", soon: "səs tezliklə",
       what: "Bu nədir?", whatTitle: "Danışan heykəllər",
       whatText: "Bakının heykəlləri yoldan keçənlərə zəng edir. Qəbul edin - qəhrəman bir dəqiqə özü haqqında danışacaq və xatirə olaraq bir fikir qoyub gedəcək.",
       aboutLink: "Layihə haqqında", close: "Bağla",
@@ -37,7 +37,7 @@
     },
     ru: {
       calling: "звонит...", accept: "Принять", decline: "Отклонить", hang: "Завершить", pause: "Пауза", resume: "Дальше",
-      dur: function (m) { return "~" + m + " мин"; }, sound: "лучше в наушниках", soon: "озвучка скоро, пока текст",
+      dur: function (m) { return "~" + m + " мин"; }, sound: "лучше в наушниках", soon: "озвучка скоро",
       what: "Что это?", whatTitle: "Danışan heykəllər",
       whatText: "Памятники Баку звонят прохожим. Примите звонок - герой минуту расскажет о себе и оставит одну мысль на память.",
       aboutLink: "О проекте", close: "Закрыть",
@@ -248,7 +248,7 @@
     }
     function paintCards(force) {
       var box = $("cards"), list = m.cards || [];
-      var show = list.length && voiced && $("subs").hidden;
+      var show = list.length && $("subs").hidden;
       box.hidden = !show; if (!show) return;
       var slot = autoSlot(list.length), i = slot;
       if (manual !== null) { if (slot === manualSlot) i = manual; else manual = null; }
@@ -274,8 +274,8 @@
     function start() {
       paused = false;
       buildSubs(); maxSeen = 0; cardIdx = -1; manual = null;
-      if (!voiced) $("subs").hidden = false;
-      $("textToggle").hidden = !voiced;
+      $("subs").hidden = true;
+      $("textToggle").hidden = false;
       setState("call");
       try { if (navigator.vibrate) navigator.vibrate(60); } catch (e) {}
       $("textToggle").textContent = $("subs").hidden ? T[lang].showText : T[lang].hideText;

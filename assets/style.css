@@ -80,7 +80,10 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--focus);outline-offs
   background:var(--paper-sunk) url("brand/veter-nochnoj.svg") repeat;background-size:160px;
   border-bottom:1px solid var(--line);
 }
+.bg{overflow:hidden}
+.bg::before{content:"";position:absolute;inset:-24px;background:var(--photo) center/cover no-repeat;filter:grayscale(1) blur(14px) brightness(.45)}
 .bg::after{content:"";position:absolute;inset:0;background:var(--photo) center bottom/contain no-repeat;filter:grayscale(1) contrast(1.05)}
+.bg.placeholder::before{display:none}
 .bg.placeholder::after{display:none}
 .veil{display:none}
 body.s-call .bg{height:100vh;height:100dvh;opacity:.14;border:0}
